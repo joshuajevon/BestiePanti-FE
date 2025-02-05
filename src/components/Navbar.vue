@@ -27,37 +27,33 @@
             </div>
           </button>
 
-          <a class="w-fit" href="/">
+          <!-- <a class="w-fit" href="/"> -->
+          <router-link class="w-fit" :to="{name: 'beranda'}">  
             <img
               class="h-10 lg:h-12"
               src="@/assets/logo/logo-icon-color.svg"
               alt="logo"
             />
-          </a>
+          <!-- </a> -->
+        </router-link>
 
           <div id="web-nav-links" class="hidden lg:flex">
             <div aria-label="Site Nav">
               <ul class="flex w-full items-center justify-center gap-6">
                 <li>
                   <router-link class="nav-link-web" :to="{name: 'beranda'}"> BERANDA </router-link>
-                  <!-- <a class="nav-link-web" href="/"> BERANDA </a> -->
                 </li>
 
                 <li>
                   <router-link class="nav-link-web" :to="{name: 'panti'}"> PANTI </router-link>
-                  <!-- <a class="nav-link-web" href="/panti"> PANTI </a> -->
                 </li>
 
                 <li>
-                  <a class="nav-link-web" href="/tentang-kami">
-                    TENTANG KAMI
-                  </a>
+                  <router-link class="nav-link-web" :to="{name: 'tentangKami'}"> TENTANG KAMI </router-link>
                 </li>
 
                 <li>
-                  <a class="nav-link-web" href="/cara-donasi">
-                    CARA BERDONASI
-                  </a>
+                  <router-link class="nav-link-web" :to="{name: 'caraBerdonasi'}"> CARA BERDONASI </router-link>
                 </li>
               </ul>
             </div>
@@ -66,8 +62,8 @@
 
         <div class="flex items-center gap-4">
           <div class="flex items-center gap-4 lg:gap-6">
-            <a class="nav-link-web" href="/login"> MASUK </a>
-            <a class="btn-primary-sm" href="/register"> DAFTAR </a>
+            <router-link class="nav-link-web" :to="{name: 'login'}"> MASUK </router-link>
+            <router-link class="btn-primary-sm" :to="{name: 'register'}"> DAFTAR </router-link>
           </div>
 
           <div class="relative text-white">

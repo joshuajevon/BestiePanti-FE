@@ -14,27 +14,27 @@
         </div>
 
         <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <a href="/panti-detail">
-            <div class="panti-card group">
-                <img
-                class="rounded-lg object-cover"
-                src="@/assets/beranda/banner-4.jpg"
-                alt=""
-                />
+            <router-link  :to="{name: 'pantiDetail'}"> 
+                <div class="panti-card group">
+                    <img
+                    class="rounded-lg object-cover"
+                    src="@/assets/beranda/banner-4.jpg"
+                    alt=""
+                    />
 
-                <div class="flex w-full flex-col gap-1">
-                <h2 class="group-hover:text-white">
-                    Nama Panti asd asd ad as dasd
-                </h2>
-                <p class="group-hover:text-white">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Impedit consequatur reprehenderit soluta, inventore excepturi at
-                    nihil obcaecati repellat est? Nemo vero voluptatibus quisquam
-                    velit perferendis nam vel quas maxime aspernatur?
-                </p>
+                    <div class="flex w-full flex-col gap-1">
+                    <h2 class="group-hover:text-white">
+                        Nama Panti asd asd ad as dasd
+                    </h2>
+                    <p class="group-hover:text-white">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        Impedit consequatur reprehenderit soluta, inventore excepturi at
+                        nihil obcaecati repellat est? Nemo vero voluptatibus quisquam
+                        velit perferendis nam vel quas maxime aspernatur?
+                    </p>
+                    </div>
                 </div>
-            </div>
-            </a>
+            </router-link>
 
             <a href="/panti-detail">
             <div class="panti-card group">
