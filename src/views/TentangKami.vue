@@ -1,6 +1,6 @@
 <template lang="">
-    <section class="bg-primary-50 text-secondary-500">
-        <section
+  <section class="bg-primary-50 text-secondary-500">
+    <section
       class="c-container flex items-center justify-center bg-cover bg-center pt-16 text-white sm:pt-[4.5rem] md:pt-20 lg:pt-[5.5rem] xl:pt-24"
       :style="backgroundStyle"
     >
@@ -9,7 +9,7 @@
       >
         <img
           class="w-28 sm:w-32 md:w-36 lg:w-40 xl:w-44 2xl:w-48"
-          src="@/assets/logo/logo-icon-text-white.svg"
+          src="/assets/logos/logo-icon-text-white.svg"
           alt="logo"
         />
         <h1
@@ -37,7 +37,7 @@
       >
         <img
           class="w-28 sm:w-32 md:w-36 lg:w-40 xl:w-44 2xl:w-48"
-          src="@/assets/logo/logo-icon-text-color.svg"
+          src="/assets/logos/logo-icon-text-color.svg"
           alt="logo"
         />
         <p class="text-justify text-sm font-normal sm:text-lg lg:text-xl">
@@ -66,14 +66,13 @@
         </p>
       </div>
     </section>
-
   </section>
 </template>
 <script>
 export default {
   data() {
     return {
-      backgroundImageUrl: "@/assets/tentang-kami/banner-1.jpg",
+      backgroundImageUrl: "/assets/tentang-kami/banner-1.jpg",
     };
   },
   computed: {
@@ -85,6 +84,4 @@ export default {
   },
 };
 </script>
-<style lang="">
-    
-</style>
+<style lang=""></style>

@@ -11,30 +11,30 @@
         <swiper-slide>
           <img
             class="h-full w-full object-cover"
-            src="@/assets/beranda/banner-1.jpg"
+            src="/assets/beranda/banner-1.jpg"
             alt=""
           />
         </swiper-slide>
         <swiper-slide>
           <img
             class="h-full w-full object-cover"
-            src="@/assets/beranda/banner-2.jpg"
+            src="/assets/beranda/banner-2.jpg"
             alt="" /></swiper-slide
         ><swiper-slide>
           <img
             class="h-full w-full object-cover"
-            src="@/assets/beranda/banner-3.jpg"
+            src="/assets/beranda/banner-3.jpg"
             alt=""
         /></swiper-slide>
         <swiper-slide>
           <img
             class="h-full w-full object-cover"
-            src="@/assets/beranda/banner-4.jpg"
+            src="/assets/beranda/banner-4.jpg"
             alt="" /></swiper-slide
         ><swiper-slide>
           <img
             class="h-full w-full object-cover"
-            src="@/assets/beranda/banner-5.jpg"
+            src="/assets/beranda/banner-5.jpg"
             alt=""
         /></swiper-slide>
       </swiper>
@@ -58,7 +58,7 @@
           <div class="panti-card group">
             <img
               class="rounded-lg object-cover"
-              src="@/assets/beranda/banner-4.jpg"
+              src="/assets/beranda/banner-4.jpg"
               alt=""
             />
 
@@ -80,7 +80,7 @@
           <div class="panti-card group">
             <img
               class="rounded-lg object-cover"
-              src="@/assets/beranda/banner-4.jpg"
+              src="/assets/beranda/banner-4.jpg"
               alt=""
             />
 
@@ -102,7 +102,7 @@
           <div class="panti-card group">
             <img
               class="rounded-lg object-cover"
-              src="@/assets/beranda/banner-4.jpg"
+              src="/assets/beranda/banner-4.jpg"
               alt=""
             />
 
@@ -124,7 +124,7 @@
           <div class="panti-card group">
             <img
               class="rounded-lg object-cover"
-              src="@/assets/beranda/banner-4.jpg"
+              src="/assets/beranda/banner-4.jpg"
               alt=""
             />
 
@@ -154,7 +154,7 @@
     >
       <div class="flex flex-col items-center gap-12 lg:flex-row">
         <img
-          src="@/assets/beranda/banner-3.jpg"
+          src="/assets/beranda/banner-3.jpg"
           alt=""
           class="h-auto w-full rounded-xl lg:h-96 lg:w-auto"
         />
@@ -192,7 +192,7 @@
       class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24"
     >
       <img
-        src="@/assets/logo/logo-icon-text-color.svg"
+        src="/assets/logos/logo-icon-text-color.svg"
         alt="logo"
         class="w-56 lg:w-60 xl:w-64"
       />

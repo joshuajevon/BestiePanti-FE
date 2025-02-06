@@ -32,7 +32,7 @@
         <router-link class="w-fit" :to="{ name: 'beranda' }">
           <img
             class="h-10 lg:h-12"
-            src="@/assets/logo/logo-icon-color.svg"
+            src="/assets/logos/logo-icon-color.svg"
             alt="logo"
           />
         </router-link>
