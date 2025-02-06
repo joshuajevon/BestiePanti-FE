@@ -214,6 +214,7 @@
 
             <div class="relative mt-1 w-full">
               <input
+                ref="password"
                 type="password"
                 autocomplete="false"
                 id="password"
@@ -223,6 +224,7 @@
               />
 
               <svg
+                v-show="!showPassword"
                 id="eye-slash-1"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -230,7 +232,7 @@
                 stroke-width="1.5"
                 stroke="currentColor"
                 class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                onclick="togglePassword()"
+                @click="togglePassword"
               >
                 <path
                   stroke-linecap="round"
@@ -240,14 +242,15 @@
               </svg>
 
               <svg
+                v-show="showPassword"
                 id="eye-1"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="absolute inset-y-0 right-4 my-auto hidden h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                onclick="togglePassword()"
+                class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
+                @click="togglePassword"
               >
                 <path
                   stroke-linecap="round"
@@ -279,6 +282,7 @@
 
             <div class="relative mt-1 w-full">
               <input
+                ref="confirmPassword"
                 type="password"
                 autocomplete="false"
                 id="confirm-password"
@@ -288,6 +292,7 @@
               />
 
               <svg
+                v-show="!showConfirmPassword"
                 id="eye-slash-2"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -295,7 +300,7 @@
                 stroke-width="1.5"
                 stroke="currentColor"
                 class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                onclick="toggleConfirmPassword()"
+                @click="toggleConfirmPassword"
               >
                 <path
                   stroke-linecap="round"
@@ -305,14 +310,15 @@
               </svg>
 
               <svg
+                v-show="showConfirmPassword"
                 id="eye-2"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="absolute inset-y-0 right-4 my-auto hidden h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                onclick="toggleConfirmPassword()"
+                class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
+                @click="toggleConfirmPassword"
               >
                 <path
                   stroke-linecap="round"
@@ -362,7 +368,31 @@
     </section>
   </section>
 </template>
-<script>
-export default {};
+
+<script setup>
+import { ref } from "vue";
+
+const password = ref(null);
+const showPassword = ref(false);
+
+function togglePassword() {
+  showPassword.value = !showPassword.value;
+  if (password.value) {
+    password.value.type = showPassword.value ? "text" : "password";
+  }
+}
+
+const confirmPassword = ref(null);
+const showConfirmPassword = ref(false);
+
+function toggleConfirmPassword() {
+  showConfirmPassword.value = !showConfirmPassword.value;
+  if (confirmPassword.value) {
+    confirmPassword.value.type = showConfirmPassword.value
+      ? "text"
+      : "password";
+  }
+}
 </script>
+
 <style></style>
