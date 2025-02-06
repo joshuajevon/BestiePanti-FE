@@ -2,7 +2,7 @@
   <section class="bg-primary-50 text-secondary-500">
     <section
       class="c-container flex items-center justify-center bg-cover bg-center pt-16 text-white sm:pt-[4.5rem] md:pt-20 lg:pt-[5.5rem] xl:pt-24"
-      :style="backgroundStyle"
+      style="background-image: url('/assets/tentang-kami/banner-1.jpg')"
     >
       <div
         class="flex h-[200px] flex-col items-center justify-center gap-2 sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px]"
@@ -68,20 +68,7 @@
     </section>
   </section>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      backgroundImageUrl: "/assets/tentang-kami/banner-1.jpg",
-    };
-  },
-  computed: {
-    backgroundStyle() {
-      return {
-        backgroundImage: `url(${this.backgroundImageUrl})`,
-      };
-    },
-  },
-};
-</script>
+
+<script setup></script>
+
 <style></style>

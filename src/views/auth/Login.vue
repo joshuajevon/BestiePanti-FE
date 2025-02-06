@@ -132,16 +132,19 @@
         >
           <span>
             Belum punya akun?
-            <a href="/register" class="font-bold hover:underline"
-              >Daftar di sini</a
+            <router-link
+              class="font-bold hover:underline"
+              :to="{ name: 'register' }"
             >
+              Daftar di sini
+            </router-link>
           </span>
         </div>
       </form>
     </section>
   </section>
 </template>
-<script>
-export default {};
-</script>
+
+<script setup></script>
+
 <style></style>

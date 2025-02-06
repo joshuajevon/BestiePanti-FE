@@ -349,7 +349,13 @@
         >
           <span>
             Sudah memiliki akun?
-            <a href="/login" class="font-bold hover:underline">Masuk di sini</a>
+
+            <router-link
+              class="font-bold hover:underline"
+              :to="{ name: 'login' }"
+            >
+              Masuk di sini
+            </router-link>
           </span>
         </div>
       </form>

@@ -2,13 +2,13 @@
   <footer
     class="c-container flex flex-col items-center justify-center gap-8 bg-primary-900 py-8 text-white"
   >
-    <a href="/" class="">
+    <router-link :to="{ name: 'beranda' }">
       <img
         class="w-40 lg:w-48"
         src="/assets/logos/logo-icon-text-color-2.svg"
         alt="logo"
       />
-    </a>
+    </router-link>
 
     <div id="web-nav-links" class="flex">
       <div aria-label="Site Nav">
@@ -16,39 +16,39 @@
           class="flex w-full flex-wrap items-center justify-center gap-6 lg:gap-8"
         >
           <li>
-            <a
+            <router-link
               class="text-sm font-bold transition hover:text-primary-300 lg:text-base"
-              href="/"
+              :to="{ name: 'beranda' }"
             >
               BERANDA
-            </a>
+            </router-link>
           </li>
 
           <li>
-            <a
+            <router-link
               class="text-sm font-bold transition hover:text-primary-300 lg:text-base"
-              href="/panti"
+              :to="{ name: 'panti' }"
             >
               PANTI
-            </a>
+            </router-link>
           </li>
 
           <li>
-            <a
+            <router-link
               class="text-sm font-bold transition hover:text-primary-300 lg:text-base"
-              href="/tentang-kami"
+              :to="{ name: 'tentangKami' }"
             >
               TENTANG KAMI
-            </a>
+            </router-link>
           </li>
 
           <li>
-            <a
+            <router-link
               class="text-sm font-bold transition hover:text-primary-300 lg:text-base"
-              href="/cara-donasi"
+              :to="{ name: 'caraBerdonasi' }"
             >
               CARA BERDONASI
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>
