@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <section class="bg-primary-50 text-secondary-500">
     <section
       class="c-container flex items-center justify-center bg-cover bg-center pt-16 text-white sm:pt-[4.5rem] md:pt-20 lg:pt-[5.5rem] xl:pt-24"
@@ -84,4 +84,4 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style></style>

@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <footer
     class="c-container flex flex-col items-center justify-center gap-8 bg-primary-900 py-8 text-white"
   >
@@ -59,7 +59,9 @@
     </p>
   </footer>
 </template>
+
 <script>
 export default {};
 </script>
-<style lang=""></style>
+
+<style></style>

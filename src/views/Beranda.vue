@@ -54,98 +54,12 @@
       </div>
 
       <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <a href="/panti-detail">
-          <div class="panti-card group">
-            <img
-              class="rounded-lg object-cover"
-              src="/assets/beranda/banner-4.jpg"
-              alt=""
-            />
-
-            <div class="flex w-full flex-col gap-1">
-              <h2 class="group-hover:text-white">
-                Nama Panti asd asd ad as dasd
-              </h2>
-              <p class="group-hover:text-white">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Impedit consequatur reprehenderit soluta, inventore excepturi at
-                nihil obcaecati repellat est? Nemo vero voluptatibus quisquam
-                velit perferendis nam vel quas maxime aspernatur?
-              </p>
-            </div>
-          </div>
-        </a>
-
-        <a href="/panti-detail">
-          <div class="panti-card group">
-            <img
-              class="rounded-lg object-cover"
-              src="/assets/beranda/banner-4.jpg"
-              alt=""
-            />
-
-            <div class="flex w-full flex-col gap-1">
-              <h2 class="group-hover:text-white">
-                Nama Panti asd asd ad as dasd
-              </h2>
-              <p class="group-hover:text-white">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Impedit consequatur reprehenderit soluta, inventore excepturi at
-                nihil obcaecati repellat est? Nemo vero voluptatibus quisquam
-                velit perferendis nam vel quas maxime aspernatur?
-              </p>
-            </div>
-          </div>
-        </a>
-
-        <a href="/panti-detail">
-          <div class="panti-card group">
-            <img
-              class="rounded-lg object-cover"
-              src="/assets/beranda/banner-4.jpg"
-              alt=""
-            />
-
-            <div class="flex w-full flex-col gap-1">
-              <h2 class="group-hover:text-white">
-                Nama Panti asd asd ad as dasd
-              </h2>
-              <p class="group-hover:text-white">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Impedit consequatur reprehenderit soluta, inventore excepturi at
-                nihil obcaecati repellat est? Nemo vero voluptatibus quisquam
-                velit perferendis nam vel quas maxime aspernatur?
-              </p>
-            </div>
-          </div>
-        </a>
-
-        <a href="/panti-detail">
-          <div class="panti-card group">
-            <img
-              class="rounded-lg object-cover"
-              src="/assets/beranda/banner-4.jpg"
-              alt=""
-            />
-
-            <div class="flex w-full flex-col gap-1">
-              <h2 class="group-hover:text-white">
-                Nama Panti asd asd ad as dasd
-              </h2>
-              <p class="group-hover:text-white">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Impedit consequatur reprehenderit soluta, inventore excepturi at
-                nihil obcaecati repellat est? Nemo vero voluptatibus quisquam
-                velit perferendis nam vel quas maxime aspernatur?
-              </p>
-            </div>
-          </div>
-        </a>
+        <PantiCard />
       </div>
 
-      <a href="/panti">
+      <router-link :to="{ name: 'panti' }">
         <button class="btn-primary">Lihat Semua Panti Asuhan</button>
-      </a>
+      </router-link>
     </section>
 
     <!-- Cara Berdonasi -->
@@ -175,13 +89,13 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-4 lg:gap-6">
-            <a href="/cara-berdonasi">
+            <router-link :to="{ name: 'caraBerdonasi' }">
               <button class="btn-primary">Baca Selengkapnya</button>
-            </a>
+            </router-link>
 
-            <a href="/cara-berdonasi">
+            <router-link :to="{ name: 'register' }">
               <button class="btn-secondary">Daftar Sekarang</button>
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
@@ -212,32 +126,21 @@
         </p>
       </div>
 
-      <a href="/tentang-kami">
+      <router-link :to="{ name: 'tentangKami' }">
         <button class="btn-primary">Baca Selengkapnya</button>
-      </a>
+      </router-link>
     </section>
   </section>
 </template>
 
-<script>
+<script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
-
 import "swiper/css";
 import "swiper/css/pagination";
-
 import { Pagination } from "swiper/modules";
+import PantiCard from "@/components/cards/PantiCard.vue";
 
-export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
-  setup() {
-    return {
-      modules: [Pagination],
-    };
-  },
-};
+const modules = [Pagination];
 </script>
 
-<style lang=""></style>
+<style></style>

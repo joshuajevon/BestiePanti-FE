@@ -211,30 +211,23 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isNavbarOpen: false,
-      isProfileWebOpen: false,
-    };
-  },
-  methods: {
-    toggleNavbar() {
-      this.isNavbarOpen = !this.isNavbarOpen;
-    },
-    closeNavbar() {
-      this.isNavbarOpen = false;
-    },
-    toggleProfileWeb() {
-      this.isProfileWebOpen = !this.isProfileWebOpen;
-    },
-    logout() {
-      // Implement logout functionality here
-      console.log("Logging out...");
-    },
-  },
-};
+<script setup>
+import { ref } from "vue";
+
+const isNavbarOpen = ref(false);
+const isProfileWebOpen = ref(false);
+
+function toggleNavbar() {
+  isNavbarOpen.value = !isNavbarOpen.value;
+}
+
+function closeNavbar() {
+  isNavbarOpen.value = false;
+}
+
+function toggleProfileWeb() {
+  isProfileWebOpen.value = !isProfileWebOpen.value;
+}
 </script>
 
 <style scoped>

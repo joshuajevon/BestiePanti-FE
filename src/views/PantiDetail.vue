@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <section class="bg-primary-50 text-secondary-500">
     <!-- Form Dana -->
     <section
@@ -511,23 +511,7 @@
       </div>
 
       <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <div class="pesan-card">
-          <img
-            class="rounded-lg object-cover"
-            src="/assets/beranda/banner-4.jpg"
-            alt=""
-          />
-
-          <div class="flex w-full flex-col gap-1 md:gap-2">
-            <h2>Nama Orang</h2>
-            <p>
-              "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit
-              consequatur reprehenderit soluta, inventore excepturi at nihil
-              obcaecati repellat est? Nemo vero voluptatibus quisquam velit
-              perferendis nam vel quas maxime aspernatur?"
-            </p>
-          </div>
-        </div>
+        <PesanCard />
       </div>
 
       <button
@@ -540,7 +524,9 @@
     </section>
   </section>
 </template>
-<script>
-export default {};
+
+<script setup>
+import PesanCard from "@/components/cards/PesanCard.vue";
 </script>
-<style lang=""></style>
+
+<style></style>
