@@ -1,0 +1,112 @@
+.swiper-slide {
+  background-color: #e5e9f2;
+}
+
+span.swiper-pagination-bullet {
+  background-color: white;
+  opacity: 100;
+  border-radius: 9999px;
+  width: 8px;
+}
+
+span.swiper-pagination-bullet-active {
+  background-color: #2547fa;
+  width: 32px;
+}
+
+div.swiper-button-prev,
+div.swiper-button-next {
+  border: 5px solid #2547fa;
+  border-radius: 999px;
+  width: 64px;
+  height: 64px;
+  color: white;
+  background: #2547fa;
+}
+
+div.swiper-button-prev::after,
+div.swiper-button-next::after {
+  scale: 0.8;
+}
+
+@media (min-width: 0px) {
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    scale: 0.5;
+  }
+}
+
+@media (min-width: 640px) {
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    scale: 0.6;
+  }
+
+  div.swiper-button-prev {
+    margin-left: 1rem;
+  }
+
+  div.swiper-button-next {
+    margin-right: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    scale: 0.7;
+  }
+
+  div.swiper-button-prev {
+    margin-left: 2rem;
+  }
+
+  div.swiper-button-next {
+    margin-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    scale: 0.8;
+  }
+
+  div.swiper-button-prev {
+    margin-left: 4rem;
+  }
+
+  div.swiper-button-next {
+    margin-right: 4rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    scale: 0.9;
+  }
+
+  div.swiper-button-prev {
+    margin-left: 5rem;
+  }
+
+  div.swiper-button-next {
+    margin-right: 5rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    scale: 1;
+  }
+
+  div.swiper-button-prev {
+    margin-left: 6rem;
+  }
+
+  div.swiper-button-next {
+    margin-right: 6rem;
+  }
+}

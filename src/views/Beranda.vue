@@ -3,10 +3,17 @@
     <!-- Banner -->
     <section>
       <swiper
-        :pagination="true"
+        :autoplay="{
+          delay: 4000,
+          disableOnInteraction: false,
+        }"
+        :pagination="{
+          clickable: true,
+        }"
+        :navigation="true"
         :modules="modules"
         :loop="true"
-        class="mySwiper h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] xl:h-[800px]"
+        class="mySwiper h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px] xl:h-[900px]"
       >
         <swiper-slide>
           <img
@@ -134,13 +141,16 @@
 </template>
 
 <script setup>
+import PantiCard from "@/components/cards/PantiCard.vue";
+
+import "@/assets/swiper.css";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
-import PantiCard from "@/components/cards/PantiCard.vue";
+import "swiper/css/navigation";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
-const modules = [Pagination];
+const modules = [Autoplay, Pagination, Navigation];
 </script>
 
 <style></style>

@@ -403,57 +403,52 @@
 
     <!-- Image Carousel -->
     <section class="c-container pb-8 lg:pb-12 xl:pb-16">
-      <div
-        class="swiper mySwiper h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] xl:h-[800px]"
+      <swiper
+        :pagination="{
+          clickable: true,
+        }"
+        :navigation="true"
+        :modules="modules"
+        :loop="true"
+        class="mySwiper h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] xl:h-[800px]"
       >
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img
-              class="h-full w-full object-contain"
-              src="/assets/beranda/banner-1.jpg"
-              alt=""
-            />
-          </div>
-          <div class="swiper-slide">
-            <img
-              class="h-full w-full object-contain"
-              src="/assets/beranda/banner-2.jpg"
-              alt=""
-            />
-          </div>
-          <div class="swiper-slide">
-            <img
-              class="h-full w-full object-contain"
-              src="/assets/beranda/banner-3.jpg"
-              alt=""
-            />
-          </div>
-          <div class="swiper-slide">
-            <img
-              class="h-full w-full object-contain"
-              src="/assets/beranda/banner-4.jpg"
-              alt=""
-            />
-          </div>
-          <div class="swiper-slide">
-            <img
-              class="h-full w-full object-contain"
-              src="/assets/beranda/banner-5.jpg"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-pagination"></div>
-      </div>
+        <swiper-slide>
+          <img
+            class="h-full w-full object-contain"
+            src="/assets/beranda/banner-1.jpg"
+            alt=""
+          />
+        </swiper-slide>
+        <swiper-slide>
+          <img
+            class="h-full w-full object-contain"
+            src="/assets/beranda/banner-2.jpg"
+            alt="" /></swiper-slide
+        ><swiper-slide>
+          <img
+            class="h-full w-full object-contain"
+            src="/assets/beranda/banner-3.jpg"
+            alt=""
+        /></swiper-slide>
+        <swiper-slide>
+          <img
+            class="h-full w-full object-contain"
+            src="/assets/beranda/banner-4.jpg"
+            alt="" /></swiper-slide
+        ><swiper-slide>
+          <img
+            class="h-full w-full object-contain"
+            src="/assets/beranda/banner-5.jpg"
+            alt=""
+        /></swiper-slide>
+      </swiper>
     </section>
 
     <!-- Details -->
     <section
       class="c-container flex flex-col items-center justify-center gap-8 pb-8 lg:pb-12 xl:pb-16"
     >
-      <div class="flex items-center justify-center gap-4">
+      <div class="flex flex-wrap items-center justify-center gap-4">
         <button class="btn-primary" onclick="openFormDana()">
           Donasi Dana
         </button>
@@ -527,6 +522,15 @@
 
 <script setup>
 import PesanCard from "@/components/cards/PesanCard.vue";
+
+import "@/assets/swiper.css";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Pagination, Navigation } from "swiper/modules";
+
+const modules = [Pagination, Navigation];
 </script>
 
 <style></style>
