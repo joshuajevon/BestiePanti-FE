@@ -68,6 +68,7 @@
 
           <div class="relative mt-1 w-full">
             <input
+              ref="password"
               type="password"
               autocomplete="false"
               id="password"
@@ -77,6 +78,7 @@
             />
 
             <svg
+              v-show="!showPassword"
               id="eye-slash"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -84,7 +86,7 @@
               stroke-width="1.5"
               stroke="currentColor"
               class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-              onclick="togglePassword()"
+              @click="togglePassword"
             >
               <path
                 stroke-linecap="round"
@@ -94,14 +96,15 @@
             </svg>
 
             <svg
+              v-show="showPassword"
               id="eye"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="absolute inset-y-0 right-4 my-auto hidden h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-              onclick="togglePassword()"
+              class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
+              @click="togglePassword"
             >
               <path
                 stroke-linecap="round"
@@ -145,6 +148,18 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const password = ref(null);
+const showPassword = ref(false);
+
+function togglePassword() {
+  showPassword.value = !showPassword.value;
+  if (password.value) {
+    password.value.type = showPassword.value ? "text" : "password";
+  }
+}
+</script>
 
 <style></style>
