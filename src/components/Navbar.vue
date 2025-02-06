@@ -41,22 +41,34 @@
         <div class="hidden lg:flex">
           <ul class="flex w-full items-center justify-center gap-6">
             <li>
-              <router-link class="nav-link-web" :to="{ name: 'beranda' }"
+              <router-link
+                class="nav-link-web"
+                :class="{ 'text-primary-300': isActiveRoute('beranda') }"
+                :to="{ name: 'beranda' }"
                 >BERANDA</router-link
               >
             </li>
             <li>
-              <router-link class="nav-link-web" :to="{ name: 'panti' }"
+              <router-link
+                class="nav-link-web"
+                :class="{ 'text-primary-300': isActiveRoute('panti') }"
+                :to="{ name: 'panti' }"
                 >PANTI</router-link
               >
             </li>
             <li>
-              <router-link class="nav-link-web" :to="{ name: 'tentangKami' }"
+              <router-link
+                class="nav-link-web"
+                :class="{ 'text-primary-300': isActiveRoute('tentangKami') }"
+                :to="{ name: 'tentangKami' }"
                 >TENTANG KAMI</router-link
               >
             </li>
             <li>
-              <router-link class="nav-link-web" :to="{ name: 'caraBerdonasi' }"
+              <router-link
+                class="nav-link-web"
+                :class="{ 'text-primary-300': isActiveRoute('caraBerdonasi') }"
+                :to="{ name: 'caraBerdonasi' }"
                 >CARA BERDONASI</router-link
               >
             </li>
@@ -184,25 +196,37 @@
 
       <div class="w-52 bg-white h-screen flex flex-col pt-20 c-container z-10">
         <div class="border-b border-secondary-100 py-4">
-          <router-link class="nav-link-mobile" :to="{ name: 'beranda' }"
+          <router-link
+            class="nav-link-mobile"
+            :class="{ 'text-primary-300': isActiveRoute('beranda') }"
+            :to="{ name: 'beranda' }"
             >BERANDA</router-link
           >
         </div>
 
         <div class="border-b border-secondary-100 py-4">
-          <router-link class="nav-link-mobile" :to="{ name: 'panti' }"
+          <router-link
+            class="nav-link-mobile"
+            :class="{ 'text-primary-300': isActiveRoute('panti') }"
+            :to="{ name: 'panti' }"
             >PANTI</router-link
           >
         </div>
 
         <div class="border-b border-secondary-100 py-4">
-          <router-link class="nav-link-mobile" :to="{ name: 'tentangKami' }"
+          <router-link
+            class="nav-link-mobile"
+            :class="{ 'text-primary-300': isActiveRoute('tentangKami') }"
+            :to="{ name: 'tentangKami' }"
             >TENTANG KAMI</router-link
           >
         </div>
 
         <div class="border-b border-secondary-100 py-4">
-          <router-link class="nav-link-mobile" :to="{ name: 'caraBerdonasi' }"
+          <router-link
+            class="nav-link-mobile"
+            :class="{ 'text-primary-300': isActiveRoute('caraBerdonasi') }"
+            :to="{ name: 'caraBerdonasi' }"
             >CARA BERDONASI</router-link
           >
         </div>
@@ -213,7 +237,9 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 const isNavbarOpen = ref(false);
 const isProfileWebOpen = ref(false);
 
@@ -227,6 +253,10 @@ function closeNavbar() {
 
 function toggleProfileWeb() {
   isProfileWebOpen.value = !isProfileWebOpen.value;
+}
+
+function isActiveRoute(routeName) {
+  return route.name === routeName;
 }
 </script>
 
