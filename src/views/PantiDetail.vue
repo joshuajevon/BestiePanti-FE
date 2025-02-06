@@ -2,8 +2,8 @@
   <section class="bg-primary-50 text-secondary-500">
     <!-- Form Dana -->
     <section
-      id="form-dana"
-      class="c-container fixed z-[100] hidden h-screen w-screen bg-black/80"
+      v-show="isFormDanaOpen"
+      class="c-container fixed z-[100] h-screen w-screen bg-black/80"
     >
       <form
         action=""
@@ -51,76 +51,10 @@
               />
               <p id="email-error-message" class="error-message"></p>
             </div>
-
-            <!-- Password -->
-            <div class="input-container">
-              <label
-                for="password"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Kata Sandi
-              </label>
-
-              <div class="relative mt-1 w-full">
-                <input
-                  type="password"
-                  autocomplete="false"
-                  id="password"
-                  name="password"
-                  placeholder="Masukkan kata sandi"
-                  class="w-full rounded-md border border-secondary-500 bg-white p-4 pr-12 text-sm autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] sm:text-base lg:pr-14"
-                />
-
-                <svg
-                  id="eye-slash"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                  onclick="togglePassword()"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
-                  />
-                </svg>
-
-                <svg
-                  id="eye"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="absolute inset-y-0 right-4 my-auto hidden h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                  onclick="togglePassword()"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-              </div>
-
-              <p id="password-error-message" class="error-message"></p>
-            </div>
           </div>
 
           <div class="flex items-center justify-center gap-4">
-            <button
-              class="btn-secondary"
-              type="button"
-              onclick="closeFormDana()"
-            >
+            <button class="btn-secondary" type="button" @click="closeFormDana">
               Tutup
             </button>
             <button class="btn-primary" type="submit">Kirim</button>
@@ -131,8 +65,8 @@
 
     <!-- Form Non Dana -->
     <section
-      id="form-non-dana"
-      class="c-container fixed z-[100] hidden h-screen w-screen bg-black/80"
+      v-show="isFormNonDanaOpen"
+      class="c-container fixed z-[100] h-screen w-screen bg-black/80"
     >
       <form
         action=""
@@ -180,75 +114,13 @@
               />
               <p id="email-error-message" class="error-message"></p>
             </div>
-
-            <!-- Password -->
-            <div class="input-container">
-              <label
-                for="password"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Kata Sandi
-              </label>
-
-              <div class="relative mt-1 w-full">
-                <input
-                  type="password"
-                  autocomplete="false"
-                  id="password"
-                  name="password"
-                  placeholder="Masukkan kata sandi"
-                  class="w-full rounded-md border border-secondary-500 bg-white p-4 pr-12 text-sm autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] sm:text-base lg:pr-14"
-                />
-
-                <svg
-                  id="eye-slash"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                  onclick="togglePassword()"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
-                  />
-                </svg>
-
-                <svg
-                  id="eye"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="absolute inset-y-0 right-4 my-auto hidden h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                  onclick="togglePassword()"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-              </div>
-
-              <p id="password-error-message" class="error-message"></p>
-            </div>
           </div>
 
           <div class="flex items-center justify-center gap-4">
             <button
               class="btn-secondary"
               type="button"
-              onclick="closeFormNonDana()"
+              @click="closeFormNonDana"
             >
               Tutup
             </button>
@@ -260,8 +132,8 @@
 
     <!-- Form Pesan -->
     <section
-      id="form-pesan"
-      class="c-container fixed z-[100] hidden h-screen w-screen bg-black/80"
+      v-show="isFormPesanOpen"
+      class="c-container fixed z-[100] h-screen w-screen bg-black/80"
     >
       <form
         action=""
@@ -309,76 +181,10 @@
               />
               <p id="email-error-message" class="error-message"></p>
             </div>
-
-            <!-- Password -->
-            <div class="input-container">
-              <label
-                for="password"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Kata Sandi
-              </label>
-
-              <div class="relative mt-1 w-full">
-                <input
-                  type="password"
-                  autocomplete="false"
-                  id="password"
-                  name="password"
-                  placeholder="Masukkan kata sandi"
-                  class="w-full rounded-md border border-secondary-500 bg-white p-4 pr-12 text-sm autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] sm:text-base lg:pr-14"
-                />
-
-                <svg
-                  id="eye-slash"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                  onclick="togglePassword()"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
-                  />
-                </svg>
-
-                <svg
-                  id="eye"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="absolute inset-y-0 right-4 my-auto hidden h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                  onclick="togglePassword()"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-              </div>
-
-              <p id="password-error-message" class="error-message"></p>
-            </div>
           </div>
 
           <div class="flex items-center justify-center gap-4">
-            <button
-              class="btn-secondary"
-              type="button"
-              onclick="closeFormPesan()"
-            >
+            <button class="btn-secondary" type="button" @click="closeFormPesan">
               Tutup
             </button>
             <button class="btn-primary" type="submit">Kirim</button>
@@ -449,15 +255,11 @@
       class="c-container flex flex-col items-center justify-center gap-8 pb-8 lg:pb-12 xl:pb-16"
     >
       <div class="flex flex-wrap items-center justify-center gap-4">
-        <button class="btn-primary" onclick="openFormDana()">
-          Donasi Dana
-        </button>
-        <button class="btn-primary" onclick="openFormNonDana()">
+        <button class="btn-primary" @click="openFormDana">Donasi Dana</button>
+        <button class="btn-primary" @click="openFormNonDana">
           Donasi Non Dana
         </button>
-        <button class="btn-primary" onclick="openFormPesan()">
-          Kirim Pesan
-        </button>
+        <button class="btn-primary" @click="openFormPesan">Kirim Pesan</button>
       </div>
 
       <div class="w-full">
@@ -511,7 +313,7 @@
 
       <button
         class="btn-primary pointer-events-none opacity-50"
-        onclick="loadMorePesan()"
+        @click="loadMorePesan"
         disabled
       >
         Lihat Lebih Banyak
@@ -521,6 +323,7 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import PesanCard from "@/components/cards/PesanCard.vue";
 
 import "@/assets/swiper.css";
@@ -531,6 +334,36 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 
 const modules = [Pagination, Navigation];
+
+const isFormDanaOpen = ref(false);
+const isFormNonDanaOpen = ref(false);
+const isFormPesanOpen = ref(false);
+
+function openFormDana() {
+  isFormDanaOpen.value = true;
+}
+
+function openFormNonDana() {
+  isFormNonDanaOpen.value = true;
+}
+
+function openFormPesan() {
+  isFormPesanOpen.value = true;
+}
+
+function closeFormDana() {
+  isFormDanaOpen.value = false;
+}
+
+function closeFormNonDana() {
+  isFormNonDanaOpen.value = false;
+}
+
+function closeFormPesan() {
+  isFormPesanOpen.value = false;
+}
+
+function loadMorePesan() {}
 </script>
 
 <style></style>

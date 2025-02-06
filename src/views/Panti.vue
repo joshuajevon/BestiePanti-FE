@@ -25,7 +25,7 @@
 
       <button
         class="btn-primary pointer-events-none opacity-50"
-        onclick="loadMorePanti()"
+        @click="loadMorePanti"
         disabled
       >
         Lihat Lebih Banyak
@@ -36,6 +36,8 @@
 
 <script setup>
 import PantiCard from "@/components/cards/PantiCard.vue";
+
+function loadMorePanti() {}
 </script>
 
 <style></style>
