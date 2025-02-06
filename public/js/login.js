@@ -16,7 +16,7 @@ function SubmitForm(e) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(data),
   })
@@ -34,7 +34,7 @@ function SubmitForm(e) {
       console.log("Success:", data);
       // alert("Login successful!");
       localStorage.setItem("jwtToken", data.token);
-      console.log(data.token)
+      console.log(data.token);
       // window.location.href = "/";
     })
     .catch((error) => {

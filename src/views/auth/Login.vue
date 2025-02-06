@@ -15,10 +15,9 @@
       </div>
 
       <form
-        action="/login"
         method="post"
         class="flex flex-col items-start justify-center gap-6 rounded-md bg-white px-6 py-12 shadow-[0px_4.7451px_41.5196px_rgba(41,82,144,0.25)] sm:rounded-lg sm:px-8 sm:py-16 md:rounded-xl md:px-10 md:py-20 lg:rounded-2xl lg:px-12 lg:py-24 xl:rounded-3xl xl:px-14 xl:py-28 2xl:px-16 2xl:py-32"
-        onsubmit="SubmitForm(event)"
+        @submit.prevent="submitForm"
       >
         <div class="w-full border-b-2 border-b-primary-300 px-4 pb-5">
           <h1
@@ -51,10 +50,13 @@
             autocomplete="false"
             id="email"
             name="email"
+            v-model="form.email"
             placeholder="Masukkan alamat email"
             class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
           />
-          <p id="email-error-message" class="error-message"></p>
+          <p id="email-error-message" class="error-message">
+            {{ errorMessages.email }}
+          </p>
         </div>
 
         <!-- Password -->
@@ -73,6 +75,7 @@
               autocomplete="false"
               id="password"
               name="password"
+              v-model="form.password"
               placeholder="Masukkan kata sandi"
               class="w-full rounded-md border border-secondary-500 bg-white p-4 pr-12 text-sm autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] sm:text-base lg:pr-14"
             />
@@ -119,15 +122,19 @@
             </svg>
           </div>
 
-          <p id="password-error-message" class="error-message"></p>
+          <p id="password-error-message" class="error-message">
+            {{ errorMessages.password }}
+          </p>
         </div>
 
         <div class="w-full px-4">
-          <p id="login-error-message" class="error-message"></p>
+          <p id="login-error-message" class="error-message">
+            {{ errorMessages.error_message }}
+          </p>
         </div>
 
         <div class="px-2 lg:px-4">
-          <button type="submit" class="btn-primary">Masuk</button>
+          <button id="submit" type="submit" class="btn-primary">Masuk</button>
         </div>
 
         <div
@@ -149,7 +156,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
 const password = ref(null);
 const showPassword = ref(false);
@@ -160,6 +167,65 @@ function togglePassword() {
     password.value.type = showPassword.value ? "text" : "password";
   }
 }
+
+const form = reactive({
+  email: "",
+  password: "",
+});
+
+const errorMessages = reactive({
+  email: "",
+  password: "",
+  error_message: "",
+});
+
+const errors = ref({});
+const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/login`;
+
+const submitForm = async () => {
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+      mode: "cors", // Ensure CORS mode is enabled
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      errors.value = errorData;
+
+      // Clear form
+      Object.keys(form).forEach((key) => {
+        form[key] = "";
+      });
+
+      // Clear errorMessages
+      Object.keys(errorMessages).forEach((key) => {
+        errorMessages[key] = "";
+      });
+
+      // Store API error messages into errorMessages
+      Object.entries(errorData).forEach(([field, message]) => {
+        errorMessages[field] = message;
+      });
+
+      console.log(errorMessages);
+
+      throw new Error("Validation failed");
+    }
+
+    const data = await response.json();
+    console.log("Success:", data);
+    alert("Login successful!");
+    // this.$router.push("/login"); // Uncomment if using Vue Router
+  } catch (error) {
+    console.error("Error:", error);
+    if (error.message !== "Validation failed") {
+      alert("Login failed: " + error.message);
+    }
+  }
+};
 </script>
 
 <style></style>
