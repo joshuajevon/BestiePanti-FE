@@ -15,10 +15,9 @@
       </div>
 
       <form
-        action="/register"
-        method="post"
+        method="POST"
         class="flex flex-col items-start justify-center gap-6 rounded-md bg-white px-6 py-12 shadow-[0px_4.7451px_41.5196px_rgba(41,82,144,0.25)] sm:rounded-lg sm:px-8 sm:py-16 md:rounded-xl md:px-10 md:py-20 lg:rounded-2xl lg:px-12 lg:py-24 xl:rounded-3xl xl:px-14 xl:py-28 2xl:px-16 2xl:py-32"
-        onsubmit="SubmitForm(event)"
+        @submit.prevent="submitForm"
       >
         <div
           class="flex w-full flex-col items-center justify-center gap-4 border-b-2 border-b-secondary-500 px-4 pb-5 sm:gap-6 lg:gap-8"
@@ -35,6 +34,7 @@
             <span class="font-bold">harus atas nama perorangan</span>.
           </p>
         </div>
+
         <div
           class="input-container mt-2 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-x-16 lg:gap-y-8"
         >
@@ -55,11 +55,14 @@
               autocomplete="false"
               id="name"
               name="name"
+              v-model="form.name"
               placeholder="Masukkan nama lengkap"
               class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
-            <p id="name-error-message" class="error-message"></p>
+            <p id="name-error-message" class="error-message">
+              {{ errorMessages.name }}
+            </p>
           </div>
 
           <!-- Jenis Kelamin -->
@@ -84,7 +87,7 @@
                   id="laki-laki"
                   name="gender"
                   value="L"
-                  checked="checked"
+                  v-model="form.gender"
                 />
                 <label for="laki-laki">Laki-laki</label>
               </div>
@@ -93,15 +96,18 @@
                 <input
                   class="text-seconarborder-b-secondary-500 cursor-pointer appearance-none rounded-full focus:ring-0 focus:ring-offset-0"
                   type="radio"
-                  id="P"
+                  id="perempuan"
                   name="gender"
-                  value="Perempuan"
+                  value="P"
+                  v-model="form.gender"
                 />
                 <label for="perempuan">Perempuan</label>
               </div>
             </div>
 
-            <p id="gender-error-message" class="error-message"></p>
+            <p id="gender-error-message" class="error-message">
+              {{ errorMessages.gender }}
+            </p>
           </div>
 
           <!-- Tanggal Lahir -->
@@ -121,11 +127,14 @@
               autocomplete="false"
               id="dob"
               name="dob"
+              v-model="form.dob"
               placeholder="Masukkan tanggal lahir"
               class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
-            <p id="dob-error-message" class="error-message"></p>
+            <p id="dob-error-message" class="error-message">
+              {{ errorMessages.dob }}
+            </p>
           </div>
 
           <!-- Nomor Whatsapp -->
@@ -145,11 +154,14 @@
               autocomplete="false"
               id="phone"
               name="phone"
+              v-model="form.phone"
               placeholder="Masukkan nomor Whatsapp"
               class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
-            <p id="phone-error-message" class="error-message"></p>
+            <p id="phone-error-message" class="error-message">
+              {{ errorMessages.phone }}
+            </p>
           </div>
 
           <!-- Alamat -->
@@ -169,11 +181,14 @@
               autocomplete="false"
               id="address"
               name="address"
+              v-model="form.address"
               placeholder="Masukkan alamat"
               class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
-            <p id="address-error-message" class="error-message"></p>
+            <p id="address-error-message" class="error-message">
+              {{ errorMessages.address }}
+            </p>
           </div>
 
           <!-- Email -->
@@ -193,11 +208,14 @@
               autocomplete="false"
               id="email"
               name="email"
+              v-model="form.email"
               placeholder="Masukkan email"
               class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
-            <p id="email-error-message" class="error-message"></p>
+            <p id="email-error-message" class="error-message">
+              {{ errorMessages.email }}
+            </p>
           </div>
 
           <!-- Kata Sandi -->
@@ -219,6 +237,7 @@
                 autocomplete="false"
                 id="password"
                 name="password"
+                v-model="form.password"
                 placeholder="Masukkan kata sandi"
                 class="w-full rounded-md border border-secondary-500 bg-white p-4 pr-12 text-sm autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] sm:text-base lg:pr-14"
               />
@@ -265,7 +284,9 @@
               </svg>
             </div>
 
-            <p id="password-error-message" class="error-message"></p>
+            <p id="password-error-message" class="error-message">
+              {{ errorMessages.password }}
+            </p>
           </div>
 
           <!-- Konfirmasi Kata Sandi -->
@@ -285,8 +306,9 @@
                 ref="confirmPassword"
                 type="password"
                 autocomplete="false"
-                id="confirm-password"
-                name="konfirmasi-kata-sandi"
+                id="confirmation_password"
+                name="confirmation_password"
+                v-model="form.confirmation_password"
                 placeholder="Masukkan kata sandi"
                 class="w-full rounded-md border border-secondary-500 bg-white p-4 pr-12 text-sm autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] sm:text-base lg:pr-14"
               />
@@ -333,10 +355,9 @@
               </svg>
             </div>
 
-            <p
-              id="confirmation_password-error-message"
-              class="error-message"
-            ></p>
+            <p id="confirmation_password-error-message" class="error-message">
+              {{ errorMessages.confirmation_password }}
+            </p>
           </div>
         </div>
 
@@ -370,7 +391,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
 const password = ref(null);
 const showPassword = ref(false);
@@ -393,6 +414,71 @@ function toggleConfirmPassword() {
       : "password";
   }
 }
+
+const form = reactive({
+  name: "",
+  email: "",
+  password: "",
+  confirmation_password: "",
+  phone: "",
+  dob: "",
+  address: "",
+  gender: "",
+});
+
+const errorMessages = reactive({
+  name: "",
+  email: "",
+  password: "",
+  confirmation_password: "",
+  phone: "",
+  dob: "",
+  address: "",
+  gender: "",
+});
+
+const errors = ref({});
+const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/register`;
+
+const submitForm = async () => {
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+      mode: "cors", // Ensure CORS mode is enabled
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      errors.value = errorData;
+
+      // Clear errorMessages
+      Object.keys(errorMessages).forEach((key) => {
+        errorMessages[key] = "";
+      });
+
+      // Store API error messages into errorMessages
+      Object.entries(errorData).forEach(([field, message]) => {
+        errorMessages[field] = message;
+      });
+
+      console.log(errorMessages);
+
+      throw new Error("Validation failed");
+    }
+
+    const data = await response.json();
+    console.log("Success:", data);
+    alert("Registration successful!");
+    // this.$router.push("/login"); // Uncomment if using Vue Router
+  } catch (error) {
+    console.error("Error:", error);
+    if (error.message !== "Validation failed") {
+      alert("Registration failed: " + error.message);
+    }
+  }
+};
 </script>
 
 <style></style>
