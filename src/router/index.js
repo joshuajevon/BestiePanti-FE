@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useAuthStore } from "@/stores/authStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,14 +28,16 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: () => import("../views/auth/Login.vue"),
+      meta: { requiresGuest: true },
     },
     {
       path: "/register",
       name: "register",
       component: () => import("../views/auth/Register.vue"),
+      meta: { requiresGuest: true },
     },
     {
-      path: "/panti-detail",
+      path: "/panti-detail/:id",
       name: "pantiDetail",
       component: () => import("../views/PantiDetail.vue"),
     },
@@ -42,8 +45,21 @@ const router = createRouter({
       path: "/dashboard",
       name: "dashboard",
       component: () => import("../views/Beranda.vue"),
+      meta: { requiresAuth: true },
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+
+  if (to.meta.requiresAuth && !authStore.isAuthenticated()) {
+    next("/login");
+  } else if (to.meta.requiresGuest && authStore.isAuthenticated()) {
+    next("/");
+  } else {
+    next();
+  }
 });
 
 export default router;

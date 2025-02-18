@@ -26,8 +26,10 @@
           <img
             class="h-full w-full object-cover"
             src="/assets/beranda/banner-2.jpg"
-            alt="" /></swiper-slide
-        ><swiper-slide>
+            alt=""
+          />
+        </swiper-slide>
+        <swiper-slide>
           <img
             class="h-full w-full object-cover"
             src="/assets/beranda/banner-3.jpg"
@@ -37,8 +39,10 @@
           <img
             class="h-full w-full object-cover"
             src="/assets/beranda/banner-4.jpg"
-            alt="" /></swiper-slide
-        ><swiper-slide>
+            alt=""
+          />
+        </swiper-slide>
+        <swiper-slide>
           <img
             class="h-full w-full object-cover"
             src="/assets/beranda/banner-5.jpg"
@@ -61,7 +65,14 @@
       </div>
 
       <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <PantiCard />
+        <PantiCard
+          v-for="panti in pantiList.slice(0, 4) || []"
+          :key="panti.id"
+          :id="panti.id"
+          :name="panti.name"
+          :address="panti.address"
+          :donationTypes="panti.donation_types"
+        />
       </div>
 
       <router-link :to="{ name: 'panti' }">
@@ -96,13 +107,17 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-4 lg:gap-6">
-            <router-link :to="{ name: 'caraBerdonasi' }">
-              <button class="btn-primary">Baca Selengkapnya</button>
-            </router-link>
+            <div>
+              <router-link :to="{ name: 'caraBerdonasi' }">
+                <button class="btn-primary">Baca Selengkapnya</button>
+              </router-link>
+            </div>
 
-            <router-link :to="{ name: 'register' }">
-              <button class="btn-secondary">Daftar Sekarang</button>
-            </router-link>
+            <div v-if="!authStore.isAuthenticated()">
+              <router-link :to="{ name: 'register' }">
+                <button class="btn-secondary">Daftar Sekarang</button>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -141,7 +156,10 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
+import { fetchAllPanti } from "@/services/api";
 import PantiCard from "@/components/cards/PantiCard.vue";
+import { useAuthStore } from "@/stores/authStore";
 
 import "@/assets/swiper.css";
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -151,6 +169,17 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 const modules = [Autoplay, Pagination, Navigation];
+const authStore = useAuthStore();
+const pantiList = ref([]);
+
+onMounted(async () => {
+  try {
+    const data = await fetchAllPanti();
+    pantiList.value = data.panti_responses;
+  } catch (error) {
+    console.log(error);
+  }
+});
 </script>
 
 <style></style>

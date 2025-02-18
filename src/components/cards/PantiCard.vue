@@ -1,5 +1,5 @@
 <template>
-  <router-link class="w-fit" :to="{ name: 'pantiDetail' }">
+  <router-link class="w-fit" :to="{ name: 'pantiDetail', params: { id: id } }">
     <div
       class="flex flex-col items-center justify-center gap-4 rounded-2xl bg-white p-6 transition hover:bg-primary-300 group"
     >
@@ -13,21 +13,42 @@
         <h2
           class="group-hover:text-white line-clamp-1 text-center text-2xl font-bold"
         >
-          Nama Panti asd asd ad as dasd
+          {{ name }}
         </h2>
         <p class="group-hover:text-white line-clamp-2">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit
-          consequatur reprehenderit soluta, inventore excepturi at nihil
-          obcaecati repellat est? Nemo vero voluptatibus quisquam velit
-          perferendis nam vel quas maxime aspernatur?
+          {{ address }}
+        </p>
+
+        <p class="group-hover:text-white line-clamp-2">
+          {{ donationTypes }}
         </p>
       </div>
     </div>
   </router-link>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { defineProps } from "vue";
+
+// Define props for the component
+const props = defineProps({
+  id: {
+    type: Number,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  donationTypes: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
 
 <style></style>

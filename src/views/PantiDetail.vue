@@ -201,9 +201,11 @@
         class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6"
       >
         <h1 class="text-3xl font-bold lg:text-4xl xl:text-5xl">
-          Nama Panti Asuhan
+          {{ panti?.name || "" }}
         </h1>
-        <p class="text-lg lg:text-xl xl:text-2xl">Alamat Panti Asuhan</p>
+        <p class="text-lg lg:text-xl xl:text-2xl">
+          {{ panti?.address || "" }}
+        </p>
       </div>
     </section>
 
@@ -266,30 +268,7 @@
         <p
           class="text-justify text-lg text-secondary-500 lg:text-xl xl:text-2xl"
         >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis
-          laudantium asperiores architecto corporis itaque saepe pariatur
-          reiciendis cum, nisi ipsa earum exercitationem veritatis sapiente
-          ipsum voluptate reprehenderit animi ratione, tenetur tempore
-          repudiandae quo libero dicta beatae cumque. Quisquam repudiandae
-          laborum earum non voluptatum officia fugit dolore, hic totam maxime
-          est dolorum fugiat laboriosam repellat veritatis, doloremque
-          voluptatibus eaque, sunt iste culpa magnam pariatur quia illo sequi?
-          Quia labore laborum dignissimos mollitia id unde voluptate velit,
-          soluta cum dolores consequuntur minus quaerat eum nobis dolorem quae
-          culpa iste explicabo debitis dolore distinctio. Iste nam dolorum
-          provident quidem debitis fuga perferendis reprehenderit delectus
-          excepturi. Quam praesentium voluptatum atque facere quas similique
-          ratione reprehenderit autem distinctio nisi corrupti odio sapiente
-          illum earum in, sed possimus harum. Vitae, enim quos placeat
-          blanditiis numquam id atque. Dolorem architecto cum, quae veniam
-          perspiciatis dolores expedita alias laboriosam vero similique suscipit
-          autem dolore aperiam temporibus quisquam facere, quidem sunt ea omnis
-          quasi repellat, repudiandae harum deleniti? Totam nemo facilis
-          doloribus et doloremque numquam, eveniet molestiae! Sunt officia
-          nihil, alias minima sed dicta tempore quibusdam, sit, dignissimos
-          similique reprehenderit in id minus quam? Amet, quod, iste, pariatur
-          voluptates possimus architecto vero eos nostrum eligendi ipsam magnam
-          sapiente. Accusantium.
+          {{ panti?.description }}
         </p>
       </div>
     </section>
@@ -323,8 +302,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import PesanCard from "@/components/cards/PesanCard.vue";
+import { fetchPantiById } from "@/services/api";
 
 import "@/assets/swiper.css";
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -334,6 +315,10 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 
 const modules = [Pagination, Navigation];
+
+const route = useRoute();
+const pantiId = route.params.id;
+const panti = ref(null);
 
 const isFormDanaOpen = ref(false);
 const isFormNonDanaOpen = ref(false);
@@ -364,6 +349,15 @@ function closeFormPesan() {
 }
 
 function loadMorePesan() {}
+
+onMounted(async () => {
+  try {
+    const data = await fetchPantiById(pantiId);
+    panti.value = data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 </script>
 
 <style></style>

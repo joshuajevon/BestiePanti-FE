@@ -14,13 +14,14 @@
       </div>
 
       <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <PantiCard />
-        <PantiCard />
-        <PantiCard />
-        <PantiCard />
-        <PantiCard />
-        <PantiCard />
-        <PantiCard />
+        <PantiCard
+          v-for="panti in pantiList || []"
+          :key="panti.id"
+          :id="panti.id"
+          :name="panti.name"
+          :address="panti.address"
+          :donationTypes="panti.donation_types"
+        />
       </div>
 
       <button
@@ -35,9 +36,22 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
+import { fetchAllPanti } from "@/services/api";
 import PantiCard from "@/components/cards/PantiCard.vue";
 
 function loadMorePanti() {}
+
+const pantiList = ref([]);
+
+onMounted(async () => {
+  try {
+    const data = await fetchAllPanti();
+    pantiList.value = data.panti_responses;
+  } catch (error) {
+    console.log(error);
+  }
+});
 </script>
 
 <style></style>
