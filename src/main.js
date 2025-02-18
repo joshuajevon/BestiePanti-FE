@@ -16,7 +16,6 @@ const authStore = useAuthStore(); // Then use your store
 
 if (authStore.token) {
   authStore.fetchUser();
-  console.log(authStore.user);
 }
 
 app.mount("#app");

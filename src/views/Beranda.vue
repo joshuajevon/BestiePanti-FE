@@ -64,7 +64,10 @@
         </p>
       </div>
 
-      <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div
+        v-if="pantiList"
+        class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
+      >
         <PantiCard
           v-for="panti in pantiList.slice(0, 4) || []"
           :key="panti.id"

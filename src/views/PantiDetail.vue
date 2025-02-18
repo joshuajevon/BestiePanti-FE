@@ -200,11 +200,11 @@
       <div
         class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6"
       >
-        <h1 class="text-3xl font-bold lg:text-4xl xl:text-5xl">
-          {{ panti?.name || "" }}
+        <h1 v-if="panti" class="text-3xl font-bold lg:text-4xl xl:text-5xl">
+          {{ panti.name || "" }}
         </h1>
-        <p class="text-lg lg:text-xl xl:text-2xl">
-          {{ panti?.address || "" }}
+        <p v-if="panti" class="text-lg lg:text-xl xl:text-2xl">
+          {{ panti.address || "" }}
         </p>
       </div>
     </section>
@@ -266,9 +266,10 @@
 
       <div class="w-full">
         <p
+          v-if="panti"
           class="text-justify text-lg text-secondary-500 lg:text-xl xl:text-2xl"
         >
-          {{ panti?.description }}
+          {{ panti.description }}
         </p>
       </div>
     </section>

@@ -91,7 +91,10 @@
         </div>
 
         <!-- Profile Dropdown -->
-        <div v-if="authStore.isAuthenticated()" class="relative text-white">
+        <div
+          v-if="authStore.isAuthenticated() && authStore.user"
+          class="relative text-white"
+        >
           <div
             class="flex cursor-pointer items-center gap-2 hover:text-white/75"
             @click="toggleProfileWeb"
@@ -112,7 +115,7 @@
             </svg>
 
             <span class="max-w-[100px] truncate py-2 text-base font-medium">
-              {{ authStore.user?.name }}
+              {{ authStore.user.name }}
             </span>
 
             <span
