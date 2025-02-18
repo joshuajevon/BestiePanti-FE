@@ -60,8 +60,12 @@
               class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
-            <p id="name-error-message" class="error-message">
-              {{ errorMessages.name }}
+            <p
+              id="name-error-message"
+              class="error-message"
+              v-if="authStore.errorMessages.name"
+            >
+              {{ authStore.errorMessages.name }}
             </p>
           </div>
 
@@ -105,8 +109,12 @@
               </div>
             </div>
 
-            <p id="gender-error-message" class="error-message">
-              {{ errorMessages.gender }}
+            <p
+              id="gender-error-message"
+              class="error-message"
+              v-if="authStore.errorMessages.gender"
+            >
+              {{ authStore.errorMessages.gender }}
             </p>
           </div>
 
@@ -132,8 +140,12 @@
               class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
-            <p id="dob-error-message" class="error-message">
-              {{ errorMessages.dob }}
+            <p
+              id="dob-error-message"
+              class="error-message"
+              v-if="authStore.errorMessages.dob"
+            >
+              {{ authStore.errorMessages.dob }}
             </p>
           </div>
 
@@ -159,8 +171,12 @@
               class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
-            <p id="phone-error-message" class="error-message">
-              {{ errorMessages.phone }}
+            <p
+              id="phone-error-message"
+              class="error-message"
+              v-if="authStore.errorMessages.phone"
+            >
+              {{ authStore.errorMessages.phone }}
             </p>
           </div>
 
@@ -186,8 +202,12 @@
               class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
-            <p id="address-error-message" class="error-message">
-              {{ errorMessages.address }}
+            <p
+              id="address-error-message"
+              class="error-message"
+              v-if="authStore.errorMessages.address"
+            >
+              {{ authStore.errorMessages.address }}
             </p>
           </div>
 
@@ -213,8 +233,12 @@
               class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
-            <p id="email-error-message" class="error-message">
-              {{ errorMessages.email }}
+            <p
+              id="email-error-message"
+              class="error-message"
+              v-if="authStore.errorMessages.email"
+            >
+              {{ authStore.errorMessages.email }}
             </p>
           </div>
 
@@ -233,7 +257,7 @@
             <div class="relative mt-1 w-full">
               <input
                 ref="password"
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 autocomplete="false"
                 id="password"
                 name="password"
@@ -284,8 +308,12 @@
               </svg>
             </div>
 
-            <p id="password-error-message" class="error-message">
-              {{ errorMessages.password }}
+            <p
+              id="password-error-message"
+              class="error-message"
+              v-if="authStore.errorMessages.password"
+            >
+              {{ authStore.errorMessages.password }}
             </p>
           </div>
 
@@ -304,7 +332,7 @@
             <div class="relative mt-1 w-full">
               <input
                 ref="confirmPassword"
-                type="password"
+                :type="showConfirmPassword ? 'text' : 'password'"
                 autocomplete="false"
                 id="confirmation_password"
                 name="confirmation_password"
@@ -355,8 +383,12 @@
               </svg>
             </div>
 
-            <p id="confirmation_password-error-message" class="error-message">
-              {{ errorMessages.confirmation_password }}
+            <p
+              id="confirmation-password-error-message"
+              class="error-message"
+              v-if="authStore.errorMessages.confirmationPassword"
+            >
+              {{ authStore.errorMessages.confirmationPassword }}
             </p>
           </div>
         </div>
@@ -392,15 +424,17 @@
 
 <script setup>
 import { reactive, ref } from "vue";
+import { useAuthStore } from "@/stores/authStore";
+import { useRouter } from "vue-router";
+
+const authStore = useAuthStore();
+const router = useRouter();
 
 const password = ref(null);
 const showPassword = ref(false);
 
 function togglePassword() {
   showPassword.value = !showPassword.value;
-  if (password.value) {
-    password.value.type = showPassword.value ? "text" : "password";
-  }
 }
 
 const confirmPassword = ref(null);
@@ -408,11 +442,6 @@ const showConfirmPassword = ref(false);
 
 function toggleConfirmPassword() {
   showConfirmPassword.value = !showConfirmPassword.value;
-  if (confirmPassword.value) {
-    confirmPassword.value.type = showConfirmPassword.value
-      ? "text"
-      : "password";
-  }
 }
 
 const form = reactive({
@@ -426,57 +455,11 @@ const form = reactive({
   gender: "",
 });
 
-const errorMessages = reactive({
-  name: "",
-  email: "",
-  password: "",
-  confirmation_password: "",
-  phone: "",
-  dob: "",
-  address: "",
-  gender: "",
-});
-
-const errors = ref({});
-const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/register`;
-
 const submitForm = async () => {
-  try {
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-      mode: "cors", // Ensure CORS mode is enabled
-    });
+  const success = await authStore.register(form);
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      errors.value = errorData;
-
-      // Clear errorMessages
-      Object.keys(errorMessages).forEach((key) => {
-        errorMessages[key] = "";
-      });
-
-      // Store API error messages into errorMessages
-      Object.entries(errorData).forEach(([field, message]) => {
-        errorMessages[field] = message;
-      });
-
-      console.log(errorMessages);
-
-      throw new Error("Validation failed");
-    }
-
-    const data = await response.json();
-    console.log("Success:", data);
-    alert("Registration successful!");
-    // this.$router.push("/login"); // Uncomment if using Vue Router
-  } catch (error) {
-    console.error("Error:", error);
-    if (error.message !== "Validation failed") {
-      alert("Registration failed: " + error.message);
-    }
+  if (success) {
+    router.push("/");
   }
 };
 </script>

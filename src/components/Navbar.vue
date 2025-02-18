@@ -111,9 +111,9 @@
               />
             </svg>
 
-            <span class="max-w-[100px] truncate py-2 text-base font-medium">{{
-              authStore.name
-            }}</span>
+            <span class="max-w-[100px] truncate py-2 text-base font-medium">
+              {{ authStore.user?.name }}
+            </span>
 
             <span
               class="transition"

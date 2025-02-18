@@ -39,6 +39,34 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
+    async register(form) {
+      const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/register`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+          mode: "cors",
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          this.errorMessages = errorData;
+          throw new Error("Validation failed");
+        }
+
+        const data = await response.json();
+
+        await this.login(form);
+
+        return true;
+      } catch (error) {
+        console.error("Registration error:", error);
+        return false;
+      }
+    },
+
     async fetchUser() {
       if (!this.token) return;
 
@@ -58,7 +86,7 @@ export const useAuthStore = defineStore("auth", {
         }
 
         const data = await response.json();
-        this.user = data.user;
+        this.user = data;
       } catch (error) {
         console.error("Error fetching user data:", error);
         // Optionally, log the user out if fetching the user fails

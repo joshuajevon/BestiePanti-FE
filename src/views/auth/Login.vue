@@ -54,11 +54,6 @@
             placeholder="Masukkan alamat email"
             class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
           />
-
-          <!-- <p id="email-error-message" class="error-message">
-            {{ errorMessages.email }}
-          </p> -->
-
           <p
             id="email-error-message"
             class="error-message"
@@ -130,11 +125,6 @@
               />
             </svg>
           </div>
-
-          <!-- <p id="password-error-message" class="error-message">
-            {{ errorMessages.password }}
-          </p> -->
-
           <p
             id="password-error-message"
             class="error-message"
@@ -145,10 +135,6 @@
         </div>
 
         <div class="w-full px-4">
-          <!-- <p id="login-error-message" class="error-message">
-            {{ errorMessages.error_message }}
-          </p> -->
-
           <p
             id="login-error-message"
             class="error-message"
