@@ -78,15 +78,20 @@
 
       <!-- Right Side (Auth & Profile) -->
       <div class="flex items-center gap-4">
-        <router-link class="nav-link-web" :to="{ name: 'login' }"
-          >MASUK</router-link
+        <div
+          v-if="!authStore.isAuthenticated()"
+          class="flex items-center gap-4"
         >
-        <router-link class="btn-primary-sm" :to="{ name: 'register' }"
-          >DAFTAR</router-link
-        >
+          <router-link class="nav-link-web" :to="{ name: 'login' }"
+            >MASUK</router-link
+          >
+          <router-link class="btn-primary-sm" :to="{ name: 'register' }"
+            >DAFTAR</router-link
+          >
+        </div>
 
         <!-- Profile Dropdown -->
-        <div class="relative text-white">
+        <div v-if="authStore.isAuthenticated()" class="relative text-white">
           <div
             class="flex cursor-pointer items-center gap-2 hover:text-white/75"
             @click="toggleProfileWeb"
@@ -106,9 +111,9 @@
               />
             </svg>
 
-            <span class="max-w-[100px] truncate py-2 text-base font-medium"
-              >Username</span
-            >
+            <span class="max-w-[100px] truncate py-2 text-base font-medium">{{
+              authStore.name
+            }}</span>
 
             <span
               class="transition"
@@ -237,9 +242,12 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/authStore";
 
 const route = useRoute();
+const router = useRouter();
+const authStore = useAuthStore();
 const isNavbarOpen = ref(false);
 const isProfileWebOpen = ref(false);
 
@@ -257,6 +265,11 @@ function toggleProfileWeb() {
 
 function isActiveRoute(routeName) {
   return route.name === routeName;
+}
+
+function logout() {
+  authStore.logout();
+  router.push("/login");
 }
 </script>
 

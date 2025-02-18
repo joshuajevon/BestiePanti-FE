@@ -54,8 +54,17 @@
             placeholder="Masukkan alamat email"
             class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
           />
-          <p id="email-error-message" class="error-message">
+
+          <!-- <p id="email-error-message" class="error-message">
             {{ errorMessages.email }}
+          </p> -->
+
+          <p
+            id="email-error-message"
+            class="error-message"
+            v-if="authStore.errorMessages.email"
+          >
+            {{ authStore.errorMessages.email }}
           </p>
         </div>
 
@@ -71,7 +80,7 @@
           <div class="relative mt-1 w-full">
             <input
               ref="password"
-              type="password"
+              :type="showPassword ? 'text' : 'password'"
               autocomplete="false"
               id="password"
               name="password"
@@ -122,14 +131,30 @@
             </svg>
           </div>
 
-          <p id="password-error-message" class="error-message">
+          <!-- <p id="password-error-message" class="error-message">
             {{ errorMessages.password }}
+          </p> -->
+
+          <p
+            id="password-error-message"
+            class="error-message"
+            v-if="authStore.errorMessages.password"
+          >
+            {{ authStore.errorMessages.password }}
           </p>
         </div>
 
         <div class="w-full px-4">
-          <p id="login-error-message" class="error-message">
+          <!-- <p id="login-error-message" class="error-message">
             {{ errorMessages.error_message }}
+          </p> -->
+
+          <p
+            id="login-error-message"
+            class="error-message"
+            v-if="authStore.errorMessages.error_message"
+          >
+            {{ authStore.errorMessages.error_message }}
           </p>
         </div>
 
@@ -157,15 +182,16 @@
 
 <script setup>
 import { reactive, ref } from "vue";
+import { useAuthStore } from "@/stores/authStore";
+import { useRouter } from "vue-router";
 
-const password = ref(null);
+const authStore = useAuthStore();
+const router = useRouter();
+
 const showPassword = ref(false);
 
 function togglePassword() {
   showPassword.value = !showPassword.value;
-  if (password.value) {
-    password.value.type = showPassword.value ? "text" : "password";
-  }
 }
 
 const form = reactive({
@@ -173,57 +199,15 @@ const form = reactive({
   password: "",
 });
 
-const errorMessages = reactive({
-  email: "",
-  password: "",
-  error_message: "",
-});
-
-const errors = ref({});
-const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/login`;
-
 const submitForm = async () => {
-  try {
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-      mode: "cors", // Ensure CORS mode is enabled
+  const success = await authStore.login(form);
+
+  if (success) {
+    router.push("/");
+  } else {
+    Object.keys(form).forEach((key) => {
+      form[key] = "";
     });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      errors.value = errorData;
-
-      // Clear form
-      Object.keys(form).forEach((key) => {
-        form[key] = "";
-      });
-
-      // Clear errorMessages
-      Object.keys(errorMessages).forEach((key) => {
-        errorMessages[key] = "";
-      });
-
-      // Store API error messages into errorMessages
-      Object.entries(errorData).forEach(([field, message]) => {
-        errorMessages[field] = message;
-      });
-
-      console.log(errorMessages);
-
-      throw new Error("Validation failed");
-    }
-
-    const data = await response.json();
-    console.log("Success:", data);
-    alert("Login successful!");
-    // this.$router.push("/login"); // Uncomment if using Vue Router
-  } catch (error) {
-    console.error("Error:", error);
-    if (error.message !== "Validation failed") {
-      alert("Login failed: " + error.message);
-    }
   }
 };
 </script>
