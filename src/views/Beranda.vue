@@ -51,6 +51,38 @@
       </swiper>
     </section>
 
+    <!-- Urgent Panti -->
+    <section
+      class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24"
+    >
+      <div
+        class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6"
+      >
+        <h1 class="text-3xl font-bold lg:text-4xl xl:text-5xl">
+          Panti Asuhan Darurat
+        </h1>
+        <p class="text-lg lg:text-xl xl:text-2xl">
+          Bantu mereka yang paling membutuhkan, saat mereka membutuhkannya.
+        </p>
+      </div>
+
+      <div
+        v-if="pantiList"
+        class="grid w-full gap-4 grid-cols-2 lg:grid-cols-4"
+      >
+        <PantiCard
+          v-for="panti in pantiList
+            .filter((panti) => panti.is_urgent === 1)
+            .slice(0, 4) || []"
+          :key="panti.id"
+          :id="panti.id"
+          :name="panti.name"
+          :address="panti.address"
+          :donationTypes="panti.donation_types"
+        />
+      </div>
+    </section>
+
     <!-- Panti -->
     <section
       class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24"
@@ -66,7 +98,7 @@
 
       <div
         v-if="pantiList"
-        class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
+        class="grid w-full gap-4 grid-cols-2 lg:grid-cols-4"
       >
         <PantiCard
           v-for="panti in pantiList.slice(0, 4) || []"

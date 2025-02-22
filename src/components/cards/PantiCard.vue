@@ -1,7 +1,7 @@
 <template>
   <router-link class="w-fit" :to="{ name: 'pantiDetail', params: { id: id } }">
     <div
-      class="flex flex-col items-center justify-center gap-4 rounded-2xl bg-white p-6 transition hover:bg-primary-300 group"
+      class="flex flex-col items-center justify-center gap-4 rounded-2xl bg-white p-4 lg:p-5 xl:P-6 transition hover:bg-primary-300 group"
     >
       <img
         class="rounded-lg object-cover"
@@ -11,15 +11,15 @@
 
       <div class="flex w-full flex-col gap-1">
         <h2
-          class="group-hover:text-white line-clamp-1 text-center text-2xl font-bold"
+          class="group-hover:text-white line-clamp-1 text-center text-lg lg:text-xl xl:text-2xl font-bold"
         >
           {{ name }}
         </h2>
-        <p class="group-hover:text-white line-clamp-2">
+        <p class="group-hover:text-white line-clamp-2 text-sm lg:text-base">
           {{ address }}
         </p>
 
-        <p class="group-hover:text-white line-clamp-2">
+        <p class="group-hover:text-white line-clamp-2 text-sm lg:text-base">
           {{ donationTypes }}
         </p>
       </div>
@@ -30,7 +30,6 @@
 <script setup>
 import { defineProps } from "vue";
 
-// Define props for the component
 const props = defineProps({
   id: {
     type: Number,
