@@ -2,7 +2,7 @@
   <section class="bg-primary-50 text-secondary-500">
     <!-- Panti -->
     <section
-      class="c-container flex flex-col items-center justify-center gap-8 pb-16 pt-32 lg:pb-20 lg:pt-36 xl:pb-24 xl:pt-40"
+      class="c-container flex flex-col items-center gap-8 pb-16 pt-32 lg:pb-20 lg:pt-36 xl:pb-24 xl:pt-40 min-h-screen"
     >
       <div
         class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6"
@@ -13,12 +13,26 @@
         </p>
       </div>
 
+      <div class="w-full">
+        <input
+          type="search"
+          id="search-panti"
+          name="search-panti"
+          v-model="searchPanti"
+          placeholder="Cari panti asuhan"
+        />
+      </div>
+
       <div
-        v-if="pantiList"
-        class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
+        v-if="filteredPanti.length === 0"
+        class="text-center font-medium text-red-600 text-lg"
       >
+        Data panti asuhan tidak ditemukan.
+      </div>
+
+      <div v-else class="grid w-full gap-4 grid-cols-1 lg:grid-cols-4">
         <PantiCard
-          v-for="panti in pantiList || []"
+          v-for="panti in filteredPanti || []"
           :key="panti.id"
           :id="panti.id"
           :name="panti.name"
@@ -27,34 +41,42 @@
         />
       </div>
 
-      <button
+      <!-- <button
         class="btn-primary pointer-events-none opacity-50"
         @click="loadMorePanti"
         disabled
       >
         Lihat Lebih Banyak
-      </button>
+      </button> -->
     </section>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { fetchAllPanti } from "@/services/api-panti";
 import PantiCard from "@/components/cards/PantiCard.vue";
 
-function loadMorePanti() {}
+// Reactive state
+const searchPanti = ref(""); // Search query
+const pantiList = ref([]); // List of all panti asuhan
 
-const pantiList = ref([]);
-
+// Fetch data when component mounts
 onMounted(async () => {
   try {
     const data = await fetchAllPanti();
     pantiList.value = data.panti_responses;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching panti data:", error);
   }
 });
+
+// Computed property for filtered search results
+const filteredPanti = computed(() =>
+  pantiList.value.filter((panti) =>
+    panti.name.toLowerCase().includes(searchPanti.value.toLowerCase())
+  )
+);
 </script>
 
 <style></style>
