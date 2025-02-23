@@ -97,65 +97,6 @@
   </section>
 </template>
 
-<!-- <script setup>
-import { ref, computed, onMounted, nextTick } from "vue";
-import { fetchAllPanti } from "@/services/api-panti";
-import PantiCard from "@/components/cards/PantiCard.vue";
-
-// Reactive state
-const searchPanti = ref("");
-const pantiList = ref([]);
-const itemsToShow = ref(8);
-const loading = ref(false);
-const scrollContainer = ref(null);
-
-onMounted(async () => {
-  try {
-    const data = await fetchAllPanti();
-    pantiList.value = data.panti_responses;
-  } catch (error) {
-    console.error("Error fetching panti data:", error);
-  }
-});
-
-// Filtered search results
-const filteredPanti = computed(() =>
-  searchPanti.value === ""
-    ? pantiList.value
-    : pantiList.value.filter((panti) =>
-        panti.name.toLowerCase().includes(searchPanti.value.toLowerCase())
-      )
-);
-
-// Show only a limited number of items
-const visiblePanti = computed(() =>
-  filteredPanti.value.slice(0, itemsToShow.value)
-);
-
-// Infinite Scroll Function
-const handleScroll = () => {
-  if (!scrollContainer.value) return;
-
-  const { scrollTop, clientHeight, scrollHeight } = scrollContainer.value;
-
-  if (scrollTop + clientHeight >= scrollHeight - 10 && !loading.value) {
-    loadMore();
-  }
-};
-
-// Load 8 more items when scrolling to the bottom
-const loadMore = async () => {
-  if (itemsToShow.value < filteredPanti.value.length) {
-    loading.value = true;
-    await nextTick(); // Ensure Vue updates the DOM before loading more
-    setTimeout(() => {
-      itemsToShow.value += 8;
-      loading.value = false;
-    }, 1000); // Simulate API delay
-  }
-};
-</script> -->
-
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
 import { fetchAllPanti } from "@/services/api-panti";
