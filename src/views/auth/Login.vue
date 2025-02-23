@@ -51,8 +51,7 @@
             id="email"
             name="email"
             v-model="form.email"
-            placeholder="Masukkan alamat email"
-            class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
+            placeholder="Masukkan email"
           />
           <p
             id="email-error-message"
@@ -72,7 +71,7 @@
             Kata Sandi
           </label>
 
-          <div class="relative mt-1 w-full">
+          <div class="relative w-full">
             <input
               ref="password"
               :type="showPassword ? 'text' : 'password'"
@@ -81,7 +80,7 @@
               name="password"
               v-model="form.password"
               placeholder="Masukkan kata sandi"
-              class="w-full rounded-md border border-secondary-500 bg-white p-4 pr-12 text-sm autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] sm:text-base lg:pr-14"
+              class="pr-12 lg:pr-16"
             />
 
             <svg

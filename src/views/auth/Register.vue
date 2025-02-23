@@ -36,10 +36,10 @@
         </div>
 
         <div
-          class="input-container mt-2 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-x-16 lg:gap-y-8"
+          class="mt-2 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-x-16 lg:gap-y-8 w-full"
         >
           <!-- Name Lengkap -->
-          <div class="col-span-1">
+          <div class="col-span-1 input-container">
             <div class="flex gap-1 text-base sm:text-lg">
               <label
                 for="name"
@@ -57,7 +57,6 @@
               name="name"
               v-model="form.name"
               placeholder="Masukkan nama lengkap"
-              class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
             <p
@@ -70,7 +69,7 @@
           </div>
 
           <!-- Jenis Kelamin -->
-          <div class="col-span-1">
+          <div class="col-span-1 input-container">
             <div class="flex gap-1 text-base sm:text-lg">
               <label
                 for="gender"
@@ -119,7 +118,7 @@
           </div>
 
           <!-- Tanggal Lahir -->
-          <div class="col-span-1">
+          <div class="col-span-1 input-container">
             <div class="flex gap-1 text-base sm:text-lg">
               <label
                 for="dob"
@@ -137,7 +136,6 @@
               name="dob"
               v-model="form.dob"
               placeholder="Masukkan tanggal lahir"
-              class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
             <p
@@ -150,7 +148,7 @@
           </div>
 
           <!-- Nomor Whatsapp -->
-          <div class="col-span-1">
+          <div class="col-span-1 input-container">
             <div class="flex gap-1 text-base sm:text-lg">
               <label
                 for="phone"
@@ -168,7 +166,6 @@
               name="phone"
               v-model="form.phone"
               placeholder="Masukkan nomor Whatsapp"
-              class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
             <p
@@ -181,7 +178,7 @@
           </div>
 
           <!-- Alamat -->
-          <div class="col-span-1">
+          <div class="col-span-1 input-container">
             <div class="flex gap-1 text-base sm:text-lg">
               <label
                 for="address"
@@ -199,7 +196,6 @@
               name="address"
               v-model="form.address"
               placeholder="Masukkan alamat"
-              class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
             <p
@@ -212,7 +208,7 @@
           </div>
 
           <!-- Email -->
-          <div class="col-span-1">
+          <div class="col-span-1 input-container">
             <div class="flex gap-1 text-base sm:text-lg">
               <label
                 for="email"
@@ -230,7 +226,6 @@
               name="email"
               v-model="form.email"
               placeholder="Masukkan email"
-              class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
             />
 
             <p
@@ -243,7 +238,7 @@
           </div>
 
           <!-- Kata Sandi -->
-          <div class="col-span-1">
+          <div class="col-span-1 input-container">
             <div class="flex gap-1 text-base sm:text-lg">
               <label
                 for="password"
@@ -254,7 +249,7 @@
               <span class="text-red-500">*</span>
             </div>
 
-            <div class="relative mt-1 w-full">
+            <div class="relative w-full">
               <input
                 ref="password"
                 :type="showPassword ? 'text' : 'password'"
@@ -263,7 +258,7 @@
                 name="password"
                 v-model="form.password"
                 placeholder="Masukkan kata sandi"
-                class="w-full rounded-md border border-secondary-500 bg-white p-4 pr-12 text-sm autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] sm:text-base lg:pr-14"
+                class="pr-12 lg:pr-16"
               />
 
               <svg
@@ -318,7 +313,7 @@
           </div>
 
           <!-- Konfirmasi Kata Sandi -->
-          <div class="col-span-1">
+          <div class="col-span-1 input-container">
             <div class="flex gap-1 text-base sm:text-lg">
               <label
                 for="passwordcon"
@@ -338,7 +333,7 @@
                 name="confirmation_password"
                 v-model="form.confirmation_password"
                 placeholder="Masukkan kata sandi"
-                class="w-full rounded-md border border-secondary-500 bg-white p-4 pr-12 text-sm autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] sm:text-base lg:pr-14"
+                class="pr-12 lg:pr-16"
               />
 
               <svg
