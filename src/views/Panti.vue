@@ -70,7 +70,7 @@
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
           ></path>
         </svg>
-        Memuat data panti ashuan...
+        Memuat data panti asuhan...
       </div>
 
       <div
@@ -132,11 +132,12 @@ const searchPanti = ref("");
 const pantiList = ref([]);
 const itemsToShow = ref(8);
 const loading = ref(false);
+const fetching = ref(true); // Added state for initial loading
 
 // Filter states
 const donationTypes = ["Barang", "Pangan", "Dana", "Tenaga"];
 const selectedFilters = ref([]);
-const urgentFilter = ref(false); // New state for "Urgent"
+const urgentFilter = ref(false);
 
 // Fetch data
 onMounted(async () => {
@@ -145,9 +146,10 @@ onMounted(async () => {
     pantiList.value = data.panti_responses;
   } catch (error) {
     console.error("Error fetching panti data:", error);
+  } finally {
+    fetching.value = false; // Set fetching to false after data is loaded
   }
 
-  // Attach scroll event listener to window
   window.addEventListener("scroll", handleScroll);
 });
 
@@ -160,14 +162,12 @@ onUnmounted(() => {
 const filteredPanti = computed(() => {
   let results = pantiList.value;
 
-  // Search filter
   if (searchPanti.value !== "") {
     results = results.filter((panti) =>
       panti.name.toLowerCase().includes(searchPanti.value.toLowerCase())
     );
   }
 
-  // Donation type filter
   if (selectedFilters.value.length > 0) {
     results = results.filter((panti) =>
       selectedFilters.value.some((filter) =>
@@ -176,7 +176,6 @@ const filteredPanti = computed(() => {
     );
   }
 
-  // Urgent filter
   if (urgentFilter.value) {
     results = results.filter((panti) => panti.is_urgent === 1);
   }
@@ -206,11 +205,11 @@ const handleScroll = () => {
 const loadMore = async () => {
   if (itemsToShow.value < filteredPanti.value.length) {
     loading.value = true;
-    await nextTick(); // Ensure Vue updates the DOM before loading more
+    await nextTick();
     setTimeout(() => {
       itemsToShow.value += 8;
       loading.value = false;
-    }, 1000); // Simulate API delay
+    }, 1000);
   }
 };
 </script>
