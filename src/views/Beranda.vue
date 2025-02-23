@@ -73,7 +73,10 @@
         Data panti asuhan tidak ditemukan.
       </div>
 
-      <div v-else class="grid w-full gap-4 grid-cols-2 lg:grid-cols-4">
+      <div
+        v-else
+        class="grid w-full gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+      >
         <PantiCard
           v-for="panti in pantiList
             .filter((panti) => panti.is_urgent === 1)
@@ -102,13 +105,16 @@
       </div>
 
       <div
-        v-if="pantiList.length === 0"
+        v-if="pantiList.filter((panti) => panti.is_urgent === 0).length === 0"
         class="text-center font-medium text-red-600 text-lg"
       >
         Data panti asuhan tidak ditemukan.
       </div>
 
-      <div v-else class="grid w-full gap-4 grid-cols-2 lg:grid-cols-4">
+      <div
+        v-else
+        class="grid w-full gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+      >
         <PantiCard
           v-for="panti in pantiList
             .filter((panti) => panti.is_urgent === 0)

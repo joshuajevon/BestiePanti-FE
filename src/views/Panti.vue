@@ -80,7 +80,7 @@
         Data panti asuhan tidak ditemukan.
       </div>
 
-      <div class="grid w-full gap-4 grid-cols-1 lg:grid-cols-4">
+      <div class="grid w-full gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <PantiCard
           v-for="panti in visiblePanti"
           :key="panti.id"
