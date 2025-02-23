@@ -53,10 +53,10 @@
 
     <!-- Urgent Panti -->
     <section
-      class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24"
+      class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24 bg-primary-900"
     >
       <div
-        class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6"
+        class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6 text-white"
       >
         <h1 class="text-3xl font-bold lg:text-4xl xl:text-5xl">
           Panti Asuhan Darurat
