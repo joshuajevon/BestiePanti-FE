@@ -83,6 +83,7 @@
           :name="panti.name"
           :address="panti.address"
           :donationTypes="panti.donation_types"
+          :isUrgent="panti.is_urgent"
         />
       </div>
     </section>
@@ -109,12 +110,15 @@
 
       <div v-else class="grid w-full gap-4 grid-cols-2 lg:grid-cols-4">
         <PantiCard
-          v-for="panti in pantiList.slice(0, 4) || []"
+          v-for="panti in pantiList
+            .filter((panti) => panti.is_urgent === 0)
+            .slice(0, 4) || []"
           :key="panti.id"
           :id="panti.id"
           :name="panti.name"
           :address="panti.address"
           :donationTypes="panti.donation_types"
+          :isUrgent="panti.is_urgent"
         />
       </div>
 

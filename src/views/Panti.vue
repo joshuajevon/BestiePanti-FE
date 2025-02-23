@@ -12,6 +12,7 @@
         </p>
       </div>
 
+      <!-- Search bar -->
       <div class="w-full">
         <input
           type="search"
@@ -20,6 +21,29 @@
           v-model="searchPanti"
           placeholder="Cari panti asuhan"
         />
+      </div>
+
+      <!-- Donation Type Filters -->
+      <div class="flex flex-wrap gap-4">
+        <label
+          v-for="type in donationTypes"
+          :key="type"
+          class="flex items-center gap-2"
+        >
+          <input
+            type="checkbox"
+            :value="type"
+            v-model="selectedFilters"
+            class="w-4 h-4"
+          />
+          {{ type }}
+        </label>
+
+        <!-- Urgent Filter -->
+        <label class="flex items-center gap-2">
+          <input type="checkbox" v-model="urgentFilter" class="w-4 h-4" />
+          Urgent
+        </label>
       </div>
 
       <div
@@ -64,6 +88,7 @@
           :name="panti.name"
           :address="panti.address"
           :donationTypes="panti.donation_types"
+          :isUrgent="panti.is_urgent"
         />
       </div>
 
@@ -107,16 +132,19 @@ const searchPanti = ref("");
 const pantiList = ref([]);
 const itemsToShow = ref(8);
 const loading = ref(false);
-const fetching = ref(true); // New state to track initial data fetching
 
+// Filter states
+const donationTypes = ["Barang", "Pangan", "Dana", "Tenaga"];
+const selectedFilters = ref([]);
+const urgentFilter = ref(false); // New state for "Urgent"
+
+// Fetch data
 onMounted(async () => {
   try {
     const data = await fetchAllPanti();
     pantiList.value = data.panti_responses;
   } catch (error) {
     console.error("Error fetching panti data:", error);
-  } finally {
-    fetching.value = false; // Mark fetching as complete
   }
 
   // Attach scroll event listener to window
@@ -128,14 +156,33 @@ onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
 });
 
-// Filtered search results
-const filteredPanti = computed(() =>
-  searchPanti.value === ""
-    ? pantiList.value
-    : pantiList.value.filter((panti) =>
-        panti.name.toLowerCase().includes(searchPanti.value.toLowerCase())
+// Computed: Filtered search results
+const filteredPanti = computed(() => {
+  let results = pantiList.value;
+
+  // Search filter
+  if (searchPanti.value !== "") {
+    results = results.filter((panti) =>
+      panti.name.toLowerCase().includes(searchPanti.value.toLowerCase())
+    );
+  }
+
+  // Donation type filter
+  if (selectedFilters.value.length > 0) {
+    results = results.filter((panti) =>
+      selectedFilters.value.some((filter) =>
+        panti.donation_types.includes(filter)
       )
-);
+    );
+  }
+
+  // Urgent filter
+  if (urgentFilter.value) {
+    results = results.filter((panti) => panti.is_urgent === 1);
+  }
+
+  return results;
+});
 
 // Show only a limited number of items
 const visiblePanti = computed(() =>

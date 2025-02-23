@@ -2,6 +2,7 @@
   <router-link class="w-fit" :to="{ name: 'pantiDetail', params: { id: id } }">
     <div
       class="flex flex-col items-center justify-center gap-4 rounded-xl lg:rounded-2xl bg-white p-4 lg:p-5 xl:P-6 transition hover:bg-primary-300 group"
+      :class="{ 'bg-red-100': isUrgent === 1 }"
     >
       <img
         class="rounded-md lg:rounded-lg object-cover"
@@ -45,6 +46,10 @@ const props = defineProps({
   },
   donationTypes: {
     type: Object,
+    required: true,
+  },
+  isUrgent: {
+    type: Number,
     required: true,
   },
 });
