@@ -40,7 +40,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { fetchAllPanti } from "@/services/api";
+import { fetchAllPanti } from "@/services/api-panti";
 import PantiCard from "@/components/cards/PantiCard.vue";
 
 function loadMorePanti() {}

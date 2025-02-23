@@ -72,7 +72,7 @@ export const useAuthStore = defineStore("auth", {
 
       try {
         // Replace with your actual endpoint for fetching user data
-        const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/profile`;
+        const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/user`;
 
         const response = await fetch(apiUrl, {
           headers: {

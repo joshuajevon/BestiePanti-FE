@@ -136,12 +136,11 @@
       class="c-container fixed z-[100] h-screen w-screen bg-black/80"
     >
       <form
-        action=""
-        method=""
+        method="POST"
         class="flex h-full w-full items-center justify-center"
-        onsubmit=""
+        @submit.prevent="submitMessage()"
       >
-        <div
+js        <div
           class="h-max-[80vh] flex w-full max-w-screen-xl flex-col gap-8 rounded-xl bg-white p-8 sm:rounded-2xl sm:p-12 lg:rounded-3xl lg:p-16"
         >
           <!-- Title -->
@@ -155,31 +154,22 @@
               <span class="font-bold text-primary-300">Kirim Pesan</span>
             </h1>
             <p class="text-center text-base sm:text-lg">
-              Silakan lengkapi form pendaftaran berikut. Akun pengguna yang
-              didaftarkan
-              <span class="font-bold">harus atas nama perorangan</span>.
+              Silakan menulis pesan yang ingin disampaikan kepada panti asuhan terkait.
             </p>
           </div>
 
           <div class="flex w-full flex-col items-start justify-center gap-6">
-            <!-- Email Address -->
+            <!-- Message -->
             <div class="input-container mt-2">
               <label
-                for="email"
+                for="message"
                 class="text-base font-medium text-secondary-500 sm:text-lg"
               >
-                Email
+                Pesan
               </label>
 
-              <input
-                type="email"
-                autocomplete="false"
-                id="email"
-                name="email"
-                placeholder="Masukkan alamat email"
-                class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
-              />
-              <p id="email-error-message" class="error-message"></p>
+              <textarea name="message" id="message" class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white text-sm sm:text-base" placeholder="Masukkan pesan" rows="5" v-model="form.message"></textarea>
+              <p id="message-error-message" class="error-message">{{ state.errorMessage }}</p>
             </div>
           </div>
 
@@ -303,10 +293,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";
 import PesanCard from "@/components/cards/PesanCard.vue";
-import { fetchPantiById } from "@/services/api";
+import { fetchPantiById } from "@/services/api-panti";
+import { createMessage } from "@/services/api-message";
 
 import "@/assets/swiper.css";
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -324,6 +315,27 @@ const panti = ref(null);
 const isFormDanaOpen = ref(false);
 const isFormNonDanaOpen = ref(false);
 const isFormPesanOpen = ref(false);
+
+const form = reactive({
+  message: ""
+});
+
+const state = reactive({
+  errorMessage: ""
+})
+
+const submitMessage = async () => {
+  try {
+    const success = await createMessage(pantiId, form.message);
+    if(success) {
+      form.message = "";
+      state.errorMessage = "";
+      closeFormPesan();
+    }
+  } catch (error) {
+    state.errorMessage = error.message;
+  }
+}
 
 function openFormDana() {
   isFormDanaOpen.value = true;
