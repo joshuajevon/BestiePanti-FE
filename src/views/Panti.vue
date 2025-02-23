@@ -23,7 +23,34 @@
       </div>
 
       <div
-        v-if="visiblePanti.length === 0"
+        v-if="fetching"
+        class="text-center mt-4 flex justify-center items-center gap-3"
+      >
+        <svg
+          class="size-5 animate-spin"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        Memuat data panti ashuan...
+      </div>
+
+      <div
+        v-else-if="visiblePanti.length === 0"
         class="text-center font-medium text-red-600 text-lg"
       >
         Data panti asuhan tidak ditemukan.
@@ -139,6 +166,7 @@ const searchPanti = ref("");
 const pantiList = ref([]);
 const itemsToShow = ref(8);
 const loading = ref(false);
+const fetching = ref(true); // New state to track initial data fetching
 
 onMounted(async () => {
   try {
@@ -146,6 +174,8 @@ onMounted(async () => {
     pantiList.value = data.panti_responses;
   } catch (error) {
     console.error("Error fetching panti data:", error);
+  } finally {
+    fetching.value = false; // Mark fetching as complete
   }
 
   // Attach scroll event listener to window
