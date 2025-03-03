@@ -13,7 +13,7 @@
         :navigation="true"
         :modules="modules"
         :loop="true"
-        class="mySwiper h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px] xl:h-[900px]"
+        class="mySwiper h-[500px] sm:h-[550px] md:h-[600px] lg:h-[650px] xl:h-[700px]"
       >
         <swiper-slide>
           <img
@@ -66,8 +66,16 @@
         </p>
       </div>
 
+      <LoadingIndicator
+        v-if="fetching"
+        text="Memuat data panti asuhan..."
+        class="text-white"
+      />
+
       <div
-        v-if="pantiList.filter((panti) => panti.is_urgent === 1).length === 0"
+        v-else-if="
+          pantiList.filter((panti) => panti.is_urgent === 1).length === 0
+        "
         class="text-center font-medium text-red-600 text-lg"
       >
         Data panti asuhan tidak ditemukan.
@@ -80,7 +88,7 @@
         <PantiCard
           v-for="panti in pantiList
             .filter((panti) => panti.is_urgent === 1)
-            .slice(0, 4) || []"
+            .slice(0, 4)"
           :key="panti.id"
           :id="panti.id"
           :name="panti.name"
@@ -91,7 +99,7 @@
       </div>
     </section>
 
-    <!-- Panti -->
+    <!-- Non-Urgent Panti -->
     <section
       class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24"
     >
@@ -104,8 +112,16 @@
         </p>
       </div>
 
+      <LoadingIndicator
+        v-if="fetching"
+        text="Memuat data panti asuhan..."
+        color="text-secondary-500"
+      />
+
       <div
-        v-if="pantiList.filter((panti) => panti.is_urgent === 0).length === 0"
+        v-else-if="
+          pantiList.filter((panti) => panti.is_urgent === 0).length === 0
+        "
         class="text-center font-medium text-red-600 text-lg"
       >
         Data panti asuhan tidak ditemukan.
@@ -118,7 +134,7 @@
         <PantiCard
           v-for="panti in pantiList
             .filter((panti) => panti.is_urgent === 0)
-            .slice(0, 4) || []"
+            .slice(0, 4)"
           :key="panti.id"
           :id="panti.id"
           :name="panti.name"
@@ -127,10 +143,6 @@
           :isUrgent="panti.is_urgent"
         />
       </div>
-
-      <router-link :to="{ name: 'panti' }">
-        <button class="btn-primary">Lihat Semua Panti Asuhan</button>
-      </router-link>
     </section>
 
     <!-- Cara Berdonasi -->
@@ -220,10 +232,12 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 
 const modules = [Autoplay, Pagination, Navigation];
 const authStore = useAuthStore();
 const pantiList = ref([]);
+const fetching = ref(true);
 
 onMounted(async () => {
   try {
@@ -231,6 +245,8 @@ onMounted(async () => {
     pantiList.value = data.panti_responses;
   } catch (error) {
     console.log(error);
+  } finally {
+    fetching.value = false;
   }
 });
 </script>
