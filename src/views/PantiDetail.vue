@@ -140,7 +140,8 @@
         class="flex h-full w-full items-center justify-center"
         @submit.prevent="submitMessage()"
       >
-js        <div
+        js
+        <div
           class="h-max-[80vh] flex w-full max-w-screen-xl flex-col gap-8 rounded-xl bg-white p-8 sm:rounded-2xl sm:p-12 lg:rounded-3xl lg:p-16"
         >
           <!-- Title -->
@@ -154,7 +155,8 @@ js        <div
               <span class="font-bold text-primary-300">Kirim Pesan</span>
             </h1>
             <p class="text-center text-base sm:text-lg">
-              Silakan menulis pesan yang ingin disampaikan kepada panti asuhan terkait.
+              Silakan menulis pesan yang ingin disampaikan kepada panti asuhan
+              terkait.
             </p>
           </div>
 
@@ -168,8 +170,17 @@ js        <div
                 Pesan
               </label>
 
-              <textarea name="message" id="message" class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white text-sm sm:text-base" placeholder="Masukkan pesan" rows="5" v-model="form.message"></textarea>
-              <p id="message-error-message" class="error-message">{{ state.errorMessage }}</p>
+              <textarea
+                name="message"
+                id="message"
+                class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white text-sm sm:text-base"
+                placeholder="Masukkan pesan"
+                rows="5"
+                v-model="form.message"
+              ></textarea>
+              <p id="message-error-message" class="error-message">
+                {{ state.errorMessage }}
+              </p>
             </div>
           </div>
 
@@ -210,35 +221,17 @@ js        <div
         :loop="true"
         class="mySwiper h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] xl:h-[800px]"
       >
-        <swiper-slide>
+        <swiper-slide
+          v-if="panti"
+          v-for="(image, index) in panti.image"
+          :key="index"
+        >
           <img
             class="h-full w-full object-contain"
-            src="/assets/beranda/banner-1.jpg"
-            alt=""
+            :src="`${apiUrl}/uploads/image/${image}`"
+            alt="Panti Image"
           />
         </swiper-slide>
-        <swiper-slide>
-          <img
-            class="h-full w-full object-contain"
-            src="/assets/beranda/banner-2.jpg"
-            alt="" /></swiper-slide
-        ><swiper-slide>
-          <img
-            class="h-full w-full object-contain"
-            src="/assets/beranda/banner-3.jpg"
-            alt=""
-        /></swiper-slide>
-        <swiper-slide>
-          <img
-            class="h-full w-full object-contain"
-            src="/assets/beranda/banner-4.jpg"
-            alt="" /></swiper-slide
-        ><swiper-slide>
-          <img
-            class="h-full w-full object-contain"
-            src="/assets/beranda/banner-5.jpg"
-            alt=""
-        /></swiper-slide>
       </swiper>
     </section>
 
@@ -308,6 +301,7 @@ import { Pagination, Navigation } from "swiper/modules";
 
 const modules = [Pagination, Navigation];
 
+const apiUrl = import.meta.env.VITE_API_URL;
 const route = useRoute();
 const pantiId = route.params.id;
 const panti = ref(null);
@@ -317,17 +311,17 @@ const isFormNonDanaOpen = ref(false);
 const isFormPesanOpen = ref(false);
 
 const form = reactive({
-  message: ""
+  message: "",
 });
 
 const state = reactive({
-  errorMessage: ""
-})
+  errorMessage: "",
+});
 
 const submitMessage = async () => {
   try {
     const success = await createMessage(pantiId, form.message);
-    if(success) {
+    if (success) {
       form.message = "";
       state.errorMessage = "";
       closeFormPesan();
@@ -335,7 +329,7 @@ const submitMessage = async () => {
   } catch (error) {
     state.errorMessage = error.message;
   }
-}
+};
 
 function openFormDana() {
   isFormDanaOpen.value = true;
