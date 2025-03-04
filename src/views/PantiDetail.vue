@@ -2,8 +2,9 @@
   <section class="bg-primary-50 text-secondary-500">
     <!-- Form Dana -->
     <section
+      v-if="authStore.user"
       v-show="isFormDanaOpen"
-      class="c-container fixed z-[100] h-screen w-screen bg-black/80"
+      class="c-container fixed z-[100] h-screen w-screen bg-black/80 py-8"
     >
       <form
         action=""
@@ -12,7 +13,7 @@
         onsubmit=""
       >
         <div
-          class="h-max-[80vh] flex w-full max-w-screen-xl flex-col gap-8 rounded-xl bg-white p-8 sm:rounded-2xl sm:p-12 lg:rounded-3xl lg:p-16"
+          class="h-full flex w-full max-w-screen-xl flex-col gap-8 rounded-xl bg-white p-8 sm:rounded-2xl sm:p-12 lg:rounded-3xl lg:p-16 overflow-scroll"
         >
           <!-- Title -->
           <div
@@ -25,31 +26,82 @@
               <span class="font-bold text-primary-300">Donasi Dana</span>
             </h1>
             <p class="text-center text-base sm:text-lg">
-              Silakan lengkapi form pendaftaran berikut. Akun pengguna yang
-              didaftarkan
-              <span class="font-bold">harus atas nama perorangan</span>.
+              Silakan isi formulir berikut untuk melakukan donasi dana.
+              <span class="font-bold"
+                >Pastikan semua informasi yang Anda masukkan akurat</span
+              >
+              agar proses donasi dapat berjalan dengan lancar.
             </p>
           </div>
 
           <div class="flex w-full flex-col items-start justify-center gap-6">
-            <!-- Email Address -->
+            <!-- QRIS Image -->
+            <div class="flex justify-center items-center w-full">
+              <div class="w-64 h-96 bg-black"></div>
+              <!-- <img src="" alt="" /> -->
+            </div>
+
+            <!-- Account Details -->
+            <div
+              class="flex flex-col justify-center items-center font-bold text-center w-full"
+            >
+              <h1>BCA</h1>
+              <p>1234123400</p>
+              <p>A/n Christopher Nathanael Tessy</p>
+            </div>
+
+            <!-- Account Number -->
             <div class="input-container mt-2">
               <label
-                for="email"
+                for="account_number"
                 class="text-base font-medium text-secondary-500 sm:text-lg"
               >
-                Email
+                Nomor Rekening
               </label>
 
               <input
-                type="email"
-                autocomplete="false"
-                id="email"
-                name="email"
-                placeholder="Masukkan alamat email"
-                class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
+                type="text"
+                id="account_number"
+                name="account_number"
+                placeholder="Masukkan nomor rekening Anda"
               />
-              <p id="email-error-message" class="error-message"></p>
+              <p id="account-number-error-message" class="error-message"></p>
+            </div>
+
+            <!-- Account Name -->
+            <div class="input-container mt-2">
+              <label
+                for="account_name"
+                class="text-base font-medium text-secondary-500 sm:text-lg"
+              >
+                Nama Rekening
+              </label>
+
+              <input
+                type="text"
+                id="account_name"
+                name="account_name"
+                placeholder="Masukkan nama rekening Anda"
+              />
+              <p id="account-name-error-message" class="error-message"></p>
+            </div>
+
+            <!-- Proof of payment -->
+            <div class="input-container mt-2">
+              <label
+                for="proof_of_payment"
+                class="text-base font-medium text-secondary-500 sm:text-lg"
+              >
+                Bukti Transfer
+              </label>
+
+              <input
+                type="file"
+                id="proof_of_payment"
+                name="proof_of_payment"
+                placeholder="Masukkan nama rekening Anda"
+              />
+              <p id="proof-of-payment-error-message" class="error-message"></p>
             </div>
           </div>
 
@@ -65,6 +117,7 @@
 
     <!-- Form Non Dana -->
     <section
+      v-if="authStore.user"
       v-show="isFormNonDanaOpen"
       class="c-container fixed z-[100] h-screen w-screen bg-black/80"
     >
@@ -132,6 +185,7 @@
 
     <!-- Form Pesan -->
     <section
+      v-if="authStore.user"
       v-show="isFormPesanOpen"
       class="c-container fixed z-[100] h-screen w-screen bg-black/80"
     >
@@ -257,19 +311,43 @@
     <section
       class="c-container flex flex-col items-center justify-center gap-8 pb-8 lg:pb-12 xl:pb-16"
     >
-      <div class="flex flex-wrap items-center justify-center gap-4">
-        <button class="btn-primary" @click="openFormDana">Donasi Dana</button>
-        <button class="btn-primary" @click="openFormNonDana">
-          Donasi Non Dana
-        </button>
-        <button class="btn-primary" @click="openFormPesan">Kirim Pesan</button>
+      <div class="flex flex-col justify-center items-center gap-2">
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <button
+            class="btn-primary"
+            :class="{ 'pointer-events-none opacity-50': !authStore.user }"
+            @click="openFormDana"
+          >
+            Donasi Dana
+          </button>
+
+          <button
+            class="btn-primary"
+            :class="{ 'pointer-events-none opacity-50': !authStore.user }"
+            @click="openFormNonDana"
+          >
+            Donasi Non Dana
+          </button>
+
+          <button
+            class="btn-primary"
+            :class="{ 'pointer-events-none opacity-50': !authStore.user }"
+            @click="openFormPesan"
+          >
+            Kirim Pesan
+          </button>
+        </div>
+
+        <div v-if="!authStore.user">
+          <p class="error-message">
+            *Anda harus login terlebih dahulu untuk melakukan donasi atau kirim
+            pesan
+          </p>
+        </div>
       </div>
 
       <div class="w-full">
-        <p
-          v-if="panti"
-          class="text-justify text-lg text-secondary-500 lg:text-xl xl:text-2xl"
-        >
+        <p v-if="panti" class="text-justify text-lg text-secondary-500">
           {{ panti.description }}
         </p>
       </div>
@@ -304,11 +382,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, watch, reactive } from "vue";
 import { useRoute } from "vue-router";
 import PesanCard from "@/components/cards/PesanCard.vue";
 import { fetchPantiById } from "@/services/api-panti";
 import { createMessage } from "@/services/api-message";
+import { fetchPaymentByPantiId } from "@/services/api-payment";
+import { useAuthStore } from "@/stores/authStore";
 
 import "@/assets/swiper.css";
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -323,6 +403,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const route = useRoute();
 const pantiId = route.params.id;
 const panti = ref(null);
+const payment = ref(null);
+const authStore = useAuthStore();
 
 const isFormDanaOpen = ref(false);
 const isFormNonDanaOpen = ref(false);
@@ -373,12 +455,12 @@ function closeFormPesan() {
   isFormPesanOpen.value = false;
 }
 
-function loadMorePesan() {}
-
 onMounted(async () => {
   try {
-    const data = await fetchPantiById(pantiId);
-    panti.value = data;
+    const pantiData = await fetchPantiById(pantiId);
+    const paymentData = await fetchPaymentByPantiId(pantiId);
+    panti.value = pantiData;
+    payment.value = paymentData;
   } catch (error) {
     console.log(error);
   }
