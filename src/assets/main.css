@@ -41,9 +41,12 @@ span.swiper-pagination-bullet-active {
   [type="text"],
   [type="email"],
   [type="password"],
-  [type="date"],
-  textarea {
+  [type="date"] {
     @apply bg-secondary-100 rounded-full text-sm sm:text-base py-3 sm:py-4 px-5 sm:px-6 w-full border-none focus:ring-0;
+  }
+
+  textarea {
+    @apply bg-secondary-100 rounded-xl text-sm sm:text-base py-3 sm:py-4 px-5 sm:px-6 w-full border-none focus:ring-0;
   }
 
   select {

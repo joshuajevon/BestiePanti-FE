@@ -173,7 +173,6 @@
               <textarea
                 name="message"
                 id="message"
-                class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white text-sm sm:text-base"
                 placeholder="Masukkan pesan"
                 rows="5"
                 v-model="form.message"
