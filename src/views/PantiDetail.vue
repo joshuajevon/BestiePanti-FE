@@ -228,8 +228,8 @@
         >
           <img
             class="h-full w-full object-contain"
-            :src="`${apiUrl}/uploads/image/${image}`"
-            alt="Panti Image"
+            :src="`${apiUrl}/storage/image/${image}`"
+            :alt="`${panti.name}'s image ${index + 1}`"
           />
         </swiper-slide>
       </swiper>

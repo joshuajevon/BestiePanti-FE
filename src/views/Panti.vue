@@ -63,11 +63,7 @@
         <PantiCard
           v-for="panti in visiblePanti"
           :key="panti.id"
-          :id="panti.id"
-          :name="panti.name"
-          :address="panti.address"
-          :donationTypes="panti.donation_types"
-          :isUrgent="panti.is_urgent"
+          :panti="panti"
         />
       </div>
 

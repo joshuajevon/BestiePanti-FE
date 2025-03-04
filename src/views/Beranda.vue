@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-primary-50 text-secondary-500">
+  <section class="bg-primary-50 text-secondary-500 pt-20 lg:pt-24">
     <!-- Banner -->
     <section>
       <swiper
@@ -90,13 +90,13 @@
             .filter((panti) => panti.is_urgent === 1)
             .slice(0, 4)"
           :key="panti.id"
-          :id="panti.id"
-          :name="panti.name"
-          :address="panti.address"
-          :donationTypes="panti.donation_types"
-          :isUrgent="panti.is_urgent"
+          :panti="panti"
         />
       </div>
+
+      <router-link :to="{ name: 'panti' }">
+        <button class="btn-primary">Lihat Selengkapnya</button>
+      </router-link>
     </section>
 
     <!-- Non-Urgent Panti -->
@@ -136,13 +136,13 @@
             .filter((panti) => panti.is_urgent === 0)
             .slice(0, 4)"
           :key="panti.id"
-          :id="panti.id"
-          :name="panti.name"
-          :address="panti.address"
-          :donationTypes="panti.donation_types"
-          :isUrgent="panti.is_urgent"
+          :panti="panti"
         />
       </div>
+
+      <router-link :to="{ name: 'panti' }">
+        <button class="btn-primary">Lihat Selengkapnya</button>
+      </router-link>
     </section>
 
     <!-- Cara Berdonasi -->
