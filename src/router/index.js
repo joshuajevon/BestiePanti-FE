@@ -48,6 +48,14 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    // If there's a saved scroll position (e.g., going back in history), use it
+    if (savedPosition) {
+      return savedPosition;
+    }
+    // Otherwise, scroll to the top
+    return { top: 0, behavior: "smooth" }; // Smooth scrolling
+  },
 });
 
 router.beforeEach((to, from, next) => {
