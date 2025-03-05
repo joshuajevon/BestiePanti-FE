@@ -108,8 +108,25 @@ const form = reactive({
 const errorMessages = reactive({ message: "" });
 const isSubmitting = ref(false); // Fetching state
 
+const validateForm = () => {
+  Object.keys(errorMessages).forEach((key) => {
+    errorMessages[key] = "";
+  });
+
+  let isValid = true;
+
+  if (!form.message) {
+    errorMessages.message = "Pesan tidak boleh kosong";
+    isValid = false;
+  }
+
+  return isValid;
+};
+
 const submitForm = async () => {
-  isSubmitting.value = true; // Start fetching
+  if (!validateForm()) return;
+
+  isSubmitting.value = true;
 
   try {
     const response = await createMessage(props.id, form.message);
@@ -121,7 +138,7 @@ const submitForm = async () => {
 
     errorMessages.message = "";
     form.message = "";
-    emit("success"); // Emit success event
+    emit("success");
     closeFormPesan();
   } catch (error) {
     console.error("Error sending message:", error);
