@@ -3,11 +3,23 @@
     v-show="isFormDanaOpen"
     class="c-container fixed z-[100] h-screen w-screen bg-black/80 py-8"
   >
+    <!-- Loading Overlay -->
+    <div
+      v-if="isSubmitting"
+      class="absolute inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
+    >
+      <div class="bg-white rounded-xl p-8">
+        <LoadingIndicator
+          text="Mengirim donasi..."
+          class="text-secondary-500"
+        />
+      </div>
+    </div>
+
     <form
-      action=""
-      method=""
+      method="POST"
       class="flex h-full w-full items-center justify-center"
-      onsubmit=""
+      @submit.prevent="submitForm"
     >
       <div
         class="h-full flex w-full max-w-screen-xl flex-col gap-8 rounded-xl bg-white p-8 sm:rounded-2xl sm:p-12 lg:rounded-3xl lg:p-16 overflow-scroll"
@@ -61,6 +73,7 @@
               id="account_number"
               name="account_number"
               placeholder="Masukkan nomor rekening Anda"
+              v-model="donationData.accountNumber"
             />
             <p id="account-number-error-message" class="error-message"></p>
           </div>
@@ -79,6 +92,7 @@
               id="account_name"
               name="account_name"
               placeholder="Masukkan nama rekening Anda"
+              v-model="donationData.accountName"
             />
             <p id="account-name-error-message" class="error-message"></p>
           </div>
@@ -96,7 +110,8 @@
               type="file"
               id="proof_of_payment"
               name="proof_of_payment"
-              placeholder="Masukkan nama rekening Anda"
+              placeholder="Masukkan bukti transfer Anda"
+              accept="image/*"
             />
             <p id="proof-of-payment-error-message" class="error-message"></p>
           </div>
@@ -114,20 +129,67 @@
 </template>
 
 <script setup>
-defineProps({
+import { createDonationDana } from "@/services/api-donation";
+import { reactive, ref } from "vue";
+import LoadingIndicator from "../loading/LoadingIndicator.vue";
+
+const props = defineProps({
   isFormDanaOpen: {
     type: Boolean,
     required: true,
   },
+  id: {
+    type: String,
+    required: true,
+  },
 });
 
-const emit = defineEmits(["closeFormDana"]);
+const emit = defineEmits(["closeFormDana", "success"]);
 
-function closeFormDana() {
+const donationData = reactive({
+  donationDate: Date(),
+  isOnsite: 0,
+  donationType: "Dana",
+  image: "",
+  accountNumber: "",
+  accountName: "",
+});
+
+const errorMessages = reactive({
+  accountNumber: "",
+  accountName: "",
+  image: "",
+});
+
+const isSubmitting = ref(false); // Fetching state
+
+const submitForm = async () => {
+  isSubmitting.value = true; // Start fetching
+
+  try {
+    console.log(donationData);
+    const response = await createDonationDana(props.id, donationData);
+
+    if (response.message && !response.id) {
+      errorMessages.message = response.message;
+      return;
+    }
+
+    errorMessages.message = "";
+    form.message = "";
+    emit("success"); // Emit success event
+    closeFormDana();
+  } catch (error) {
+    console.error("Error sending donation:", error);
+    errorMessages.message = "Terjadi kesalahan. Silakan coba lagi.";
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+
+const closeFormDana = () => {
   emit("closeFormDana");
-}
+};
 </script>
 
-<style scoped>
-/* Add any specific styles for this component here */
-</style>
+<style scoped></style>

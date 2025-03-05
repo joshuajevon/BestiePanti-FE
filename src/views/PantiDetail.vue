@@ -5,9 +5,17 @@
     >
       <transition name="slide-fade">
         <SuccessAlert
-          v-if="showSuccessAlert"
+          v-if="showDanaSuccessAlert"
+          text1="Donasi dana telah terkirim"
+          text2="Terima kasih! Donasi dana Anda akan segera diproses."
+        />
+      </transition>
+
+      <transition name="slide-fade">
+        <SuccessAlert
+          v-if="showPesanSuccessAlert"
           text1="Pesan telah terkirim"
-          text2="Pesan Anda akan segera diproses."
+          text2="Terima kasih! Pesan Anda akan segera diproses."
         />
       </transition>
     </div>
@@ -16,7 +24,9 @@
     <FormDana
       v-if="authStore.user"
       :isFormDanaOpen="isFormDanaOpen"
+      :id="pantiId"
       @closeFormDana="closeFormDana"
+      @success="handleFormDanaSuccess"
     />
 
     <!-- Form Non Dana -->
@@ -261,13 +271,22 @@ const isFormDanaOpen = ref(false);
 const isFormNonDanaOpen = ref(false);
 const isFormPesanOpen = ref(false);
 
-const showSuccessAlert = ref(false);
+const showDanaSuccessAlert = ref(false);
+const showPesanSuccessAlert = ref(false);
 
-const handleFormPesanSuccess = () => {
-  showSuccessAlert.value = true;
+const handleFormDanaSuccess = () => {
+  showDanaSuccessAlert.value = true;
 
   setTimeout(() => {
-    showSuccessAlert.value = false;
+    showDanaSuccessAlert.value = false;
+  }, 3000); // Hide the alert after 3 seconds
+};
+
+const handleFormPesanSuccess = () => {
+  showPesanSuccessAlert.value = true;
+
+  setTimeout(() => {
+    showPesanSuccessAlert.value = false;
   }, 3000); // Hide the alert after 3 seconds
 };
 
