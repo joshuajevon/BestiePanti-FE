@@ -1,119 +1,23 @@
 <template>
   <section class="bg-primary-50 text-secondary-500">
-    <!-- Form Dana -->
-    <section
-      v-if="authStore.user"
-      v-show="isFormDanaOpen"
-      class="c-container fixed z-[100] h-screen w-screen bg-black/80 py-8"
+    <div
+      class="p-8 fixed z-[100] h-screen w-screen flex justify-end items-end pointer-events-none"
     >
-      <form
-        action=""
-        method=""
-        class="flex h-full w-full items-center justify-center"
-        onsubmit=""
-      >
-        <div
-          class="h-full flex w-full max-w-screen-xl flex-col gap-8 rounded-xl bg-white p-8 sm:rounded-2xl sm:p-12 lg:rounded-3xl lg:p-16 overflow-scroll"
-        >
-          <!-- Title -->
-          <div
-            class="flex w-full flex-col items-center justify-center gap-2 border-b-2 border-b-secondary-500 px-4 pb-5 sm:gap-3 lg:gap-4"
-          >
-            <h1
-              class="pb-2 text-center text-4xl font-medium leading-9 sm:text-5xl lg:text-6xl"
-            >
-              Formulir
-              <span class="font-bold text-primary-300">Donasi Dana</span>
-            </h1>
-            <p class="text-center text-base sm:text-lg">
-              Silakan isi formulir berikut untuk melakukan donasi dana.
-              <span class="font-bold"
-                >Pastikan semua informasi yang Anda masukkan akurat</span
-              >
-              agar proses donasi dapat berjalan dengan lancar.
-            </p>
-          </div>
+      <transition name="slide-fade">
+        <SuccessAlert
+          v-if="showSuccessAlert"
+          text1="Pesan telah terkirim"
+          text2="Pesan Anda akan segera diproses."
+        />
+      </transition>
+    </div>
 
-          <div class="flex w-full flex-col items-start justify-center gap-6">
-            <!-- QRIS Image -->
-            <div class="flex justify-center items-center w-full">
-              <div class="w-64 h-96 bg-black"></div>
-              <!-- <img src="" alt="" /> -->
-            </div>
-
-            <!-- Account Details -->
-            <div
-              class="flex flex-col justify-center items-center font-bold text-center w-full"
-            >
-              <h1>BCA</h1>
-              <p>1234123400</p>
-              <p>A/n Christopher Nathanael Tessy</p>
-            </div>
-
-            <!-- Account Number -->
-            <div class="input-container mt-2">
-              <label
-                for="account_number"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Nomor Rekening
-              </label>
-
-              <input
-                type="text"
-                id="account_number"
-                name="account_number"
-                placeholder="Masukkan nomor rekening Anda"
-              />
-              <p id="account-number-error-message" class="error-message"></p>
-            </div>
-
-            <!-- Account Name -->
-            <div class="input-container mt-2">
-              <label
-                for="account_name"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Nama Rekening
-              </label>
-
-              <input
-                type="text"
-                id="account_name"
-                name="account_name"
-                placeholder="Masukkan nama rekening Anda"
-              />
-              <p id="account-name-error-message" class="error-message"></p>
-            </div>
-
-            <!-- Proof of payment -->
-            <div class="input-container mt-2">
-              <label
-                for="proof_of_payment"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Bukti Transfer
-              </label>
-
-              <input
-                type="file"
-                id="proof_of_payment"
-                name="proof_of_payment"
-                placeholder="Masukkan nama rekening Anda"
-              />
-              <p id="proof-of-payment-error-message" class="error-message"></p>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-center gap-4">
-            <button class="btn-secondary" type="button" @click="closeFormDana">
-              Tutup
-            </button>
-            <button class="btn-primary" type="submit">Kirim</button>
-          </div>
-        </div>
-      </form>
-    </section>
+    <!-- Form Dana -->
+    <FormDana
+      v-if="authStore.user"
+      :isFormDanaOpen="isFormDanaOpen"
+      @closeFormDana="closeFormDana"
+    />
 
     <!-- Form Non Dana -->
     <section
@@ -184,68 +88,13 @@
     </section>
 
     <!-- Form Pesan -->
-    <section
+    <FormPesan
       v-if="authStore.user"
-      v-show="isFormPesanOpen"
-      class="c-container fixed z-[100] h-screen w-screen bg-black/80"
-    >
-      <form
-        method="POST"
-        class="flex h-full w-full items-center justify-center"
-        @submit.prevent="submitMessage()"
-      >
-        js
-        <div
-          class="h-max-[80vh] flex w-full max-w-screen-xl flex-col gap-8 rounded-xl bg-white p-8 sm:rounded-2xl sm:p-12 lg:rounded-3xl lg:p-16"
-        >
-          <!-- Title -->
-          <div
-            class="flex w-full flex-col items-center justify-center gap-2 border-b-2 border-b-secondary-500 px-4 pb-5 sm:gap-3 lg:gap-4"
-          >
-            <h1
-              class="pb-2 text-center text-4xl font-medium leading-9 sm:text-5xl lg:text-6xl"
-            >
-              Formulir
-              <span class="font-bold text-primary-300">Kirim Pesan</span>
-            </h1>
-            <p class="text-center text-base sm:text-lg">
-              Silakan menulis pesan yang ingin disampaikan kepada panti asuhan
-              terkait.
-            </p>
-          </div>
-
-          <div class="flex w-full flex-col items-start justify-center gap-6">
-            <!-- Message -->
-            <div class="input-container mt-2">
-              <label
-                for="message"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Pesan
-              </label>
-
-              <textarea
-                name="message"
-                id="message"
-                placeholder="Masukkan pesan"
-                rows="5"
-                v-model="form.message"
-              ></textarea>
-              <p id="message-error-message" class="error-message">
-                {{ state.errorMessage }}
-              </p>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-center gap-4">
-            <button class="btn-secondary" type="button" @click="closeFormPesan">
-              Tutup
-            </button>
-            <button class="btn-primary" type="submit">Kirim</button>
-          </div>
-        </div>
-      </form>
-    </section>
+      :isFormPesanOpen="isFormPesanOpen"
+      :id="pantiId"
+      @closeFormPesan="closeFormPesan"
+      @success="handleFormPesanSuccess"
+    />
 
     <!-- Title -->
     <section
@@ -382,11 +231,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, reactive } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import PesanCard from "@/components/cards/PesanCard.vue";
 import { fetchPantiById } from "@/services/api-panti";
-import { createMessage } from "@/services/api-message";
 import { fetchPaymentByPantiId } from "@/services/api-payment";
 import { useAuthStore } from "@/stores/authStore";
 
@@ -396,6 +244,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
+import FormPesan from "@/components/forms/FormPesan.vue";
+import FormDana from "@/components/forms/FormDana.vue";
+import SuccessAlert from "@/components/alerts/SuccessAlert.vue";
 
 const modules = [Pagination, Navigation];
 
@@ -410,25 +261,14 @@ const isFormDanaOpen = ref(false);
 const isFormNonDanaOpen = ref(false);
 const isFormPesanOpen = ref(false);
 
-const form = reactive({
-  message: "",
-});
+const showSuccessAlert = ref(false);
 
-const state = reactive({
-  errorMessage: "",
-});
+const handleFormPesanSuccess = () => {
+  showSuccessAlert.value = true;
 
-const submitMessage = async () => {
-  try {
-    const success = await createMessage(pantiId, form.message);
-    if (success) {
-      form.message = "";
-      state.errorMessage = "";
-      closeFormPesan();
-    }
-  } catch (error) {
-    state.errorMessage = error.message;
-  }
+  setTimeout(() => {
+    showSuccessAlert.value = false;
+  }, 3000); // Hide the alert after 3 seconds
 };
 
 function openFormDana() {
@@ -467,4 +307,19 @@ onMounted(async () => {
 });
 </script>
 
-<style></style>
+<style scoped>
+/* Slide and fade-in animation */
+.slide-fade-enter-active {
+  transition: all 0.5s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.5s ease-in;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
+</style>

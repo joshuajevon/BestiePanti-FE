@@ -1,6 +1,6 @@
 <template>
   <div
-    class="text-center mt-4 flex justify-center items-center gap-3"
+    class="text-center flex justify-center items-center gap-3"
     :class="customClass"
   >
     <svg
