@@ -195,12 +195,34 @@ const form = reactive({
 
 const isLoading = ref(false);
 
+const validateForm = () => {
+  Object.keys(authStore.errorMessages).forEach((key) => {
+    authStore.errorMessages[key] = "";
+  });
+
+  let isValid = true;
+
+  if (!form.email) {
+    authStore.errorMessages.email = "Email tidak boleh kosong";
+    isValid = false;
+  }
+
+  if (!form.password) {
+    authStore.errorMessages.password = "Kata Sandi tidak boleh kosong";
+    isValid = false;
+  }
+
+  return isValid;
+};
+
 const submitForm = async () => {
-  isLoading.value = true; // Show loading overlay
+  if (!validateForm()) return;
+
+  isLoading.value = true;
 
   const success = await authStore.login(form);
 
-  isLoading.value = false; // Hide loading overlay
+  isLoading.value = false;
 
   if (success) {
     router.push("/");
