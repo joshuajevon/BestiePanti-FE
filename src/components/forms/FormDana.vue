@@ -75,7 +75,14 @@
               placeholder="Masukkan nomor rekening Anda"
               v-model="donationData.accountNumber"
             />
-            <p id="account-number-error-message" class="error-message"></p>
+
+            <p
+              v-if="errorMessages.accountNumber"
+              id="account-number-error-message"
+              class="error-message"
+            >
+              {{ errorMessages.accountNumber }}
+            </p>
           </div>
 
           <!-- Account Name -->
@@ -94,7 +101,40 @@
               placeholder="Masukkan nama rekening Anda"
               v-model="donationData.accountName"
             />
-            <p id="account-name-error-message" class="error-message"></p>
+
+            <p
+              v-if="errorMessages.accountName"
+              id="account-name-error-message"
+              class="error-message"
+            >
+              {{ errorMessages.accountName }}
+            </p>
+          </div>
+
+          <!-- Donation Amount -->
+          <div class="input-container mt-2">
+            <label
+              for="donation_amount"
+              class="text-base font-medium text-secondary-500 sm:text-lg"
+            >
+              Nominal Donasi
+            </label>
+
+            <input
+              type="number"
+              id="donation_amount"
+              name="donation_amount"
+              placeholder="Masukkan nominal donasi Anda"
+              v-model="donationData.donationAmount"
+            />
+
+            <p
+              v-if="errorMessages.donationAmount"
+              id="donation-amount-error-message"
+              class="error-message"
+            >
+              {{ errorMessages.donationAmount }}
+            </p>
           </div>
 
           <!-- Proof of payment -->
@@ -112,8 +152,16 @@
               name="proof_of_payment"
               placeholder="Masukkan bukti transfer Anda"
               accept="image/*"
+              @change="handleFileUpload"
             />
-            <p id="proof-of-payment-error-message" class="error-message"></p>
+
+            <p
+              v-if="errorMessages.image"
+              id="proof-of-payment-error-message"
+              class="error-message"
+            >
+              {{ errorMessages.image }}
+            </p>
           </div>
         </div>
 
@@ -150,24 +198,64 @@ const donationData = reactive({
   donationDate: Date(),
   isOnsite: 0,
   donationType: "Dana",
-  image: "",
   accountNumber: "",
   accountName: "",
+  donationAmount: "",
+  image: null,
 });
 
 const errorMessages = reactive({
   accountNumber: "",
   accountName: "",
+  donationAmount: "",
   image: "",
 });
 
-const isSubmitting = ref(false); // Fetching state
+const isSubmitting = ref(false);
+
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    donationData.image = file;
+  }
+};
+
+const validateForm = () => {
+  Object.keys(errorMessages).forEach((key) => {
+    errorMessages[key] = "";
+  });
+
+  let isValid = true;
+
+  if (!donationData.accountNumber) {
+    errorMessages.accountNumber = "Nomor Rekening tidak boleh kosong";
+    isValid = false;
+  }
+
+  if (!donationData.accountName) {
+    errorMessages.accountName = "Nama Rekening tidak boleh kosong";
+    isValid = false;
+  }
+
+  if (!donationData.donationAmount) {
+    errorMessages.donationAmount = "Nominal Donasi tidak boleh kosong";
+    isValid = false;
+  }
+
+  if (!donationData.image) {
+    errorMessages.image = "Bukti Transfer tidak boleh kosong";
+    isValid = false;
+  }
+
+  return isValid;
+};
 
 const submitForm = async () => {
-  isSubmitting.value = true; // Start fetching
+  if (!validateForm()) return;
+
+  isSubmitting.value = true;
 
   try {
-    console.log(donationData);
     const response = await createDonationDana(props.id, donationData);
 
     if (response.message && !response.id) {
@@ -175,8 +263,14 @@ const submitForm = async () => {
       return;
     }
 
-    errorMessages.message = "";
-    form.message = "";
+    Object.keys(errorMessages).forEach((key) => {
+      errorMessages[key] = "";
+    });
+
+    Object.keys(donationData).forEach((key) => {
+      donationData[key] = "";
+    });
+
     emit("success"); // Emit success event
     closeFormDana();
   } catch (error) {

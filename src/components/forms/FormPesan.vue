@@ -106,6 +106,7 @@ const form = reactive({
 });
 
 const errorMessages = reactive({ message: "" });
+
 const isSubmitting = ref(false); // Fetching state
 
 const validateForm = () => {
@@ -138,6 +139,7 @@ const submitForm = async () => {
 
     errorMessages.message = "";
     form.message = "";
+
     emit("success");
     closeFormPesan();
   } catch (error) {
