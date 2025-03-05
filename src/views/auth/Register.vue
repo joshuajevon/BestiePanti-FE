@@ -462,12 +462,85 @@ const form = reactive({
 
 const isLoading = ref(false);
 
+const validateForm = () => {
+  Object.keys(authStore.errorMessages).forEach((key) => {
+    authStore.errorMessages[key] = "";
+  });
+
+  let isValid = true;
+
+  // Name validation
+  if (!form.name) {
+    authStore.errorMessages.name = "Nama tidak boleh kosong";
+    isValid = false;
+  }
+
+  // Email validation
+  if (!form.email) {
+    authStore.errorMessages.email = "Email tidak boleh kosong";
+    isValid = false;
+  }
+
+  // Password validation
+  if (!form.password) {
+    authStore.errorMessages.password = "Kata Sandi tidak boleh kosong";
+    isValid = false;
+  } else if (form.password.length < 6) {
+    authStore.errorMessages.password =
+      "Kata Sandi harus memiliki minimal 6 karakter";
+    isValid = false;
+  }
+
+  // Confirmation password validation
+  if (!form.confirmation_password) {
+    authStore.errorMessages.confirmationPassword =
+      "Konfirmasi Kata Sandi tidak boleh kosong";
+    isValid = false;
+  } else if (form.password !== form.confirmation_password) {
+    console.log(9);
+    authStore.errorMessages.confirmationPassword =
+      "Konfirmasi Kata Sandi tidak cocok";
+    isValid = false;
+  }
+
+  // Phone number validation
+  if (!form.phone) {
+    authStore.errorMessages.phone = "Nomor Telepon tidak boleh kosong";
+    isValid = false;
+  }
+
+  // Date of birth validation
+  if (!form.dob) {
+    authStore.errorMessages.dob = "Tanggal Lahir tidak boleh kosong";
+    isValid = false;
+  }
+
+  // Address validation
+  if (!form.address) {
+    authStore.errorMessages.address = "Alamat tidak boleh kosong";
+    isValid = false;
+  }
+
+  // Gender validation
+  if (!form.gender) {
+    authStore.errorMessages.gender = "Jenis kelamin tidak boleh kosong";
+    isValid = false;
+  }
+
+  console.log(form);
+
+  return isValid;
+};
+
 const submitForm = async () => {
+  if (!validateForm()) return;
+
   isLoading.value = true;
 
   const success = await authStore.register(form);
 
   isLoading.value = false;
+
   if (success) {
     router.push("/");
   }
