@@ -7,7 +7,7 @@
         <SuccessAlert
           v-if="showDanaSuccessAlert"
           text1="Donasi dana telah terkirim"
-          text2="Terima kasih! Donasi dana Anda akan segera diproses."
+          text2="Terima kasih! Donasi Dana Anda akan segera diproses."
         />
       </transition>
 

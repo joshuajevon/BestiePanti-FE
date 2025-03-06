@@ -112,7 +112,7 @@
           </div>
 
           <!-- Donation Amount -->
-          <div class="input-container mt-2">
+          <!-- <div class="input-container mt-2">
             <label
               for="donation_amount"
               class="text-base font-medium text-secondary-500 sm:text-lg"
@@ -135,7 +135,7 @@
             >
               {{ errorMessages.donationAmount }}
             </p>
-          </div>
+          </div> -->
 
           <!-- Proof of payment -->
           <div class="input-container mt-2">
@@ -153,6 +153,7 @@
               placeholder="Masukkan bukti transfer Anda"
               accept="image/*"
               @change="handleFileUpload"
+              ref="fileInput"
             />
 
             <p
@@ -181,6 +182,8 @@ import { createDonationDana } from "@/services/api-donation";
 import { reactive, ref } from "vue";
 import LoadingIndicator from "../loading/LoadingIndicator.vue";
 
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+
 const props = defineProps({
   isFormDanaOpen: {
     type: Boolean,
@@ -195,23 +198,20 @@ const props = defineProps({
 const emit = defineEmits(["closeFormDana", "success"]);
 
 const donationData = reactive({
-  donationDate: Date(),
-  isOnsite: 0,
-  donationType: "Dana",
+  image: null,
   accountNumber: "",
   accountName: "",
-  donationAmount: "",
-  image: null,
 });
 
 const errorMessages = reactive({
+  image: "",
   accountNumber: "",
   accountName: "",
-  donationAmount: "",
-  image: "",
 });
 
 const isSubmitting = ref(false);
+
+const fileInput = ref(null);
 
 const handleFileUpload = (event) => {
   const file = event.target.files[0];
@@ -227,23 +227,26 @@ const validateForm = () => {
 
   let isValid = true;
 
-  if (!donationData.accountNumber) {
+  if (!donationData.accountNumber.trim()) {
     errorMessages.accountNumber = "Nomor Rekening tidak boleh kosong";
     isValid = false;
   }
 
-  if (!donationData.accountName) {
+  if (!donationData.accountName.trim()) {
     errorMessages.accountName = "Nama Rekening tidak boleh kosong";
-    isValid = false;
-  }
-
-  if (!donationData.donationAmount) {
-    errorMessages.donationAmount = "Nominal Donasi tidak boleh kosong";
     isValid = false;
   }
 
   if (!donationData.image) {
     errorMessages.image = "Bukti Transfer tidak boleh kosong";
+    isValid = false;
+  }
+
+  if (!donationData.image) {
+    errorMessages.image = "Bukti Transfer tidak boleh kosong";
+    isValid = false;
+  } else if (donationData.image.size > MAX_FILE_SIZE) {
+    errorMessages.image = "Ukuran file terlalu besar. Maksimum 2MB.";
     isValid = false;
   }
 
@@ -263,15 +266,16 @@ const submitForm = async () => {
       return;
     }
 
-    Object.keys(errorMessages).forEach((key) => {
-      errorMessages[key] = "";
-    });
+    Object.keys(errorMessages).forEach((key) => (errorMessages[key] = ""));
+    donationData.image = null;
+    donationData.accountNumber = "";
+    donationData.accountName = "";
 
-    Object.keys(donationData).forEach((key) => {
-      donationData[key] = "";
-    });
+    if (fileInput.value) {
+      fileInput.value.value = "";
+    }
 
-    emit("success"); // Emit success event
+    emit("success");
     closeFormDana();
   } catch (error) {
     console.error("Error sending donation:", error);
@@ -280,7 +284,6 @@ const submitForm = async () => {
     isSubmitting.value = false;
   }
 };
-
 const closeFormDana = () => {
   emit("closeFormDana");
 };
