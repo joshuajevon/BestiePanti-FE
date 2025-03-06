@@ -46,9 +46,12 @@
         <div class="flex w-full flex-col items-start justify-center gap-6">
           <!-- Donation Date -->
           <div class="input-container mt-2">
-            <label class="text-base font-medium text-secondary-500 sm:text-lg"
+            <label
+              for="donation_date"
+              class="text-base font-medium text-secondary-500 sm:text-lg"
               >Tanggal Donasi</label
             >
+
             <input
               type="date"
               id="donation_date"
@@ -112,19 +115,38 @@
             >
 
             <div class="flex flex-wrap gap-4">
-              <label
-                v-for="(option, index) in donationTypes"
-                :key="index"
-                class="flex items-center gap-2"
-              >
+              <div class="flex items-center gap-2">
                 <input
                   type="checkbox"
+                  id="dana"
                   name="donation-type"
                   v-model="donationData.donation_types"
-                  :value="option"
+                  value="Dana"
                 />
-                {{ option }}
-              </label>
+                <label for="dana">Dana</label>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="barang"
+                  name="donation-type"
+                  v-model="donationData.donation_types"
+                  value="Barang"
+                />
+                <label for="barang">Barang</label>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="tenaga"
+                  name="donation-type"
+                  v-model="donationData.donation_types"
+                  value="Tenaga"
+                />
+                <label for="tenaga">Tenaga</label>
+              </div>
             </div>
 
             <p
@@ -232,8 +254,6 @@ const props = defineProps({
 
 const emit = defineEmits(["closeFormNonDana", "success"]);
 
-const donationTypes = ["Barang", "Makanan", "Tenaga"];
-
 const donationData = reactive({
   donation_date: "",
   is_onsite: "",
@@ -251,6 +271,7 @@ const errorMessages = reactive({
   active_phone: "",
   notes: "",
 });
+
 const isSubmitting = ref(false);
 
 const validateForm = () => {
@@ -307,7 +328,12 @@ const submitForm = async () => {
       return;
     }
 
-    Object.keys(donationData).forEach((key) => (donationData[key] = ""));
+    donationData.donation_date = "";
+    donationData.is_onsite = "";
+    donationData.donation_types = [];
+    donationData.pic = "";
+    donationData.active_phone = "";
+    donationData.notes = "";
     Object.keys(errorMessages).forEach((key) => (errorMessages[key] = ""));
 
     emit("success");
@@ -319,6 +345,7 @@ const submitForm = async () => {
     isSubmitting.value = false;
   }
 };
+
 const closeFormNonDana = () => {
   emit("closeFormNonDana");
 };
