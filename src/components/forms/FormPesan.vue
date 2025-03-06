@@ -53,7 +53,6 @@
               placeholder="Masukkan pesan"
               rows="5"
               v-model="form.message"
-              :disabled="isSubmitting"
             ></textarea>
             <p
               v-if="errorMessages.message"

@@ -6,8 +6,16 @@
       <transition name="slide-fade">
         <SuccessAlert
           v-if="showDanaSuccessAlert"
-          text1="Donasi dana telah terkirim"
+          text1="Donasi Dana telah terkirim"
           text2="Terima kasih! Donasi Dana Anda akan segera diproses."
+        />
+      </transition>
+
+      <transition name="slide-fade">
+        <SuccessAlert
+          v-if="showNonDanaSuccessAlert"
+          text1="Donasi Non Dana telah terkirim"
+          text2="Terima kasih! Donasi Non Dana Anda akan segera diproses."
         />
       </transition>
 
@@ -30,72 +38,13 @@
     />
 
     <!-- Form Non Dana -->
-    <section
+    <FormNonDana
       v-if="authStore.user"
-      v-show="isFormNonDanaOpen"
-      class="c-container fixed z-[100] h-screen w-screen bg-black/80"
-    >
-      <form
-        action=""
-        method=""
-        class="flex h-full w-full items-center justify-center"
-        onsubmit=""
-      >
-        <div
-          class="h-max-[80vh] flex w-full max-w-screen-xl flex-col gap-8 rounded-xl bg-white p-8 sm:rounded-2xl sm:p-12 lg:rounded-3xl lg:p-16"
-        >
-          <!-- Title -->
-          <div
-            class="flex w-full flex-col items-center justify-center gap-2 border-b-2 border-b-secondary-500 px-4 pb-5 sm:gap-3 lg:gap-4"
-          >
-            <h1
-              class="pb-2 text-center text-4xl font-medium leading-9 sm:text-5xl lg:text-6xl"
-            >
-              Formulir
-              <span class="font-bold text-primary-300">Donasi Non Dana</span>
-            </h1>
-            <p class="text-center text-base sm:text-lg">
-              Silakan lengkapi form pendaftaran berikut. Akun pengguna yang
-              didaftarkan
-              <span class="font-bold">harus atas nama perorangan</span>.
-            </p>
-          </div>
-
-          <div class="flex w-full flex-col items-start justify-center gap-6">
-            <!-- Email Address -->
-            <div class="input-container mt-2">
-              <label
-                for="email"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Email
-              </label>
-
-              <input
-                type="email"
-                autocomplete="false"
-                id="email"
-                name="email"
-                placeholder="Masukkan alamat email"
-                class="autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]' mt-1 w-full rounded-md border border-secondary-500 bg-white p-4 text-sm sm:text-base"
-              />
-              <p id="email-error-message" class="error-message"></p>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-center gap-4">
-            <button
-              class="btn-secondary"
-              type="button"
-              @click="closeFormNonDana"
-            >
-              Tutup
-            </button>
-            <button class="btn-primary" type="submit">Kirim</button>
-          </div>
-        </div>
-      </form>
-    </section>
+      :isFormNonDanaOpen="isFormNonDanaOpen"
+      :id="pantiId"
+      @closeFormNonDana="closeFormNonDana"
+      @success="handleFormNonDanaSuccess"
+    />
 
     <!-- Form Pesan -->
     <FormPesan
@@ -254,8 +203,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
-import FormPesan from "@/components/forms/FormPesan.vue";
 import FormDana from "@/components/forms/FormDana.vue";
+import FormNonDana from "@/components/forms/FormNonDana.vue";
+import FormPesan from "@/components/forms/FormPesan.vue";
 import SuccessAlert from "@/components/alerts/SuccessAlert.vue";
 
 const modules = [Pagination, Navigation];
@@ -272,6 +222,7 @@ const isFormNonDanaOpen = ref(false);
 const isFormPesanOpen = ref(false);
 
 const showDanaSuccessAlert = ref(false);
+const showNonDanaSuccessAlert = ref(false);
 const showPesanSuccessAlert = ref(false);
 
 const handleFormDanaSuccess = () => {
@@ -279,7 +230,15 @@ const handleFormDanaSuccess = () => {
 
   setTimeout(() => {
     showDanaSuccessAlert.value = false;
-  }, 3000); // Hide the alert after 3 seconds
+  }, 3000);
+};
+
+const handleFormNonDanaSuccess = () => {
+  showNonDanaSuccessAlert.value = true;
+
+  setTimeout(() => {
+    showNonDanaSuccessAlert.value = false;
+  }, 3000);
 };
 
 const handleFormPesanSuccess = () => {
@@ -287,7 +246,7 @@ const handleFormPesanSuccess = () => {
 
   setTimeout(() => {
     showPesanSuccessAlert.value = false;
-  }, 3000); // Hide the alert after 3 seconds
+  }, 3000);
 };
 
 function openFormDana() {

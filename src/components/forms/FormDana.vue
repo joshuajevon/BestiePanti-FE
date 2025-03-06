@@ -266,10 +266,8 @@ const submitForm = async () => {
       return;
     }
 
+    Object.keys(donationData).forEach((key) => (donationData[key] = ""));
     Object.keys(errorMessages).forEach((key) => (errorMessages[key] = ""));
-    donationData.image = null;
-    donationData.accountNumber = "";
-    donationData.accountName = "";
 
     if (fileInput.value) {
       fileInput.value.value = "";
@@ -284,6 +282,7 @@ const submitForm = async () => {
     isSubmitting.value = false;
   }
 };
+
 const closeFormDana = () => {
   emit("closeFormDana");
 };

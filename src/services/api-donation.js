@@ -32,3 +32,32 @@ export async function createDonationDana(id, donationData) {
     throw error;
   }
 }
+
+export async function createDonationNonDana(id, donationData) {
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await fetch(
+      `${API_URL}/api/v1/donation/nonfund/create/${id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(donationData),
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.log(errorResponse);
+      return errorResponse;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
