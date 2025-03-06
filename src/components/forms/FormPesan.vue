@@ -118,6 +118,9 @@ const validateForm = () => {
   if (!form.message) {
     errorMessages.message = "Pesan tidak boleh kosong";
     isValid = false;
+  } else if (form.message.length > 255) {
+    errorMessages.message = "Pesan tidak boleh lebih dari 255 karakter";
+    isValid = false;
   }
 
   return isValid;

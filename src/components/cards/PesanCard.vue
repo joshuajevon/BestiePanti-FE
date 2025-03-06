@@ -9,19 +9,19 @@
     />
 
     <div class="flex w-full flex-col gap-1 md:gap-2">
-      <h2 class="line-clamp-1 text-xl font-bold md:text-2xl">Nama Orang</h2>
-      <p class="text-justify text-secondary-300 md:text-lg">
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit
-        consequatur reprehenderit soluta, inventore excepturi at nihil obcaecati
-        repellat est? Nemo vero voluptatibus quisquam velit perferendis nam vel
-        quas maxime aspernatur?"
-      </p>
+      <h2 class="line-clamp-1 text-xl font-bold md:text-2xl">Nama Donatur</h2>
+      <p class="text-justify text-secondary-300">"{{ message.message }}"</p>
     </div>
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+defineProps({
+  message: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
 
 <style></style>

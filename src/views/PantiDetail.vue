@@ -1,5 +1,6 @@
 <template>
   <section class="bg-primary-50 text-secondary-500">
+    <!-- Success Alerts -->
     <div
       class="p-8 fixed z-[100] h-screen w-screen flex justify-end items-end pointer-events-none"
     >
@@ -55,7 +56,7 @@
       @success="handleFormPesanSuccess"
     />
 
-    <!-- Title -->
+    <!-- Go back -->
     <section
       class="c-container flex flex-col items-center justify-center gap-8 pb-8 pt-32 lg:pb-12 lg:pt-36 xl:pb-16 xl:pt-40"
     >
@@ -77,13 +78,31 @@
           Kembali
         </button>
       </div>
+    </section>
 
+    <!-- Loading -->
+    <section
+      v-if="isFetchingDatas"
+      class="c-container flex flex-col items-center pb-8 lg:pb-12 xl:pb-16 min-h-screen"
+    >
+      <LoadingIndicator
+        text="Memuat data panti asuhan..."
+        color="text-secondary-500"
+      />
+    </section>
+
+    <!-- Title -->
+    <section
+      v-if="!isFetchingDatas"
+      class="c-container flex flex-col items-center justify-center gap-8 pb-8 lg:pb-12 xl:pb-16"
+    >
       <div
         class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6"
       >
         <h1 v-if="panti" class="text-3xl font-bold lg:text-4xl xl:text-5xl">
           {{ panti.name || "" }}
         </h1>
+
         <p v-if="panti" class="text-lg lg:text-xl xl:text-2xl">
           {{ panti.address || "" }}
         </p>
@@ -91,7 +110,7 @@
     </section>
 
     <!-- Image Carousel -->
-    <section class="c-container pb-8 lg:pb-12 xl:pb-16">
+    <section v-if="!isFetchingDatas" class="c-container pb-8 lg:pb-12 xl:pb-16">
       <swiper
         :pagination="{
           clickable: true,
@@ -117,13 +136,17 @@
 
     <!-- Details -->
     <section
+      v-if="!isFetchingDatas"
       class="c-container flex flex-col items-center justify-center gap-8 pb-8 lg:pb-12 xl:pb-16"
     >
       <div class="flex flex-col justify-center items-center gap-2">
         <div class="flex flex-wrap items-center justify-center gap-4">
           <button
             class="btn-primary"
-            :class="{ 'pointer-events-none opacity-50': !authStore.user }"
+            :class="{
+              'pointer-events-none opacity-50':
+                !authStore.user || isFetchingDatas,
+            }"
             @click="openFormDana"
           >
             Donasi Dana
@@ -131,7 +154,10 @@
 
           <button
             class="btn-primary"
-            :class="{ 'pointer-events-none opacity-50': !authStore.user }"
+            :class="{
+              'pointer-events-none opacity-50':
+                !authStore.user || isFetchingDatas,
+            }"
             @click="openFormNonDana"
           >
             Donasi Non Dana
@@ -139,14 +165,17 @@
 
           <button
             class="btn-primary"
-            :class="{ 'pointer-events-none opacity-50': !authStore.user }"
+            :class="{
+              'pointer-events-none opacity-50':
+                !authStore.user || isFetchingDatas,
+            }"
             @click="openFormPesan"
           >
             Kirim Pesan
           </button>
         </div>
 
-        <div v-if="!authStore.user">
+        <div v-if="!authStore.user && !isFetchingDatas">
           <p class="error-message">
             *Anda harus login terlebih dahulu untuk melakukan donasi atau kirim
             pesan
@@ -163,6 +192,7 @@
 
     <!-- Pesan -->
     <section
+      v-if="!isFetchingDatas"
       class="c-container flex flex-col items-center justify-center gap-8 pb-16 lg:pb-20 xl:pb-24"
     >
       <div
@@ -174,17 +204,40 @@
         <div class="h-0.5 flex-1 bg-secondary-500"></div>
       </div>
 
-      <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <PesanCard />
+      <LoadingIndicator
+        v-if="isFetchingDatas"
+        text="Memuat data pesan panti asuhan..."
+        color="text-secondary-500"
+      />
+
+      <div
+        v-else-if="messages.length > 0"
+        class="flex flex-col justify-center items-center gap-8 w-full"
+      >
+        <div
+          class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4"
+        >
+          <PesanCard
+            v-for="message in messages.slice(0, messagesToShow)"
+            :key="message.id"
+            :message="message"
+          />
+        </div>
+
+        <button
+          class="btn-primary"
+          @click="loadMoreMessages"
+          :class="{
+            'pointer-events-none opacity-50':
+              messages.length <= 4 || messagesToShow >= messages.length,
+          }"
+          :disabled="messages.length <= 4 || messagesToShow >= messages.length"
+        >
+          Lihat Lebih Banyak
+        </button>
       </div>
 
-      <button
-        class="btn-primary pointer-events-none opacity-50"
-        @click="loadMorePesan"
-        disabled
-      >
-        Lihat Lebih Banyak
-      </button>
+      <p v-else class="error-message">Panti asuhan ini belum memiliki pesan</p>
     </section>
   </section>
 </template>
@@ -195,6 +248,7 @@ import { useRoute } from "vue-router";
 import PesanCard from "@/components/cards/PesanCard.vue";
 import { fetchPantiById } from "@/services/api-panti";
 import { fetchPaymentByPantiId } from "@/services/api-payment";
+import { fetchAllMessagesById } from "@/services/api-message";
 import { useAuthStore } from "@/stores/authStore";
 
 import "@/assets/swiper.css";
@@ -207,6 +261,7 @@ import FormDana from "@/components/forms/FormDana.vue";
 import FormNonDana from "@/components/forms/FormNonDana.vue";
 import FormPesan from "@/components/forms/FormPesan.vue";
 import SuccessAlert from "@/components/alerts/SuccessAlert.vue";
+import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 
 const modules = [Pagination, Navigation];
 
@@ -215,6 +270,8 @@ const route = useRoute();
 const pantiId = route.params.id;
 const panti = ref(null);
 const payment = ref(null);
+const messages = ref([]);
+const messagesToShow = ref(4);
 const authStore = useAuthStore();
 
 const isFormDanaOpen = ref(false);
@@ -224,6 +281,8 @@ const isFormPesanOpen = ref(false);
 const showDanaSuccessAlert = ref(false);
 const showNonDanaSuccessAlert = ref(false);
 const showPesanSuccessAlert = ref(false);
+
+const isFetchingDatas = ref(true);
 
 const handleFormDanaSuccess = () => {
   showDanaSuccessAlert.value = true;
@@ -273,20 +332,30 @@ function closeFormPesan() {
   isFormPesanOpen.value = false;
 }
 
+function loadMoreMessages() {
+  messagesToShow.value += 4;
+}
+
 onMounted(async () => {
   try {
     const pantiData = await fetchPantiById(pantiId);
     const paymentData = await fetchPaymentByPantiId(pantiId);
+    const messagesData = await fetchAllMessagesById(pantiId);
+
     panti.value = pantiData;
     payment.value = paymentData;
+    messages.value = messagesData.message_responses.filter(
+      (message) => message.panti_id === parseInt(pantiId)
+    );
   } catch (error) {
     console.log(error);
+  } finally {
+    isFetchingDatas.value = false;
   }
 });
 </script>
 
 <style scoped>
-/* Slide and fade-in animation */
 .slide-fade-enter-active {
   transition: all 0.5s ease-out;
 }

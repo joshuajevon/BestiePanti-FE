@@ -30,3 +30,27 @@ export async function createMessage(id, message) {
     throw error;
   }
 }
+
+export async function fetchAllMessagesById(id) {
+  try {
+    const response = await fetch(`${API_URL}/api/v1/message/view/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch panti messages. Status: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
