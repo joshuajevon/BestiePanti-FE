@@ -31,7 +31,7 @@
 
     <!-- Form Dana -->
     <FormDana
-      v-if="authStore.user && panti"
+      v-if="authStore.user && authStore.user.role !== 'ROLE_PANTI' && panti"
       :isFormDanaOpen="isFormDanaOpen"
       :id="pantiId"
       :qris="panti.qris"
@@ -45,7 +45,7 @@
 
     <!-- Form Non Dana -->
     <FormNonDana
-      v-if="authStore.user"
+      v-if="authStore.user && authStore.user.role !== 'ROLE_PANTI' && panti"
       :isFormNonDanaOpen="isFormNonDanaOpen"
       :id="pantiId"
       @closeFormNonDana="closeFormNonDana"
@@ -54,7 +54,7 @@
 
     <!-- Form Pesan -->
     <FormPesan
-      v-if="authStore.user"
+      v-if="authStore.user && authStore.user.role !== 'ROLE_PANTI' && panti"
       :isFormPesanOpen="isFormPesanOpen"
       :id="pantiId"
       @closeFormPesan="closeFormPesan"
@@ -178,7 +178,9 @@
             class="btn-primary"
             :class="{
               'pointer-events-none opacity-50':
-                !authStore.user || isFetchingDatas,
+                !authStore.user ||
+                isFetchingDatas ||
+                authStore.user.role === 'ROLE_PANTI',
             }"
             @click="openFormDana"
           >
@@ -189,7 +191,9 @@
             class="btn-primary"
             :class="{
               'pointer-events-none opacity-50':
-                !authStore.user || isFetchingDatas,
+                !authStore.user ||
+                isFetchingDatas ||
+                authStore.user.role === 'ROLE_PANTI',
             }"
             @click="openFormNonDana"
           >
@@ -200,7 +204,9 @@
             class="btn-primary"
             :class="{
               'pointer-events-none opacity-50':
-                !authStore.user || isFetchingDatas,
+                !authStore.user ||
+                isFetchingDatas ||
+                authStore.user.role === 'ROLE_PANTI',
             }"
             @click="openFormPesan"
           >
@@ -212,6 +218,12 @@
           <p class="error-message">
             *Anda harus login terlebih dahulu untuk melakukan donasi atau kirim
             pesan
+          </p>
+        </div>
+        <div v-else-if="authStore.user.role === 'ROLE_PANTI'">
+          <p class="error-message">
+            Akun panti asuhan tidak dapat digunakan untuk berdonasi atau
+            mengirim pesan
           </p>
         </div>
       </div>
