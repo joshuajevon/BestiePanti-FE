@@ -2,7 +2,7 @@
   <div
     class="flex h-fit flex-col justify-center gap-4 rounded-2xl bg-white p-8"
   >
-    <div class="w-24 h-24 rounded-full bg-secondary-300">
+    <div class="w-24 h-24 rounded-full bg-secondary-300 overflow-hidden">
       <img
         class="h-full w-full object-cover object-center"
         :src="`${apiUrl}/storage/profile/${profile}`"
