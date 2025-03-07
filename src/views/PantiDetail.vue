@@ -36,6 +36,9 @@
       :id="pantiId"
       :qris="panti.qris"
       :pantiName="panti.name"
+      :bankAccountName="panti.bank_account_name"
+      :bankAccountNumber="panti.bank_account_number"
+      :bankName="panti.bank_name"
       @closeFormDana="closeFormDana"
       @success="handleFormDanaSuccess"
     />

@@ -57,9 +57,9 @@
           <div
             class="flex flex-col justify-center items-center font-bold text-center w-full"
           >
-            <h1>BCA</h1>
-            <p>1234123400</p>
-            <p>A/n Christopher Nathanael Tessy</p>
+              <h1>{{ bankName || "" }}</h1>
+              <p>{{ bankAccountNumber || "" }}</p>
+              <p>A/n {{ bankAccountName || "" }}</p>
           </div>
 
           <!-- Account Number -->
@@ -202,6 +202,18 @@ const props = defineProps({
     required: true,
   },
   pantiName: {
+    type: String,
+    required: true,
+  },
+  bankAccountName: {
+    type: String,
+    required: true,
+  },
+  bankAccountNumber: {
+    type: String,
+    required: true,
+  },
+  bankName: {
     type: String,
     required: true,
   },
