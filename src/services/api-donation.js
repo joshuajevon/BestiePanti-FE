@@ -16,7 +16,7 @@ export async function createDonationDana(id, donationData) {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: formData, // Send as FormData
+        body: formData,
       }
     );
 

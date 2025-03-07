@@ -31,9 +31,11 @@
 
     <!-- Form Dana -->
     <FormDana
-      v-if="authStore.user"
+      v-if="authStore.user && panti"
       :isFormDanaOpen="isFormDanaOpen"
       :id="pantiId"
+      :qris="panti.qris"
+      :pantiName="panti.name"
       @closeFormDana="closeFormDana"
       @success="handleFormDanaSuccess"
     />
@@ -218,9 +220,12 @@
           class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4"
         >
           <PesanCard
+            v-if="messages"
             v-for="message in messages.slice(0, messagesToShow)"
             :key="message.id"
-            :message="message"
+            :profile="message.donatur_profile"
+            :name="message.donatur_name"
+            :message="message.message"
           />
         </div>
 

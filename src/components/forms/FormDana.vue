@@ -46,8 +46,11 @@
         <div class="flex w-full flex-col items-start justify-center gap-6">
           <!-- QRIS Image -->
           <div class="flex justify-center items-center w-full">
-            <div class="w-64 h-96 bg-black"></div>
-            <!-- <img src="" alt="" /> -->
+            <img
+              class="h-96 w-auto"
+              :src="`${apiUrl}/storage/qris/${qris}`"
+              :alt="`${pantiName}'s qris image`"
+            />
           </div>
 
           <!-- Account Details -->
@@ -112,7 +115,7 @@
           </div>
 
           <!-- Donation Amount -->
-          <!-- <div class="input-container mt-2">
+          <div class="input-container mt-2">
             <label
               for="donation_amount"
               class="text-base font-medium text-secondary-500 sm:text-lg"
@@ -125,17 +128,17 @@
               id="donation_amount"
               name="donation_amount"
               placeholder="Masukkan nominal donasi Anda"
-              v-model="donationData.donationAmount"
+              v-model="donationData.nominalAmount"
             />
 
             <p
-              v-if="errorMessages.donationAmount"
+              v-if="errorMessages.nominalAmount"
               id="donation-amount-error-message"
               class="error-message"
             >
-              {{ errorMessages.donationAmount }}
+              {{ errorMessages.nominalAmount }}
             </p>
-          </div> -->
+          </div>
 
           <!-- Proof of payment -->
           <div class="input-container mt-2">
@@ -183,6 +186,7 @@ import { reactive, ref } from "vue";
 import LoadingIndicator from "../loading/LoadingIndicator.vue";
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const props = defineProps({
   isFormDanaOpen: {
@@ -190,6 +194,14 @@ const props = defineProps({
     required: true,
   },
   id: {
+    type: String,
+    required: true,
+  },
+  qris: {
+    type: String,
+    required: true,
+  },
+  pantiName: {
     type: String,
     required: true,
   },
@@ -201,12 +213,14 @@ const donationData = reactive({
   image: null,
   accountNumber: "",
   accountName: "",
+  nominalAmount: "",
 });
 
 const errorMessages = reactive({
   image: "",
   accountNumber: "",
   accountName: "",
+  nominalAmount: "",
 });
 
 const isSubmitting = ref(false);
