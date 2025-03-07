@@ -1,5 +1,26 @@
 <template>
   <section class="bg-primary-50 text-secondary-500 pt-20 lg:pt-24">
+    <!-- Success Alert -->
+    <div
+      class="p-8 fixed z-[100] h-screen w-screen flex justify-end items-end left-0 top-0 pointer-events-none"
+    >
+      <transition name="slide-fade">
+        <SuccessAlert
+          v-if="showLoginSuccessAlert"
+          text1="Berhasil Masuk!"
+          text2="Selamat datang kembali! Anda telah berhasil masuk."
+        />
+      </transition>
+
+      <transition name="slide-fade">
+        <SuccessAlert
+          v-if="showRegisterSuccessAlert"
+          text1="Pendafataran Berhasil!"
+          text2="Akun Anda telah dibuat. Selamat datang!"
+        />
+      </transition>
+    </div>
+
     <!-- Banner -->
     <section>
       <swiper
@@ -233,13 +254,45 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
+import SuccessAlert from "@/components/alerts/SuccessAlert.vue";
+import { useRoute, useRouter } from "vue-router";
+
+const route = useRoute();
+const router = useRouter();
 
 const modules = [Autoplay, Pagination, Navigation];
 const authStore = useAuthStore();
 const pantiList = ref([]);
 const fetching = ref(true);
 
+const showLoginSuccessAlert = ref(false);
+const showRegisterSuccessAlert = ref(false);
+
+const handleLoginSuccess = () => {
+  router.replace({ query: {} });
+  showLoginSuccessAlert.value = true;
+
+  setTimeout(() => {
+    showLoginSuccessAlert.value = false;
+  }, 3000);
+};
+
+const handleRegisterSuccess = () => {
+  router.replace({ query: {} });
+  showRegisterSuccessAlert.value = true;
+
+  setTimeout(() => {
+    showRegisterSuccessAlert.value = false;
+  }, 3000);
+};
+
 onMounted(async () => {
+  if (route.query.showLoginSuccessAlert) {
+    handleLoginSuccess();
+  } else if (route.query.showRegisterSuccessAlert) {
+    handleRegisterSuccess();
+  }
+
   try {
     const data = await fetchAllPanti();
     pantiList.value = data.panti_responses;
@@ -251,4 +304,18 @@ onMounted(async () => {
 });
 </script>
 
-<style></style>
+<style scoped>
+.slide-fade-enter-active {
+  transition: all 0.5s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.5s ease-in;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
+</style>

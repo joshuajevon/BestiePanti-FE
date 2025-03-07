@@ -2,6 +2,19 @@
   <section
     class="c-container flex flex-col gap-8 pb-8 pt-36 lg:gap-12 lg:pb-16 lg:pt-40 xl:gap-16 xl:pb-32 xl:pt-44 2xl:pt-48 bg-primary-50 text-secondary-500 relative"
   >
+    <!-- Success Alert -->
+    <div
+      class="p-8 fixed z-[100] h-screen w-screen flex justify-end items-end left-0 top-0 pointer-events-none"
+    >
+      <transition name="slide-fade">
+        <SuccessAlert
+          v-if="showLogoutSuccessAlert"
+          text1="Berhasil Keluar!"
+          text2="Anda telah keluar. Sampai jumpa lagi!"
+        />
+      </transition>
+    </div>
+
     <!-- Loading Overlay -->
     <div
       v-if="isLoading"
@@ -174,13 +187,26 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useAuthStore } from "@/stores/authStore";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
+import SuccessAlert from "@/components/alerts/SuccessAlert.vue";
 
 const authStore = useAuthStore();
+const route = useRoute();
 const router = useRouter();
+
+const showLogoutSuccessAlert = ref(false);
+
+const handleLogoutSuccess = () => {
+  router.replace({ query: {} });
+  showLogoutSuccessAlert.value = true;
+
+  setTimeout(() => {
+    showLogoutSuccessAlert.value = false;
+  }, 3000);
+};
 
 const showPassword = ref(false);
 
@@ -225,13 +251,33 @@ const submitForm = async () => {
   isLoading.value = false;
 
   if (success) {
-    router.push("/");
+    router.push({ path: "/", query: { showLoginSuccessAlert: "true" } });
   } else {
     Object.keys(form).forEach((key) => {
       form[key] = "";
     });
   }
 };
+
+onMounted(async () => {
+  if (route.query.showLogoutSuccessAlert) {
+    handleLogoutSuccess();
+  }
+});
 </script>
 
-<style></style>
+<style scoped>
+.slide-fade-enter-active {
+  transition: all 0.5s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.5s ease-in;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
+</style>

@@ -2,7 +2,7 @@
   <section class="bg-primary-50 text-secondary-500">
     <!-- Success Alerts -->
     <div
-      class="p-8 fixed z-[100] h-screen w-screen flex justify-end items-end pointer-events-none"
+      class="p-8 fixed z-[100] h-screen w-screen flex justify-end items-end pointer-events-none top-0 left-0"
     >
       <transition name="slide-fade">
         <SuccessAlert

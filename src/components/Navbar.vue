@@ -182,7 +182,7 @@
                   />
                 </svg>
 
-                Logout
+                Keluar
               </button>
             </div>
           </div>
@@ -245,11 +245,10 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
 
 const route = useRoute();
-const router = useRouter();
 const authStore = useAuthStore();
 const isNavbarOpen = ref(false);
 const isProfileWebOpen = ref(false);
@@ -272,7 +271,6 @@ function isActiveRoute(routeName) {
 
 function logout() {
   authStore.logout();
-  router.push("/login");
 }
 </script>
 

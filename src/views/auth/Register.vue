@@ -542,7 +542,7 @@ const submitForm = async () => {
   isLoading.value = false;
 
   if (success) {
-    router.push("/");
+    router.push({ path: "/", query: { showRegisterSuccessAlert: "true" } });
   }
 };
 </script>
