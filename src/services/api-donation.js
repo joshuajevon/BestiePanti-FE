@@ -4,9 +4,10 @@ export async function createDonationDana(id, donationData) {
   const token = localStorage.getItem("token");
 
   const formData = new FormData();
-  formData.append("account_number", donationData.accountNumber);
-  formData.append("account_name", donationData.accountName);
-  formData.append("image", donationData.image); // Append image file
+  formData.append("accountNumber", donationData.accountNumber);
+  formData.append("accountName", donationData.accountName);
+  formData.append("nominalAmount", donationData.nominalAmount);
+  formData.append("image", donationData.image);
 
   try {
     const response = await fetch(
@@ -26,7 +27,9 @@ export async function createDonationDana(id, donationData) {
       return errorResponse;
     }
 
-    return await response.json();
+    const data = await response.json();
+
+    return data;
   } catch (error) {
     console.error("API Error:", error);
     throw error;
@@ -55,7 +58,9 @@ export async function createDonationNonDana(id, donationData) {
       return errorResponse;
     }
 
-    return await response.json();
+    const data = await response.json();
+
+    return data;
   } catch (error) {
     console.error("API Error:", error);
     throw error;

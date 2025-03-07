@@ -114,26 +114,26 @@
             </p>
           </div>
 
-          <!-- Donation Amount -->
+          <!-- Jumlah Transfer -->
           <div class="input-container mt-2">
             <label
-              for="donation_amount"
+              for="transferAmount"
               class="text-base font-medium text-secondary-500 sm:text-lg"
             >
-              Nominal Donasi
+              Jumlah Transfer
             </label>
 
             <input
               type="number"
-              id="donation_amount"
-              name="donation_amount"
-              placeholder="Masukkan nominal donasi Anda"
+              id="transferAmount"
+              name="transferAmount"
+              placeholder="Masukkan jumlah transfer Anda"
               v-model="donationData.nominalAmount"
             />
 
             <p
               v-if="errorMessages.nominalAmount"
-              id="donation-amount-error-message"
+              id="transfer-amount-error-message"
               class="error-message"
             >
               {{ errorMessages.nominalAmount }}
@@ -251,6 +251,14 @@ const validateForm = () => {
     isValid = false;
   }
 
+  if (!String(donationData.nominalAmount).trim()) {
+    errorMessages.nominalAmount = "Jumlah Transfer tidak boleh kosong";
+    isValid = false;
+  } else if (donationData.nominalAmount === 0) {
+    errorMessages.nominalAmount = "Jumlah Transfer tidak boleh 0";
+    isValid = false;
+  }
+
   if (!donationData.image) {
     errorMessages.image = "Bukti Transfer tidak boleh kosong";
     isValid = false;
@@ -269,6 +277,8 @@ const validateForm = () => {
 
 const submitForm = async () => {
   if (!validateForm()) return;
+
+  donationData.nominalAmount = String(donationData.nominalAmount);
 
   isSubmitting.value = true;
 
