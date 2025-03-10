@@ -10,30 +10,30 @@
       Tidak ada data panti tersedia.
     </p>
 
-    <div v-else class="overflow-x-auto">
-      <table class="w-full min-w-max border-collapse border border-gray-300">
-        <thead class="bg-blue-700 text-white">
-          <tr>
-            <th v-for="header in headers" :key="header" class="p-2">{{ header }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="panti in paginatedData" :key="panti.id">
-            <td class="border p-2">{{ panti.name }}</td>
-            <td class="border p-2">{{ panti.email }}</td>
-            <td class="border p-2">{{ panti.phone }}</td>
-            <td class="border p-2">{{ panti.address }}</td>
-            <td class="border p-2">{{ panti.is_urgent ? "Urgent" : "Tidak Urgent" }}</td>
-            <td class="border p-2">{{ panti.bank_name }}</td>
-            <td class="border p-2">{{ panti.bank_account_number }}</td>
-            <td class="border p-2">{{ panti.bank_account_name }}</td>
-            <td class="border p-2">
-              <a href="#" class="text-blue-600 hover:underline">Edit</a> <br>
-              <a href="#" class="text-red-600 hover:underline">Delete</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div v-else class="overflow-x-auto rounded-xl">
+        <table class="w-full min-w-max border-collapse border">
+          <thead class="bg-blue-700 text-white">
+            <tr>
+              <th v-for="header in headers" :key="header" class="p-2">{{ header }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="panti in paginatedData" :key="panti.id">
+              <td class="border p-2">{{ panti.name }}</td>
+              <td class="border p-2">{{ panti.email }}</td>
+              <td class="border p-2">{{ panti.phone }}</td>
+              <td class="border p-2">{{ panti.address }}</td>
+              <td class="border p-2">{{ panti.is_urgent ? "Darurat" : "Tidak Darurat" }}</td>
+              <td class="border p-2">{{ panti.region }}</td>
+              <td class="border p-2">{{ panti.bank_name }} - {{ panti.bank_account_number }}</td>
+              <td class="border p-2">{{ panti.bank_account_name }}</td>
+              <td class="border p-2">
+                <a href="#" class="text-blue-600 hover:underline">Edit</a> <br>
+                <a href="#" class="text-red-600 hover:underline">Delete</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
     </div>
 
     <div class="flex justify-end mt-4">
@@ -62,8 +62,8 @@ const headers = ["Nama Panti",
   "Kontak",
   "Alamat",
   "Darurat",
-  "Nama Bank",
-  "Nomor Rekening",
+  "Region",
+  "Bank",
   "Nama Pemilik Rekening",
   "Aksi"
 ];

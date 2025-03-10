@@ -11,7 +11,7 @@
       Tidak ada data donasi tersedia.
     </p>
 
-    <div v-else class="overflow-x-auto">
+    <div v-else class="overflow-x-auto rounded-xl">
       <table class="w-full min-w-max border-collapse border border-gray-300">
         <thead class="bg-blue-700 text-white">
           <tr>
