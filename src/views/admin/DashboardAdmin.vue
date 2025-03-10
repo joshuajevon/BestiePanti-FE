@@ -1,6 +1,12 @@
 <template>
   <section class="min-h-screen pt-36">
-    <div class="p-6">
+    <div v-if="!isAdmin" class="p-6">
+      <h1 class="text-4xl font-bold text-center text-red-700 justify-center">
+        Kamu Tidak Memiliki Akses
+      </h1>
+    </div>
+
+    <div v-else class="p-6">
       <!-- Profile Section Placeholder -->
       <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-10 md:mb-20">
         <!-- Profile Picture Placeholder -->
@@ -74,11 +80,28 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import PantiTable from "@/components/dashboard/PantiTable.vue";
 import DonaturTable from "@/components/dashboard/DonaturTable.vue";
 import DonationFundTable from "@/components/dashboard/DonationFundTable.vue";
 import DonationNonFundTable from "@/components/dashboard/DonationNonFundTable.vue";
+import { useAuthStore } from "@/stores/authStore";
 
+const authStore = useAuthStore();
 const activeTab = ref("panti");
+
+const isAdmin = computed(() => {
+  return authStore.user?.role === "ROLE_ADMIN" ? true : false;
+});
+
+onMounted(() => {
+  const savedTab = localStorage.getItem("activeTab");
+  if (savedTab) {
+    activeTab.value = savedTab;
+  }
+});
+
+watch(activeTab, (newValue) => {
+  localStorage.setItem("activeTab", newValue);
+});
 </script>
