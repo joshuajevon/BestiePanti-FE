@@ -42,9 +42,15 @@ const router = createRouter({
       component: () => import("../views/PantiDetail.vue"),
     },
     {
-      path: "/dashboard",
-      name: "dashboard",
+      path: "/dashboard-admin",
+      name: "dashboard-admin",
       component: () => import("../views/admin/DashboardAdmin.vue"),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/dashboard-user",
+      name: "dashboard-user",
+      component: () => import("../views/user/Dashboard.vue"),
       meta: { requiresAuth: true },
     },
   ],

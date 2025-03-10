@@ -141,7 +141,7 @@
           >
             <div class="p-2">
               <router-link
-                to="/dashboard"
+                :to="dashboardRoute"
                 class="flex items-center gap-2 px-4 py-2 hover:bg-primary-100 rounded-lg"
               >
                 <svg
@@ -244,7 +244,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
 
@@ -252,6 +252,10 @@ const route = useRoute();
 const authStore = useAuthStore();
 const isNavbarOpen = ref(false);
 const isProfileWebOpen = ref(false);
+
+const dashboardRoute = computed(() => {
+  return authStore.user?.role === "ROLE_ADMIN" ? "/dashboard-admin" : "/dashboard-user";
+});
 
 function toggleNavbar() {
   isNavbarOpen.value = !isNavbarOpen.value;
