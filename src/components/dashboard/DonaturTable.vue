@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1 class="text-xl font-bold mb-4">Daftar Donatur</h1>
 
     <LoadingIndicator v-if="fetching" 
       text="Memuat data donatur..." 

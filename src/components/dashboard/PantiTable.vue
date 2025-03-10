@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h1 class="text-xl font-bold mb-4">Daftar Panti Asuhan</h1>
 
-    <LoadingIndicator v-if="fetching" text="Memuat data panti asuhan..." color="text-secondary-500" />
+    <LoadingIndicator v-if="fetching" 
+      text="Memuat data panti asuhan..." 
+      color="text-secondary-500"
+     />
     
     <p v-else-if="!fetching && pantiList.length === 0" class="text-center text-red-500 mt-4">
       Tidak ada data panti tersedia.
