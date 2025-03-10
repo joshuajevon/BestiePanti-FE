@@ -58,7 +58,13 @@ const fetching = ref(true);
 const currentPage = ref(1);
 const itemsPerPage = 10;
 
-const headers = ["Nama Donatur", "Email", "Kontak", "Alamat", "Aksi"];
+const headers = [
+  "Nama Donatur", 
+  "Email", 
+  "Kontak", 
+  "Alamat", 
+  "Aksi"
+];
 
 const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;

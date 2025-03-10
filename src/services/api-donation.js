@@ -66,3 +66,47 @@ export async function createDonationNonDana(id, donationData) {
     throw error;
   }
 }
+
+export async function fetchAllFundDonation() {
+  try {
+    const response = await fetch(`${API_URL}/api/v1/donation/fund/view`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch fund donation data. Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+export async function fetchAllNonFundDonation() {
+  try {
+    const response = await fetch(`${API_URL}/api/v1/donation/nonfund/view`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch non fund donation data. Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}

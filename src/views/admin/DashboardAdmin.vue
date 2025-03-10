@@ -27,20 +27,48 @@
       <!-- Toggle Buttons -->
       <div class="flex flex-wrap justify-start gap-4 mb-4">
         <button @click="activeTab = 'panti'" 
-          :class="{'bg-blue-700 text-white rounded-lg': activeTab === 'panti', 'bg-gray-300 rounded-lg hover:bg-blue-600': activeTab !== 'panti'}"
+          :class="{
+            'bg-blue-700 text-white rounded-lg': activeTab === 'panti',
+            'bg-gray-300 rounded-lg hover:bg-blue-600': activeTab !== 'panti'
+            }"
           class="px-4 py-2  transition duration-300">
           Panti Asuhan
         </button>
+
         <button @click="activeTab = 'donatur'" 
-          :class="{'bg-blue-700 text-white rounded-lg': activeTab === 'donatur', 'bg-gray-300 rounded-lg hover:bg-blue-600': activeTab !== 'donatur'}"
+          :class="{
+            'bg-blue-700 text-white rounded-lg': activeTab === 'donatur',
+            'bg-gray-300 rounded-lg hover:bg-blue-600': activeTab !== 'donatur'
+            }"
           class="px-4 py-2  transition duration-300">
           Donatur
         </button>
+
+        <button @click="activeTab = 'fund-donation'" 
+          :class="{
+            'bg-blue-700 text-white rounded-lg': activeTab === 'fund-donation',
+            'bg-gray-300 rounded-lg hover:bg-blue-600': activeTab !== 'fund-donation'
+            }"
+          class="px-4 py-2  transition duration-300">
+          Donasi Dana
+        </button>
+
+        <button @click="activeTab = 'nonfund-donation'" 
+          :class="{
+            'bg-blue-700 text-white rounded-lg': activeTab === 'nonfund-donation',
+            'bg-gray-300 rounded-lg hover:bg-blue-600': activeTab !== 'nonfund-donation'
+            }"
+          class="px-4 py-2  transition duration-300">
+          Donasi Non-Dana
+        </button>
+        
       </div>
 
       <!-- Conditional Rendering -->
       <PantiTable v-if="activeTab === 'panti'" class="relative" />
-      <DonaturTable v-else class="relative" />
+      <DonaturTable v-else-if="activeTab === 'donatur'" class="relative" />
+      <DonationFundTable v-else-if="activeTab === 'fund-donation'" class="relative" />
+      <DonationNonFundTable v-else-if="activeTab === 'nonfund-donation'" class="relative" />
     </div>
   </section>
 </template>
@@ -49,6 +77,8 @@
 import { ref } from "vue";
 import PantiTable from "@/components/dashboard/PantiTable.vue";
 import DonaturTable from "@/components/dashboard/DonaturTable.vue";
+import DonationFundTable from "@/components/dashboard/DonationFundTable.vue";
+import DonationNonFundTable from "@/components/dashboard/DonationNonFundTable.vue";
 
 const activeTab = ref("panti");
 </script>

@@ -12,7 +12,7 @@ export async function fetchAllDonatur() {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch donation data. Status: ${response.status}`);
+      throw new Error(`Failed to fetch donatur data. Status: ${response.status}`);
     }
 
     const data = await response.json();
