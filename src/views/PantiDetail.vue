@@ -378,7 +378,7 @@ const handleFormNonDanaSuccess = () => {
   }, 3000);
 };
 
-const handleFormPesanSuccess = () => {
+const handleFormPesanSuccess = async () => {
   showPesanSuccessAlert.value = true;
 
   setTimeout(() => {
@@ -425,11 +425,12 @@ function loadMoreMessages() {
 onMounted(async () => {
   try {
     const pantiData = await fetchPantiById(pantiId);
-    const paymentData = await fetchPaymentByPantiId(pantiId);
-    const messagesData = await fetchAllMessagesById(pantiId);
-
     panti.value = pantiData;
+
+    const paymentData = await fetchPaymentByPantiId(pantiId);
     payment.value = paymentData;
+
+    const messagesData = await fetchAllMessagesById(pantiId);
     messages.value = messagesData.message_responses.filter(
       (message) =>
         message.panti_id === parseInt(pantiId) && message.isShown === 1
