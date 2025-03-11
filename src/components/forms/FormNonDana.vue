@@ -121,7 +121,7 @@
                   id="makanan"
                   name="donation-type"
                   v-model="donationData.donation_types"
-                  value="Makanan"
+                  value="Pangan"
                 />
                 <label for="makanan">Makanan</label>
               </div>

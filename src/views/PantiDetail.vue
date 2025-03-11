@@ -179,8 +179,10 @@
       v-if="!isFetchingDatas"
       class="c-container flex flex-col items-center justify-center gap-8 pb-8 lg:pb-12 xl:pb-16"
     >
+      <!-- Donation and Message Buttons -->
       <div class="flex flex-col justify-center items-center gap-2">
         <div class="flex flex-wrap items-center justify-center gap-4">
+          <!-- Dana -->
           <button
             class="btn-primary"
             :class="{
@@ -194,6 +196,7 @@
             Donasi Dana
           </button>
 
+          <!-- Non Dana -->
           <button
             class="btn-primary"
             :class="{
@@ -207,6 +210,7 @@
             Donasi Non Dana
           </button>
 
+          <!-- Message -->
           <button
             class="btn-primary"
             :class="{
@@ -220,6 +224,7 @@
             Kirim Pesan
           </button>
 
+          <!-- Donation Report -->
           <button
             class="flex items-center justify-center rounded-full bg-primary-500 text-center text-base font-bold text-white outline outline-4 -outline-offset-4 outline-transparent transition-all hover:outline-offset-0 hover:outline-primary-500/50 p-3 lg:p-3.5 lg:text-lg"
             @click="openDonationReport"
