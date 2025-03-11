@@ -118,12 +118,12 @@
               <div class="flex items-center gap-2">
                 <input
                   type="checkbox"
-                  id="dana"
+                  id="makanan"
                   name="donation-type"
                   v-model="donationData.donation_types"
-                  value="Dana"
+                  value="Makanan"
                 />
-                <label for="dana">Dana</label>
+                <label for="makanan">Makanan</label>
               </div>
 
               <div class="flex items-center gap-2">

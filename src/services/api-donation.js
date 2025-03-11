@@ -77,7 +77,9 @@ export async function fetchAllFundDonation() {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch fund donation data. Status: ${response.status}`);
+      throw new Error(
+        `Failed to fetch fund donation data. Status: ${response.status}`
+      );
     }
 
     const data = await response.json();
@@ -99,7 +101,60 @@ export async function fetchAllNonFundDonation() {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch non fund donation data. Status: ${response.status}`);
+      throw new Error(
+        `Failed to fetch non fund donation data. Status: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+export async function fetchFundDonationsById(id) {
+  try {
+    const response = await fetch(`${API_URL}/api/v1/donation/fund/view/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch fund donation data. Status: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+export async function fetchNonFundDonationsById(id) {
+  try {
+    const response = await fetch(
+      `${API_URL}/api/v1/donation/nonfund/view/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch non fund donation data. Status: ${response.status}`
+      );
     }
 
     const data = await response.json();
