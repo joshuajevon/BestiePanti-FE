@@ -14,18 +14,24 @@
           <h1
             class="pb-2 text-center text-4xl font-medium leading-9 sm:text-5xl lg:text-6xl"
           >
-            Formulir
-            <span class="font-bold text-primary-300">Kirim Pesan</span>
+            Laporan
+            <span class="font-bold text-primary-300">Donasi</span>
           </h1>
           <p class="text-center text-base sm:text-lg">
-            Silakan menulis pesan yang ingin disampaikan kepada panti asuhan
-            terkait.
+            Berikut adalah daftar donasi yang telah diterima oleh panti asuhan.
           </p>
         </div>
 
         <div class="overflow-x-auto">
           <div v-if="isFetching">
             <LoadingIndicator text="Memuat data donasi panti asuhan..." />
+          </div>
+
+          <div
+            v-else-if="combinedDonations.length === 0"
+            class="flex justify-center"
+          >
+            <p class="error-message">Panti asuhan ini belum menerima donasi</p>
           </div>
 
           <table
