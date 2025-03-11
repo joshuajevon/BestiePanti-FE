@@ -431,7 +431,8 @@ onMounted(async () => {
     panti.value = pantiData;
     payment.value = paymentData;
     messages.value = messagesData.message_responses.filter(
-      (message) => message.panti_id === parseInt(pantiId)
+      (message) =>
+        message.panti_id === parseInt(pantiId) && message.isShown === 1
     );
   } catch (error) {
     console.log(error);
