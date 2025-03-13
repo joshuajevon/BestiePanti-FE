@@ -26,6 +26,18 @@
             <td class="border p-2">{{ donation.panti_id }}</td>
             <td class="border p-2">{{ donation.donation_date }}</td>
             <td class="border p-2">
+              <span 
+                :class="{
+                  'bg-yellow-200 text-yellow-700': donation.status === 'PENDING',
+                  'bg-green-200 text-green-700': donation.status === 'COMPLETED',
+                  'bg-red-200 text-red-700': donation.status === 'REJECTED'
+                }"
+                class="px-2 py-1 rounded"
+                >
+                {{ donation.status }}
+              </span>
+            </td>
+            <td class="border p-2">
               <div class="flex flex-wrap gap-2">
                 <span 
                   v-for="(type, index) in donation.donation_types" 
@@ -77,8 +89,9 @@ const itemsPerPage = 10;
 
 const headers = [
   "Donatur", 
-  "Panti", 
+  "Panti",
   "Tanggal Donasi",
+  "Status", 
   "Tipe Donasi", 
   "PIC",
   "Kontak",

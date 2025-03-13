@@ -25,7 +25,6 @@
             <td class="border p-2">{{ donation.donatur_id }}</td>
             <td class="border p-2">{{ donation.panti_id }}</td>
             <td class="border p-2">{{ donation.donation_date }}</td>
-            <td class="border p-2">{{ donation.nominal_amount }}</td>
             <td class="border p-2">
               <span 
                 :class="{
@@ -38,6 +37,7 @@
                 {{ donation.status }}
               </span>
             </td>
+            <td class="border p-2">{{ donation.nominal_amount }}</td>
             <td class="border p-2">
               <a href="#" class="text-green-600 hover:underline">
                 Verifikasi
@@ -74,8 +74,8 @@ const headers = [
   "Donatur", 
   "Panti",
   "Tanggal Donasi", 
-  "Nominal", 
   "Status", 
+  "Nominal", 
   "Aksi"
 ];
 
