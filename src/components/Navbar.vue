@@ -159,7 +159,7 @@
                   />
                 </svg>
 
-                Dashboard
+                {{ profileOpenMenuDashboardName }}
               </router-link>
             </div>
             <div class="p-2">
@@ -253,9 +253,20 @@ const authStore = useAuthStore();
 const isNavbarOpen = ref(false);
 const isProfileWebOpen = ref(false);
 
-const dashboardRoute = computed(() => {
-  return authStore.user?.role === "ROLE_ADMIN" ? "/dashboard-admin" : "/dashboard-user";
+const profileOpenMenuDashboardName = computed(() => {
+  return authStore.user?.role === "ROLE_DONATUR" ? "Donasi Saya" : "Dashboard";
 });
+
+const dashboardRoute = computed(() => {
+  if (authStore.user?.role === "ROLE_PANTI") {
+    return "/dashboard-panti";
+  } else if (authStore.user?.role === "ROLE_ADMIN") {
+    return "/dashboard-admin";
+  } else {
+    return "/donasi-saya";
+  }
+});
+
 
 function toggleNavbar() {
   isNavbarOpen.value = !isNavbarOpen.value;

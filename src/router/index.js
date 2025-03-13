@@ -48,9 +48,15 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: "/dashboard-user",
-      name: "dashboard-user",
-      component: () => import("../views/user/Dashboard.vue"),
+      path: "/dashboard-panti",
+      name: "dashboard-panti",
+      component: () => import("../views/user/DashboardPanti.vue"),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/donasi-saya",
+      name: "donasi-saya",
+      component: () => import("../views/user/DonasiSaya.vue"),
       meta: { requiresAuth: true },
     },
   ],
