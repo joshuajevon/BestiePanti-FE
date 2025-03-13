@@ -81,10 +81,10 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from "vue";
-import PantiTable from "@/components/dashboard/PantiTable.vue";
-import DonaturTable from "@/components/dashboard/DonaturTable.vue";
-import DonationFundTable from "@/components/dashboard/DonationFundTable.vue";
-import DonationNonFundTable from "@/components/dashboard/DonationNonFundTable.vue";
+import PantiTable from "@/components/dashboard-admin/PantiTable.vue";
+import DonaturTable from "@/components/dashboard-admin/DonaturTable.vue";
+import DonationFundTable from "@/components/dashboard-admin/DonationFundTable.vue";
+import DonationNonFundTable from "@/components/dashboard-admin/DonationNonFundTable.vue";
 import { useAuthStore } from "@/stores/authStore";
 
 const authStore = useAuthStore();
