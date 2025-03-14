@@ -10,7 +10,15 @@
       Tidak ada data panti tersedia.
     </p>
 
-    <div v-else class="overflow-x-auto rounded-xl">
+    <div v-else>
+
+      <div class="mt-4 md:text-right mb-5">
+        <button class="px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300">
+          Tambah Panti
+        </button>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl">
         <table class="w-full min-w-max border-collapse border">
           <thead class="bg-blue-700 text-white">
             <tr>
@@ -35,7 +43,9 @@
             </tr>
           </tbody>
         </table>
+      </div>
     </div>
+    
 
     <div class="flex justify-end mt-4">
       <Pagination v-if="pantiList.length > 0" 
@@ -43,7 +53,8 @@
         :itemsPerPage="itemsPerPage" 
         v-model:currentPage="currentPage" 
         class="mt-4" />
-      </div>
+    </div>
+
   </div>
 </template>
 
