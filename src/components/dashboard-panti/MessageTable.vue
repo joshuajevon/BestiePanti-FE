@@ -22,7 +22,9 @@
         </thead>
         <tbody>
           <tr v-for="message in paginatedData" :key="message.id">
-            <td class="border p-2">{{ message.donatur_name }}</td>
+            <td class="border p-2">
+              {{ message.donatur_name? message.donatur_name : '-' }}
+            </td>
             <td class="border p-2">
               <span 
                 :class="message.is_shown ? 

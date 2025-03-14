@@ -11,17 +11,17 @@
       <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-10 md:mb-20">
         <!-- Profile Picture Placeholder -->
         <img 
-          src="/assets/cara-berdonasi/banner-1.jpg" 
-          alt="Profile Picture" 
+          :src="`${apiUrl}/storage/image/${authStore.user.image[0]}`"
+          :alt="`${authStore.user?.name || 'User'}'image`" 
           class="w-40 h-40 md:w-52 md:h-52 rounded-full border-2 border-gray-300"
         />
         
         <!-- User Info Placeholder -->
         <div class="text-center md:text-left">
-          <h2 class="text-2xl font-bold">Nama Pengguna</h2>
-          <p class="text-gray-600">Email: user@example.com</p>
-          <p class="text-gray-600">Telepon: +62 812-3456-7890</p>
-          <p class="text-gray-600">Alamat: Jl Sudirman Raya No 1</p>
+          <h2 class="text-2xl font-bold">{{ authStore.user.name }}</h2>
+          <p class="text-gray-600">Email: {{ authStore.user.email }}</p>
+          <p class="text-gray-600">Telepon: {{ authStore.user.phone }}</p>
+          <p class="text-gray-600">Alamat: {{ authStore.user.address }}</p>
           <div class="mt-4 md:text-right">
             <button class="px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300">
               Edit Profile
@@ -77,6 +77,7 @@ import { useAuthStore } from "@/stores/authStore";
 
 const authStore = useAuthStore();
 const activeTabPanti = ref("fund-donation");
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const isPanti = computed(() => {
   return authStore.user?.role === "ROLE_PANTI" ? true : false;

@@ -22,9 +22,15 @@
         </thead>
         <tbody>
           <tr v-for="donation in paginatedData" :key="donation.id">
-            <td class="border p-2">{{ donation.donatur_id }}</td>
-            <td class="border p-2">{{ donation.panti_id }}</td>
-            <td class="border p-2">{{ donation.donation_date }}</td>
+            <td class="border p-2">
+              {{ donation.donatur_name? donation.donatur_name : '-' }}
+            </td>
+            <td class="border p-2">
+              {{ donation.panti_name? donation.panti_name : '-'}}
+            </td>
+            <td class="border p-2">
+              {{ donation.donation_date }}
+            </td>
             <td class="border p-2">
               <span 
                 :class="{
