@@ -29,7 +29,6 @@
           </p>
         </div>
 
-        <!-- Status dan Tombol di Satu Baris -->
         <div class="mt-3 flex justify-between items-center">
           <p class="text-sm">
             <span class="font-medium">Status: </span>
