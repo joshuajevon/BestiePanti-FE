@@ -11,8 +11,8 @@
       <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-10 md:mb-20">
         <!-- Profile Picture Placeholder -->
         <img 
-          src="/assets/cara-berdonasi/banner-1.jpg" 
-          alt="Profile Picture" 
+          src="/assets/default-profile/admin-profile.jpg" 
+          alt="admin-profile" 
           class="w-40 h-40 md:w-52 md:h-52 rounded-full border-2 border-gray-300"
         />
         
