@@ -18,10 +18,16 @@
         
         <!-- User Info Placeholder -->
         <div class="text-center md:text-left">
-          <h2 class="text-2xl font-bold">Nama Pengguna</h2>
-          <p class="text-gray-600">Email: user@example.com</p>
-          <p class="text-gray-600">Telepon: +62 812-3456-7890</p>
-          <p class="text-gray-600">Alamat: Jl Sudirman Raya No 1</p>
+          <h2 class="text-2xl font-bold">{{ authStore.user.name }}</h2>
+          <p class="text-gray-600">
+            Email: {{ authStore.user.email }}
+          </p>
+          <p class="text-gray-600">
+            Telepon: {{ authStore.user.phone? authStore.user.phone : '-' }}
+          </p>
+          <p class="text-gray-600">
+            Alamat: {{ authStore.user.address? authStore.user.address : '-' }}
+          </p>
           <div class="mt-4 md:text-right">
             <button class="px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300">
               Edit Profile
