@@ -1,22 +1,25 @@
 <template>
   <section class="min-h-screen pt-36">
-    <div v-if="!isAdmin" class="p-6">
+    <LoadingIndicator v-if="fetching" 
+      text="Memuat data..." 
+      color="text-secondary-500" 
+    />
+
+    <div v-else-if="!isAdmin" class="p-6">
       <h1 class="text-4xl font-bold text-center text-red-700 justify-center">
         Kamu Tidak Memiliki Akses
       </h1>
     </div>
 
     <div v-else class="p-6">
-      <!-- Profile Section Placeholder -->
+      <!-- Profile Section -->
       <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-10 md:mb-20">
-        <!-- Profile Picture Placeholder -->
         <img 
           src="/assets/default-profile/admin-profile.jpg" 
           alt="admin-profile" 
           class="w-40 h-40 md:w-52 md:h-52 rounded-full border-2 border-gray-300"
         />
-        
-        <!-- User Info Placeholder -->
+
         <div class="text-center md:text-left">
           <h2 class="text-2xl font-bold">{{ authStore.user.name }}</h2>
           <p class="text-gray-600">
@@ -28,11 +31,13 @@
           <p class="text-gray-600">
             Alamat: {{ authStore.user.address? authStore.user.address : '-' }}
           </p>
+
           <div class="mt-4 md:text-right">
             <button class="px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300">
               Edit Profile
             </button>
           </div>
+          
         </div>
       </div>
 
@@ -90,20 +95,25 @@ import { ref, computed, onMounted, watch } from "vue";
 import PantiTable from "@/components/dashboard-admin/PantiTable.vue";
 import DonaturTable from "@/components/dashboard-admin/DonaturTable.vue";
 import DonationFundTable from "@/components/dashboard-admin/DonationFundTable.vue";
+import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import DonationNonFundTable from "@/components/dashboard-admin/DonationNonFundTable.vue";
 import { useAuthStore } from "@/stores/authStore";
 
 const authStore = useAuthStore();
 const activeTab = ref("panti");
+const fetching = ref(true);
 
 const isAdmin = computed(() => {
-  return authStore.user?.role === "ROLE_ADMIN" ? true : false;
+  return authStore.user?.role === "ROLE_ADMIN";
 });
 
-onMounted(() => {
+onMounted(async () => {
+  await authStore.fetchUser();
+  fetching.value = false;
+  
   const savedTab = localStorage.getItem("activeTab");
   if (savedTab) {
-    activeTab.value = savedTab;
+    activeTabPanti.value = savedTab;
   }
 });
 

@@ -1,18 +1,22 @@
 <template>
   <section class="min-h-screen pt-36">
-    <div v-if="!isPanti" class="p-6">
-      <h1 class="text-4xl font-bold text-center text-red-700 justify-center">
+    <LoadingIndicator v-if="fetching" 
+      text="Memuat data..." 
+      color="text-secondary-500" 
+    />
+    
+    <div v-else-if="!isPanti" class="p-6">
+      <h1 class="text-4xl font-bold text-center text-red-700">
         Kamu Tidak Memiliki Akses
       </h1>
     </div>
 
     <div v-else class="p-6">
-      <!-- Profile Section Placeholder -->
+      <!-- Profile Section -->
       <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-10 md:mb-20">
-        <!-- Profile Picture Placeholder -->
         <img 
           :src="`${apiUrl}/storage/image/${authStore.user.image[0]}`"
-          :alt="`${authStore.user?.name || 'User'}'image`" 
+          :alt="`${authStore.user?.name || 'User'}' image`" 
           class="w-40 h-40 md:w-52 md:h-52 rounded-full border-2 border-gray-300"
         />
         
@@ -37,7 +41,7 @@
             'bg-blue-700 text-white rounded-lg': activeTabPanti === 'fund-donation',
             'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabPanti !== 'fund-donation'
             }"
-          class="px-4 py-2  transition duration-300">
+          class="px-4 py-2 transition duration-300">
           Donasi Dana
         </button>
 
@@ -46,7 +50,7 @@
             'bg-blue-700 text-white rounded-lg': activeTabPanti === 'nonfund-donation',
             'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabPanti !== 'nonfund-donation'
             }"
-          class="px-4 py-2  transition duration-300">
+          class="px-4 py-2 transition duration-300">
           Donasi Non-Dana
         </button>
         
@@ -55,7 +59,7 @@
             'bg-blue-700 text-white rounded-lg': activeTabPanti === 'message',
             'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabPanti !== 'message'
             }"
-          class="px-4 py-2  transition duration-300">
+          class="px-4 py-2 transition duration-300">
           Pesan
         </button>
       </div>
@@ -72,18 +76,23 @@
 import { ref, computed, onMounted, watch } from "vue";
 import DonationFundTable from "@/components/dashboard-panti/DonationFundTable.vue";
 import DonationNonFundTable from "@/components/dashboard-panti/DonationNonFundTable.vue";
+import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import MessageTable from "@/components/dashboard-panti/MessageTable.vue";
 import { useAuthStore } from "@/stores/authStore";
 
 const authStore = useAuthStore();
 const activeTabPanti = ref("fund-donation");
 const apiUrl = import.meta.env.VITE_API_URL;
+const fetching = ref(true);
 
 const isPanti = computed(() => {
-  return authStore.user?.role === "ROLE_PANTI" ? true : false;
+  return authStore.user?.role === "ROLE_PANTI";
 });
 
-onMounted(() => {
+onMounted(async () => {
+  await authStore.fetchUser();
+  fetching.value = false;
+  
   const savedTab = localStorage.getItem("activeTabPanti");
   if (savedTab) {
     activeTabPanti.value = savedTab;
