@@ -40,30 +40,97 @@
           src="/assets/logos/logo-icon-text-color.svg"
           alt="logo"
         />
-        <p class="text-justify text-sm font-normal sm:text-lg lg:text-xl">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo earum
-          animi esse corporis odit. Repellat ipsam tempore magni voluptas
-          assumenda eligendi nisi voluptatum non dolores. Dicta ipsum veritatis
-          maxime modi magnam voluptate minus accusantium saepe sint eveniet.
-          Sunt ipsum quas et praesentium odio suscipit minima animi incidunt
-          deleniti nemo perspiciatis aliquid quis iure fuga, ducimus dolore
-          magnam alias eaque. Exercitationem rerum sed quae corporis assumenda
-          ullam saepe vel in, ab, autem magni odio accusantium sequi nostrum
-          architecto nulla sunt placeat sapiente reiciendis itaque. Aut eaque
-          eveniet fugiat eligendi labore omnis expedita, incidunt impedit atque
-          iusto nisi sapiente possimus ipsam ipsum doloremque neque id fugit
-          eius maiores perferendis inventore. Asperiores perferendis maxime,
-          labore animi perspiciatis, maiores voluptatibus placeat quos ut modi
-          nostrum tenetur autem? Culpa aut dolores rerum veniam. Laborum, sequi,
-          eveniet odit quas in impedit ad hic blanditiis amet quaerat error
-          omnis nam itaque, illo dolore? Facere illo aliquid et unde quaerat
-          ducimus, odit perferendis earum praesentium tenetur. Eveniet
-          doloremque numquam eum ratione sed tenetur optio molestias aliquid
-          labore perspiciatis dolor dignissimos iusto quidem atque perferendis
-          magnam quod totam maiores voluptates, repudiandae sit alias, inventore
-          corporis praesentium? Harum accusamus, quae illo sit officia, eligendi
-          modi totam debitis, ut asperiores tempora!
-        </p>
+        <div
+          class="flex flex-col text-justify text-sm sm:text-base lg:text-lg gap-8 sm:gap-10 lg:gap-12"
+        >
+          <div class="flex flex-col gap-2">
+            <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+              Siapa Kami?
+            </h3>
+            <p>
+              Selamat datang di BestiePanti, platform manajemen donasi yang
+              berkomitmen untuk menjadi jembatan kebaikan antara para donatur
+              dan panti asuhan di Jabodetabek. Kami memahami pentingnya berbagi
+              dan mendukung mereka yang membutuhkan, itulah sebabnya kami hadir
+              untuk mempermudah proses donasi dalam berbagai bentuk.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h3 class="font-bold text-base sm:text-lg lg:text-xl">Misi Kami</h3>
+            <p>
+              Kami berupaya menciptakan ekosistem donasi yang transparan,
+              efektif, dan mudah diakses. Dengan fitur-fitur unggulan, kami
+              memberikan solusi bagi donatur untuk mendukung panti asuhan sesuai
+              dengan kebutuhan mereka, baik secara online maupun offline.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+              Koneksi Langsung:
+            </h3>
+            <p>
+              Donatur dapat mencari dan memilih panti asuhan berdasarkan
+              kebutuhan spesifik yang terdaftar di platform kami.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+              Janji Temu Offline:
+            </h3>
+            <p>
+              Selain donasi online, kami memfasilitasi pertemuan langsung antara
+              donatur dan panti asuhan, memungkinkan interaksi dan kontribusi
+              secara personal.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+              Manajemen Donasi untuk Panti Asuhan:
+            </h3>
+            <p>
+              Panti asuhan memiliki akses ke fitur manajemen donasi yang
+              komprehensif, termasuk laporan, riwayat donasi, dan profil
+              informasi.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+              Pesan untuk Panti Asuhan:
+            </h3>
+            <p>
+              Donatur juga dapat menambahkan pesan khusus untuk panti asuhan
+              sebagai bentuk perhatian atau harapan pribadi mereka.
+            </p>
+          </div>
+
+          <div>
+            <p>
+              Dengan sistem komunikasi dua arah yang tersedia, kami memastikan
+              bahwa hubungan antara donatur dan panti asuhan dapat berjalan
+              lancar, transparan, dan penuh makna.
+            </p>
+          </div>
+          <div>
+            <p>
+              Komitmen Kami Kami percaya bahwa dengan bersama-sama, kita dapat
+              menciptakan dampak positif yang berkelanjutan bagi komunitas.
+              BestiePanti ada untuk menjadikan proses berbagi lebih mudah dan
+              terarah, sehingga kebaikan dapat menjangkau mereka yang
+              membutuhkan.
+            </p>
+          </div>
+          <div>
+            <p class="font-bold">
+              Bergabunglah dengan kami dan jadilah bagian dari perubahan hari
+              ini!
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
