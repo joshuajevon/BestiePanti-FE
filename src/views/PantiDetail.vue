@@ -433,7 +433,7 @@ onMounted(async () => {
     const messagesData = await fetchAllMessagesById(pantiId);
     messages.value = messagesData.message_responses.filter(
       (message) =>
-        message.panti_id === parseInt(pantiId) && message.isShown === 1
+        message.panti_id === parseInt(pantiId) && message.is_shown === 1
     );
   } catch (error) {
     console.log(error);
