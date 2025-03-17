@@ -21,7 +21,7 @@
     </section>
 
     <section
-      class="c-container flex flex-col gap-8 py-8 lg:gap-12 lg:py-16 xl:gap-16 xl:py-32"
+      class="c-container flex flex-col gap-8 pt-8 lg:gap-12 lg:pt-16 xl:gap-16 xl:pt-32"
     >
       <div
         class="flex items-center justify-center gap-3 lg:gap-4 xl:gap-6 2xl:gap-8"
@@ -40,32 +40,282 @@
           src="/assets/logos/logo-icon-text-color.svg"
           alt="logo"
         />
-        <p class="text-justify text-sm font-normal sm:text-lg lg:text-xl">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam
-          fugit perferendis dolores odit delectus! Quidem, cumque recusandae
-          non, delectus aliquam velit excepturi quia saepe, exercitationem
-          placeat temporibus ipsum. Amet consequatur qui quibusdam perferendis,
-          error necessitatibus maiores? Neque debitis esse incidunt maxime
-          repellat aliquid rerum facilis hic corporis a modi necessitatibus unde
-          illo impedit optio quod, molestiae consequatur totam. Fuga a saepe
-          molestiae minus accusamus, sed dolorem nostrum dignissimos. Similique
-          dolor sint aliquid praesentium consectetur sit saepe perspiciatis sed
-          quas dignissimos voluptas amet earum tenetur, accusantium nisi
-          corrupti aspernatur. Quae fugiat sed maxime quis ex excepturi vitae
-          dolore! Labore reprehenderit quod nihil aliquid maxime quaerat totam
-          excepturi quia impedit minima sint, soluta earum pariatur nisi quo
-          alias asperiores eveniet, officia debitis odit praesentium, itaque
-          architecto quidem? Praesentium totam cupiditate a eos earum, sunt
-          numquam architecto pariatur perferendis consequatur blanditiis?
-          Similique expedita obcaecati incidunt maxime deleniti cumque, illo quo
-          quis. Fugit animi quisquam illo illum quos eius consectetur nesciunt,
-          reiciendis eaque vitae. Delectus, ad mollitia soluta provident aperiam
-          saepe. Voluptatem est magnam voluptates quis excepturi libero
-          laboriosam culpa veritatis voluptatibus! Quod quo sequi expedita
-          quisquam rerum assumenda in, blanditiis sint officiis? Dolor
-          consequuntur esse ullam dolores et ipsam nostrum sed, quidem
-          exercitationem.
-        </p>
+
+        <div
+          class="flex flex-col text-justify text-sm sm:text-base lg:text-lg gap-8 sm:gap-10 lg:gap-12"
+        >
+          <div class="flex flex-col gap-2">
+            <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+              Ingin berbagi dengan panti asuhan?
+            </h3>
+            <p>
+              Berikut adalah langkah-langkah sederhana untuk melakukan donasi
+              melalui BestiePanti:
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col gap-8 sm:gap-10 lg:gap-12 relative pb-8 lg:pb-12 xl:pb-16"
+        >
+          <span
+            class="absolute w-1 sm:w-1.5 lg:w-2 h-full top-0 bg-primary-200 left-[1.125rem] sm:left-6 lg:left-7"
+          ></span>
+
+          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+            <div
+              class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
+            >
+              <svg
+                class="size-4 sm:size-6 lg:size-8 overflow-visible"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M352 96l64 0c17.7 0 32 14.3 32 32l0 256c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0c53 0 96-43 96-96l0-256c0-53-43-96-96-96l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32zm-9.4 182.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L242.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z"
+                />
+              </svg>
+            </div>
+
+            <div class="flex flex-col gap-8 sm:gap-10 lg:gap-12">
+              <div class="flex flex-col gap-1">
+                <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+                  1. Login Terlebih Dahulu
+                </h3>
+
+                <ol
+                  class="text-sm sm:text-base lg:text-lg text-justify list-disc pl-5 space-y-1"
+                >
+                  <li>
+                    Pastikan Anda sudah memiliki akun di BestiePanti. Jika
+                    belum, silakan daftar terlebih dahulu.
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+            <div
+              class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
+            >
+              <svg
+                class="size-4 sm:size-6 lg:size-8 overflow-visible"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                />
+              </svg>
+            </div>
+
+            <div class="flex flex-col gap-8 sm:gap-10 lg:gap-12">
+              <div class="flex flex-col gap-1">
+                <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+                  2. Pilih Panti Asuhan
+                </h3>
+
+                <ol
+                  class="text-sm sm:text-base lg:text-lg text-justify list-disc pl-5 space-y-1"
+                >
+                  <li>
+                    Kunjungi halaman panti asuhan. Di sini, Anda dapat mencari
+                    panti asuhan berdasarkan nama, kebutuhan dan wilayah yang
+                    ingin Anda tuju.
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+            <div
+              class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
+            >
+              <svg
+                class="size-4 sm:size-6 lg:size-8 overflow-visible"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"
+                />
+              </svg>
+            </div>
+
+            <div class="flex flex-col gap-8 sm:gap-10 lg:gap-12">
+              <div class="flex flex-col gap-1">
+                <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+                  3. Akses Halaman Detail Panti Asuhan
+                </h3>
+
+                <ol
+                  class="text-sm sm:text-base lg:text-lg text-justify list-disc pl-5 space-y-1"
+                >
+                  <li>
+                    Klik pada nama atau gambar panti asuhan pilihan Anda untuk
+                    membuka halaman detailnya.
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+            <div
+              class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
+            >
+              <svg
+                class="size-4 sm:size-6 lg:size-8 overflow-visible"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 576 512"
+              >
+                <path
+                  d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9l2.6-2.4C267.2 438.6 256 404.6 256 368c0-97.2 78.8-176 176-176c28.3 0 55 6.7 78.7 18.5c.9-6.5 1.3-13 1.3-19.6l0-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1l0 5.8c0 41.5 17.2 81.2 47.6 109.5zM432 512a144 144 0 1 0 0-288 144 144 0 1 0 0 288zm16-208l0 48 48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-48 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48-48 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l48 0 0-48c0-8.8 7.2-16 16-16s16 7.2 16 16z"
+                />
+              </svg>
+            </div>
+
+            <div class="flex flex-col gap-8 sm:gap-10 lg:gap-12">
+              <div class="flex flex-col gap-1">
+                <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+                  4. Pilih Bentuk Donasi
+                </h3>
+
+                <ol
+                  class="text-sm sm:text-base lg:text-lg text-justify list-disc pl-5 space-y-1"
+                >
+                  <li>
+                    Pada halaman detail, pilih jenis donasi yang ingin Anda
+                    berikan:
+                    <br />
+                    - Dana
+                    <br />
+                    - Non Dana (Barang, makanan dan tenaga)
+                  </li>
+
+                  <li>Tekan tombol yang sesuai dengan bentuk donasi Anda.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+            <div
+              class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
+            >
+              <svg
+                class="size-4 sm:size-6 lg:size-8 overflow-visible"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 384 512"
+              >
+                <path
+                  d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0zM112 256l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16z"
+                />
+              </svg>
+            </div>
+
+            <div class="flex flex-col gap-8 sm:gap-10 lg:gap-12">
+              <div class="flex flex-col gap-1">
+                <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+                  5. Isi Formulir Donasi
+                </h3>
+
+                <ol
+                  class="text-sm sm:text-base lg:text-lg text-justify list-disc pl-5 space-y-1"
+                >
+                  <li>
+                    Sebuah formulir akan muncul setelah Anda memilih jenis
+                    donasi.
+                  </li>
+
+                  <li>Lengkapi data yang diminta pada formulir tersebut.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+            <div
+              class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
+            >
+              <svg
+                class="size-4 sm:size-6 lg:size-8 overflow-visible"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 384 512"
+              >
+                <path
+                  d="M32 0C14.3 0 0 14.3 0 32S14.3 64 32 64l0 11c0 42.4 16.9 83.1 46.9 113.1L146.7 256 78.9 323.9C48.9 353.9 32 394.6 32 437l0 11c-17.7 0-32 14.3-32 32s14.3 32 32 32l32 0 256 0 32 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l0-11c0-42.4-16.9-83.1-46.9-113.1L237.3 256l67.9-67.9c30-30 46.9-70.7 46.9-113.1l0-11c17.7 0 32-14.3 32-32s-14.3-32-32-32L320 0 64 0 32 0zM96 75l0-11 192 0 0 11c0 19-5.6 37.4-16 53L112 128c-10.3-15.6-16-34-16-53zm16 309c3.5-5.3 7.6-10.3 12.1-14.9L192 301.3l67.9 67.9c4.6 4.6 8.6 9.6 12.1 14.9L112 384z"
+                />
+              </svg>
+            </div>
+
+            <div class="flex flex-col gap-8 sm:gap-10 lg:gap-12">
+              <div class="flex flex-col gap-1">
+                <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+                  6. Tunggu Verifikasi
+                </h3>
+
+                <ol
+                  class="text-sm sm:text-base lg:text-lg text-justify list-disc pl-5 space-y-1"
+                >
+                  <li>
+                    Setelah mengirim formulir, donasi Anda akan diteruskan ke
+                    panti asuhan terkait.
+                  </li>
+
+                  <li>
+                    Panti asuhan akan memverifikasi donasi Anda sebelum langkah
+                    berikutnya dilakukan.
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+            <div
+              class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
+            >
+              <svg
+                class="size-4 sm:size-6 lg:size-8 overflow-visible"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
+                />
+              </svg>
+            </div>
+
+            <div class="flex flex-col gap-8 sm:gap-10 lg:gap-12">
+              <div class="flex flex-col gap-1">
+                <h3 class="font-bold text-base sm:text-lg lg:text-xl">
+                  7. Cek Status Donasi
+                </h3>
+
+                <ol
+                  class="text-sm sm:text-base lg:text-lg text-justify list-disc pl-5 space-y-1"
+                >
+                  <li>
+                    Anda dapat memantau status donasi yang telah diajukan
+                    melalui halaman “Donasi Saya” di akun Anda. Hal ini
+                    memudahkan Anda untuk mengikuti perkembangan donasi secara
+                    real-time.
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

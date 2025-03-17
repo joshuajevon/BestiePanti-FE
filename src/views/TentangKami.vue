@@ -40,6 +40,7 @@
           src="/assets/logos/logo-icon-text-color.svg"
           alt="logo"
         />
+
         <div
           class="flex flex-col text-justify text-sm sm:text-base lg:text-lg gap-8 sm:gap-10 lg:gap-12"
         >
