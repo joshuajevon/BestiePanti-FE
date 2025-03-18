@@ -39,7 +39,7 @@
                 href="#" 
                 class="text-green-600 hover:underline ml-2"
                 @click.prevent="showConfirmation(message.id, 'tampilkan')">
-                Tampilkan
+                Tampilkan <br>
               </a>
               <a 
                 href="#" 

@@ -61,13 +61,20 @@
               {{ donation.pic }}
             </td>
             <td class="border p-2">
-              <a :href="`https://wa.me/${donation.active_phone}`"
+              <a 
+                :href="`https://wa.me/${donation.active_phone}`"
                 target="_blank"
-                class="text-blue-600 hover:underline">
+                class="text-blue-600 mb-2 hover:underline"
+                @click="markAsContacted(donation.id)"
+              >
                 Hubungi
               </a>
-              <span class="mx-2">| </span>
-              <a href="#" class="text-green-600 hover:underline">
+              <br>
+              <a 
+                href="#" 
+                class="text-green-600 hover:underline"
+                :class="{ 'pointer-events-none opacity-50': !contactedDonations.has(donation.id) }"
+              >
                 Verifikasi
               </a>
             </td>
@@ -100,6 +107,7 @@ const itemsPerPage = 10;
 import { useAuthStore } from "@/stores/authStore";
 
 const authStore = useAuthStore();
+const contactedDonations = ref(new Set());
 
 const headers = [
   "Donatur", 
@@ -135,7 +143,16 @@ const fetchData = async () => {
   }
 };
 
+const markAsContacted = (donationId) => {
+  contactedDonations.value.add(donationId);
+  localStorage.setItem("contactedDonations", JSON.stringify([...contactedDonations.value]));
+};
+
 onMounted(async () => {
   fetchData();
+  const storedContacts = JSON.parse(localStorage.getItem("contactedDonations"));
+  if (storedContacts) {
+    contactedDonations.value = new Set(storedContacts);
+  }
 });
 </script>
