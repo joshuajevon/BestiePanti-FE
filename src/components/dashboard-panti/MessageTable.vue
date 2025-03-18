@@ -1,13 +1,12 @@
 <template>
   <div>
-
     <LoadingIndicator v-if="fetching" 
       text="Memuat data donasi..." 
       color="text-secondary-500" 
     />
     
     <p v-else-if="!fetching && messageList.length === 0" 
-    class="text-center text-red-500 mt-4">
+      class="text-center text-red-500 mt-4">
       Panti asuhan anda belum menerima pesan.
     </p>
 
@@ -23,7 +22,7 @@
         <tbody>
           <tr v-for="message in paginatedData" :key="message.id">
             <td class="border p-2">
-              {{ message.donatur_name? message.donatur_name : '-' }}
+              {{ message.donatur_name ? message.donatur_name : '-' }}
             </td>
             <td class="border p-2">
               <span 
@@ -35,11 +34,17 @@
             </td>
             <td class="border p-2 whitespace-pre-line">{{ formatMessage(message.message) }}</td>
             <td class="border p-2">
-              <a href="#" class="text-green-600 hover:underline">
+              <a 
+                v-if="message.is_shown === 0"
+                href="#" 
+                class="text-green-600 hover:underline ml-2"
+                @click.prevent="showConfirmation(message.id, 'tampilkan')">
                 Tampilkan
               </a>
-              <br>
-              <a href="#" class="text-red-600 hover:underline">
+              <a 
+                href="#" 
+                class="text-red-600 hover:underline ml-2"
+                @click.prevent="showConfirmation(message.id, 'hapus')">
                 Hapus
               </a>
             </td>
@@ -56,15 +61,24 @@
         class="mt-4" 
       />
     </div>
+
+    <!-- Confirmation Modal -->
+    <ConfirmationModal 
+      :show="modalVisible" 
+      :message="modalMessage" 
+      @confirm="handleConfirm"
+      @cancel="modalVisible = false"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { fetchAllMessagesById } from "@/services/api-message";
+import { fetchAllMessagesById, acceptMessage, deleteMessage } from "@/services/api-message";
+import { useAuthStore } from "@/stores/authStore";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
-import { useAuthStore } from "@/stores/authStore";
+import ConfirmationModal from "@/components/modal/ConfirmationModal.vue"; 
 
 const authStore = useAuthStore();
 
@@ -72,6 +86,11 @@ const messageList = ref([]);
 const fetching = ref(true);
 const currentPage = ref(1);
 const itemsPerPage = 10;
+
+const modalVisible = ref(false);
+const modalMessage = ref("");
+const selectedMessageId = ref(null);
+const actionType = ref(null);
 
 const headers = [
   "Donatur", 
@@ -91,6 +110,36 @@ const formatMessage = (text) => {
   return words.reduce((acc, word, index) => {
     return acc + (index % 19 === 0 && index !== 0 ? "\n" : " ") + word;
   });
+};
+
+const showConfirmation = (id, type) => {
+  selectedMessageId.value = id;
+  actionType.value = type;
+  modalMessage.value = type === "tampilkan"
+    ? "Apakah kamu yakin ingin menampilkan pesan ini?"
+    : "Apakah kamu yakin ingin menghapus pesan ini?";
+  modalVisible.value = true;
+};
+
+const handleConfirm = async () => {
+  if (actionType.value === "tampilkan") {
+    await acceptMessage(selectedMessageId.value);
+  } 
+  else if (actionType.value === "hapus") {
+    await deleteMessage(selectedMessageId.value);
+  }
+
+  modalVisible.value = false;
+  
+  fetching.value = true;
+  try {
+    const data = await fetchAllMessagesById(authStore ? authStore.user.id : 0);
+    messageList.value = data.message_responses;
+  } catch (error) {
+    console.error("Error fetching message data:", error);
+  } finally {
+    fetching.value = false;
+  }
 };
 
 onMounted(async () => {
