@@ -25,19 +25,6 @@
           <p class="text-gray-600">
             Email: {{ authStore.user.email }}
           </p>
-          <p class="text-gray-600">
-            Telepon: {{ authStore.user.phone? authStore.user.phone : '-' }}
-          </p>
-          <p class="text-gray-600">
-            Alamat: {{ authStore.user.address? authStore.user.address : '-' }}
-          </p>
-
-          <div class="mt-4 md:text-right">
-            <button class="px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300">
-              Edit Profile
-            </button>
-          </div>
-          
         </div>
       </div>
 
