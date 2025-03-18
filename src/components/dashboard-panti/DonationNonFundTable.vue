@@ -57,6 +57,7 @@
             <td class="border p-2">{{ donation.pic }}</td>
             <td class="border p-2">
               <a :href="`https://wa.me/${donation.active_phone}`"
+                target="_blank"
                 class="text-blue-600 hover:underline">
                 Hubungi
               </a>
