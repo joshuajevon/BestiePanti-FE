@@ -86,7 +86,7 @@ const paginatedData = computed(() => {
   return pantiList.value.slice(start, start + itemsPerPage);
 });
 
-onMounted(async () => {
+const fetchData = async () => {
   try {
     const data = await fetchAllPanti();
     pantiList.value = data.panti_responses;
@@ -95,5 +95,9 @@ onMounted(async () => {
   } finally {
     fetching.value = false;
   }
+};
+
+onMounted(async () => {
+  fetchData();
 });
 </script>

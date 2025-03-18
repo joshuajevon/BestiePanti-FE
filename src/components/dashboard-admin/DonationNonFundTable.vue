@@ -58,7 +58,7 @@
               </div>
             </td>
             <td class="border p-2 whitespace-pre-line">
-              {{ formatMessage(donation.notes) }}
+              {{ formatNotes(donation.notes) }}
             </td>
             <td class="border p-2">
               {{ donation.pic }}
@@ -109,7 +109,7 @@ const paginatedData = computed(() => {
   return nonFundDonationList.value.slice(start, start + itemsPerPage);
 });
 
-const formatMessage = (text) => {
+const formatNotes = (text) => {
   if (!text) return "";
   const words = text.split(" ");
   return words.reduce((acc, word, index) => {
@@ -117,7 +117,7 @@ const formatMessage = (text) => {
   });
 };
 
-onMounted(async () => {
+const fetchData = async () => {
   try {
     const data = await fetchAllNonFundDonation();
     nonFundDonationList.value = data.nonfund_donation_responses;
@@ -126,5 +126,9 @@ onMounted(async () => {
   } finally {
     fetching.value = false;
   }
+};
+
+onMounted(async () => {
+  fetchData();
 });
 </script>

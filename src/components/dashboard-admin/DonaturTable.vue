@@ -71,7 +71,7 @@ const paginatedData = computed(() => {
   return donaturList.value.slice(start, start + itemsPerPage);
 });
 
-onMounted(async () => {
+const fetchData = async () => {
   try {
     const data = await fetchAllDonatur();
     donaturList.value = data.donatur_responses;
@@ -80,5 +80,9 @@ onMounted(async () => {
   } finally {
     fetching.value = false;
   }
+};
+
+onMounted(async () => {
+  fetchData();
 });
 </script>

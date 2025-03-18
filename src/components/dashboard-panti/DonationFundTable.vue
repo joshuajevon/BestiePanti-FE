@@ -89,14 +89,18 @@ const paginatedData = computed(() => {
   return fundDonationList.value.slice(start, start + itemsPerPage);
 });
 
-onMounted(async () => {
+const fetchData = async () => {
   try {
-    const data = await fetchFundDonationsById(authStore ? authStore.user.id : 0);
+    const data = await fetchFundDonationsById(authStore.user?.id || 0);
     fundDonationList.value = data.fund_donation_responses;
   } catch (error) {
     console.error("Error fetching fund donation data:", error);
   } finally {
     fetching.value = false;
   }
+};
+
+onMounted(async () => {
+  fetchData();
 });
 </script>

@@ -121,6 +121,17 @@ const showConfirmation = (id, type) => {
   modalVisible.value = true;
 };
 
+const fetchData = async () => {
+  try {
+    const data = await fetchAllMessagesById(authStore?.user.id || 0);
+    messageList.value = data.message_responses;
+  } catch (error) {
+    console.error("Error fetching message data:", error);
+  } finally {
+    fetching.value = false;
+  }
+};
+
 const handleConfirm = async () => {
   if (actionType.value === "tampilkan") {
     await acceptMessage(selectedMessageId.value);
@@ -132,24 +143,10 @@ const handleConfirm = async () => {
   modalVisible.value = false;
   
   fetching.value = true;
-  try {
-    const data = await fetchAllMessagesById(authStore ? authStore.user.id : 0);
-    messageList.value = data.message_responses;
-  } catch (error) {
-    console.error("Error fetching message data:", error);
-  } finally {
-    fetching.value = false;
-  }
+  fetchData();
 };
 
 onMounted(async () => {
-  try {
-    const data = await fetchAllMessagesById(authStore ? authStore.user.id : 0);
-    messageList.value = data.message_responses;
-  } catch (error) {
-    console.error("Error fetching message data:", error);
-  } finally {
-    fetching.value = false;
-  }
+  fetchData();
 });
 </script>

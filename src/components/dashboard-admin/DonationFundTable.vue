@@ -82,7 +82,7 @@ const paginatedData = computed(() => {
   return fundDonationList.value.slice(start, start + itemsPerPage);
 });
 
-onMounted(async () => {
+const fetchData = async () => {
   try {
     const data = await fetchAllFundDonation ();
     fundDonationList.value = data.fund_donation_responses;
@@ -91,5 +91,9 @@ onMounted(async () => {
   } finally {
     fetching.value = false;
   }
+};
+
+onMounted(async () => {
+  fetchData();
 });
 </script>
