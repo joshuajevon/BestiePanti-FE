@@ -73,7 +73,9 @@
               <a 
                 href="#" 
                 class="text-green-600 hover:underline"
-                :class="{ 'pointer-events-none opacity-45': !contactedDonations.has(donation.id) }"
+                :class="{ 'pointer-events-none opacity-45': 
+                !contactedDonations.has(donation.id) && 
+                donation.status === 'PENDING' }"
               >
                 Verifikasi
               </a>
