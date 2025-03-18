@@ -16,14 +16,12 @@
         class="bg-white shadow-md rounded-xl p-4 border border-gray-200 w-full max-w-[600px] lg:max-w-full flex flex-col h-full"
       >
         <div class="flex space-x-4">
-          <!-- Gambar di sebelah kiri -->
           <img 
             :src="`${apiUrl}/storage/image/${donation.profile}`" 
             alt="Gambar Donasi" 
             class="w-24 h-24 object-cover rounded-md border border-gray-300"
           />
-
-          <!-- Informasi di sebelah kanan -->
+          
           <div class="flex-1">
             <h2 class="text-lg font-semibold text-gray-800">
               {{ donation.panti_name || '-' }}
