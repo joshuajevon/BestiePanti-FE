@@ -59,11 +59,6 @@
             </td>
             <td class="border p-2">{{ donation.pic }}</td>
             <td class="border p-2">{{ donation.active_phone }}</td>
-            <td class="border p-2">
-              <a href="#" class="text-green-600 hover:underline">
-                Verifikasi
-              </a>
-            </td>
           </tr>
         </tbody>
       </table>
@@ -98,8 +93,7 @@ const headers = [
   "Status", 
   "Tipe Donasi", 
   "PIC",
-  "Kontak",
-  "Aksi"
+  "Kontak"
 ];
 
 const paginatedData = computed(() => {

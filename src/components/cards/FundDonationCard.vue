@@ -78,7 +78,7 @@ const authStore = useAuthStore();
 const fundDonationList = ref([]);
 const fetching = ref(true);
 const currentPage = ref(1);
-const itemsPerPage = 10;
+const itemsPerPage = 5;
 
 const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;

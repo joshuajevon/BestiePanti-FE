@@ -25,9 +25,6 @@
             <td class="border p-2">
               {{ donation.donatur_name? donation.donatur_name : '-' }}
             </td>
-            <td class="border p-2">
-              {{ donation.panti_name? donation.panti_name : '-'}}
-            </td>
             <td class="border p-2">{{ donation.donation_date }}</td>
              <td class="border p-2">
               <span 
@@ -58,11 +55,12 @@
               </div>
             </td>
             <td class="border p-2">{{ donation.pic }}</td>
-            <td class="border p-2">{{ donation.active_phone }}</td>
             <td class="border p-2">
-              <a href="#" class="text-green-600 hover:underline">
+              <a :href="`https://wa.me/${donation.active_phone}`"
+                class="text-blue-600 hover:underline">
                 Hubungi
               </a>
+              <span class="mx-2">| </span>
               <a href="#" class="text-green-600 hover:underline">
                 Verifikasi
               </a>
@@ -99,12 +97,10 @@ const authStore = useAuthStore();
 
 const headers = [
   "Donatur", 
-  "Panti",
   "Tanggal Donasi",
   "Status", 
   "Tipe Donasi", 
   "PIC",
-  "Kontak",
   "Aksi"
 ];
 

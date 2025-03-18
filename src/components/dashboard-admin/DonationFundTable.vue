@@ -42,11 +42,6 @@
               </span>
             </td>
             <td class="border p-2">{{ donation.nominal_amount }}</td>
-            <td class="border p-2">
-              <a href="#" class="text-green-600 hover:underline">
-                Verifikasi
-              </a>
-            </td>
           </tr>
         </tbody>
       </table>
@@ -79,8 +74,7 @@ const headers = [
   "Panti",
   "Tanggal Donasi", 
   "Status", 
-  "Nominal", 
-  "Aksi"
+  "Nominal"
 ];
 
 const paginatedData = computed(() => {

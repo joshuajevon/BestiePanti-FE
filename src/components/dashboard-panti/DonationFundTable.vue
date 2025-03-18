@@ -26,9 +26,6 @@
               {{ donation.donatur_name? donation.donatur_name : '-' }}
             </td>
             <td class="border p-2">
-              {{ donation.panti_name? donation.panti_name : '-'}}
-            </td>
-            <td class="border p-2">
               {{ donation.donation_date }}
             </td>
             <td class="border p-2">
@@ -81,7 +78,6 @@ const itemsPerPage = 10;
 
 const headers = [
   "Donatur", 
-  "Panti",
   "Tanggal Donasi",
   "Status", 
   "Nominal", 

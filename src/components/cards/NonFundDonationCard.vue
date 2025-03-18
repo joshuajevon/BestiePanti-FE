@@ -6,7 +6,7 @@
     />
     
     <p v-else-if="!fetching && nonFundDonationList.length === 0" 
-    class="text-center text-red-500 mt-4">
+      class="text-center text-red-500 mt-4">
       Tidak ada data donasi tersedia.
     </p>
 
@@ -15,29 +15,39 @@
       <div v-for="donation in paginatedData" :key="donation.id"
         class="bg-white shadow-md rounded-xl p-4 border border-gray-200 w-full max-w-[600px] lg:max-w-full flex flex-col h-full"
       >
-        <div>
-          <h2 class="text-lg font-semibold text-gray-800">
-            {{ donation.panti_name || '-' }}
-          </h2>
+        <div class="flex space-x-4">
+          <!-- Gambar di sebelah kiri -->
+          <!-- <img 
+            :src="`${apiUrl}/storage/profile/${donation.profile}`" 
+            alt="Gambar Donasi" 
+            class="w-24 h-24 object-cover rounded-md border border-gray-300"
+          /> -->
 
-          <p class="text-sm text-gray-600">
-            <span class="font-medium">Tanggal Donasi:</span> {{ donation.donation_date }}
-          </p>
-          <p class="text-sm">
-            <span class="font-medium">Jenis Donasi: </span>
-            <span
-              v-for="(type, index) in donation.donation_types" 
-              :key="index" 
-              :class="{
-                'bg-blue-200 text-blue-700': type === 'Barang',
-                'bg-yellow-200 text-yellow-700': type === 'Tenaga',
-                'bg-purple-200 text-purple-700': type === 'Pangan'
-              }"
-              class="px-2 py-1 rounded text-xs font-semibold mr-1"
-            >
-              {{ type }} 
-            </span>
-          </p>
+          <!-- Informasi di sebelah kanan -->
+          <div class="flex-1">
+            <h2 class="text-lg font-semibold text-gray-800">
+              {{ donation.panti_name || '-' }}
+            </h2>
+
+            <p class="text-sm text-gray-600">
+              <span class="font-medium">Tanggal Donasi:</span> {{ donation.donation_date }}
+            </p>
+            <p class="text-sm">
+              <span class="font-medium">Jenis Donasi: </span>
+              <span
+                v-for="(type, index) in donation.donation_types" 
+                :key="index" 
+                :class="{
+                  'bg-blue-200 text-blue-700': type === 'Barang',
+                  'bg-yellow-200 text-yellow-700': type === 'Tenaga',
+                  'bg-purple-200 text-purple-700': type === 'Pangan'
+                }"
+                class="px-2 py-1 rounded text-xs font-semibold mr-1"
+              >
+                {{ type }} 
+              </span>
+            </p>
+          </div>
         </div>
 
         <div class="mt-3 flex justify-between items-center">
@@ -89,7 +99,8 @@ const authStore = useAuthStore();
 const nonFundDonationList = ref([]);
 const fetching = ref(true);
 const currentPage = ref(1);
-const itemsPerPage = 10;
+const itemsPerPage = 5;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;

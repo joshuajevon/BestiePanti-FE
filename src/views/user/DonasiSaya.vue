@@ -73,24 +73,19 @@ import { useAuthStore } from "@/stores/authStore";
 const authStore = useAuthStore();
 const activeTabDonatur = ref("fund-donation");
 const apiUrl = import.meta.env.VITE_API_URL;
-const isLoading = ref(true);
+const fetching = ref(true);
 
 const isDonatur = computed(() => {
   return authStore.user?.role === "ROLE_DONATUR";
 });
 
 onMounted(async () => {
-  try {
     await authStore.fetchUser();
-    const savedTab = localStorage.getItem("activeTabDonatur");
+    fetching.value = false;
+
     if (savedTab) {
       activeTabDonatur.value = savedTab;
     }
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-  } finally {
-    isLoading.value = false; 
-  }
 });
 
 watch(activeTabDonatur, (newValue) => {
