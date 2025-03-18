@@ -54,7 +54,12 @@
                 </span>
               </div>
             </td>
-            <td class="border p-2">{{ donation.pic }}</td>
+            <td class="border p-2 whitespace-pre-line">
+              {{ formatMessage(donation.notes) }}
+            </td>
+            <td class="border p-2">
+              {{ donation.pic }}
+            </td>
             <td class="border p-2">
               <a :href="`https://wa.me/${donation.active_phone}`"
                 target="_blank"
@@ -100,7 +105,8 @@ const headers = [
   "Donatur", 
   "Tanggal Donasi",
   "Status", 
-  "Tipe Donasi", 
+  "Tipe Donasi",
+  "Catatan", 
   "PIC",
   "Aksi"
 ];
@@ -109,6 +115,14 @@ const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   return nonFundDonationList.value.slice(start, start + itemsPerPage);
 });
+
+const formatMessage = (text) => {
+  if (!text) return "";
+  const words = text.split(" ");
+  return words.reduce((acc, word, index) => {
+    return acc + (index % 7 === 0 && index !== 0 ? "\n" : " ") + word;
+  });
+};
 
 onMounted(async () => {
   try {
