@@ -36,28 +36,28 @@
 
       <!-- Toggle Buttons -->
       <div class="flex flex-wrap justify-start gap-4 mb-4">
-        <button @click="activeTabPanti = 'fund-donation'" 
+        <button @click="activeTabPantiTab = 'fund-donation'" 
           :class="{
-            'bg-blue-700 text-white rounded-lg': activeTabPanti === 'fund-donation',
-            'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabPanti !== 'fund-donation'
+            'bg-blue-700 text-white rounded-lg': activeTabPantiTab === 'fund-donation',
+            'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabPantiTab !== 'fund-donation'
             }"
           class="px-4 py-2 transition duration-300">
           Donasi Dana
         </button>
 
-        <button @click="activeTabPanti = 'nonfund-donation'" 
+        <button @click="activeTabPantiTab = 'nonfund-donation'" 
           :class="{
-            'bg-blue-700 text-white rounded-lg': activeTabPanti === 'nonfund-donation',
-            'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabPanti !== 'nonfund-donation'
+            'bg-blue-700 text-white rounded-lg': activeTabPantiTab === 'nonfund-donation',
+            'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabPantiTab !== 'nonfund-donation'
             }"
           class="px-4 py-2 transition duration-300">
           Donasi Non-Dana
         </button>
         
-        <button @click="activeTabPanti = 'message'" 
+        <button @click="activeTabPantiTab = 'message'" 
           :class="{
-            'bg-blue-700 text-white rounded-lg': activeTabPanti === 'message',
-            'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabPanti !== 'message'
+            'bg-blue-700 text-white rounded-lg': activeTabPantiTab === 'message',
+            'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabPantiTab !== 'message'
             }"
           class="px-4 py-2 transition duration-300">
           Pesan
@@ -65,9 +65,9 @@
       </div>
 
       <!-- Conditional Rendering -->
-      <DonationFundTable v-if="activeTabPanti === 'fund-donation'" class="relative" />
-      <DonationNonFundTable v-else-if="activeTabPanti === 'nonfund-donation'" class="relative" />
-      <MessageTable v-else-if="activeTabPanti === 'message'" class="relative" />
+      <DonationFundTable v-if="activeTabPantiTab === 'fund-donation'" class="relative" />
+      <DonationNonFundTable v-else-if="activeTabPantiTab === 'nonfund-donation'" class="relative" />
+      <MessageTable v-else-if="activeTabPantiTab === 'message'" class="relative" />
     </div>
   </section>
 </template>
@@ -81,7 +81,7 @@ import MessageTable from "@/components/dashboard-panti/MessageTable.vue";
 import { useAuthStore } from "@/stores/authStore";
 
 const authStore = useAuthStore();
-const activeTabPanti = ref("fund-donation");
+const activeTabPantiTab = ref("fund-donation");
 const apiUrl = import.meta.env.VITE_API_URL;
 const fetching = ref(true);
 
@@ -93,13 +93,13 @@ onMounted(async () => {
   await authStore.fetchUser();
   fetching.value = false;
   
-  const savedTab = localStorage.getItem("activeTabPanti");
+  const savedTab = localStorage.getItem("activeTabPantiTab");
   if (savedTab) {
-    activeTabPanti.value = savedTab;
+    activeTabPantiTab.value = savedTab;
   }
 });
 
-watch(activeTabPanti, (newValue) => {
-  localStorage.setItem("activeTabPanti", newValue);
+watch(activeTabPantiTab, (newValue) => {
+  localStorage.setItem("activeTabPantiTab", newValue);
 });
 </script>

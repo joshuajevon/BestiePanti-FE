@@ -17,11 +17,11 @@
       >
         <div class="flex space-x-4">
           <!-- Gambar di sebelah kiri -->
-          <!-- <img 
-            :src="`${apiUrl}/storage/profile/${donation.profile}`" 
+          <img 
+            :src="`${apiUrl}/storage/image/${donation.image}`" 
             alt="Gambar Donasi" 
             class="w-24 h-24 object-cover rounded-md border border-gray-300"
-          /> -->
+          />
 
           <!-- Informasi di sebelah kanan -->
           <div class="flex-1">

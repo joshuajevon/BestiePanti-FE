@@ -36,19 +36,19 @@
 
         <!-- Toggle Buttons -->
         <div class="flex flex-wrap justify-start gap-4 mb-4">
-          <button @click="activeTabDonatur = 'fund-donation'" 
+          <button @click="activeTabDonaturTab = 'fund-donation'" 
             :class="{
-              'bg-blue-700 text-white rounded-lg': activeTabDonatur === 'fund-donation',
-              'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabDonatur !== 'fund-donation'
+              'bg-blue-700 text-white rounded-lg': activeTabDonaturTab === 'fund-donation',
+              'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabDonaturTab !== 'fund-donation'
             }"
             class="px-4 py-2 transition duration-300">
             Donasi Dana
           </button>
 
-          <button @click="activeTabDonatur = 'nonfund-donation'" 
+          <button @click="activeTabDonaturTab = 'nonfund-donation'" 
             :class="{
-              'bg-blue-700 text-white rounded-lg': activeTabDonatur === 'nonfund-donation',
-              'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabDonatur !== 'nonfund-donation'
+              'bg-blue-700 text-white rounded-lg': activeTabDonaturTab === 'nonfund-donation',
+              'bg-gray-300 rounded-lg hover:bg-blue-600': activeTabDonaturTab !== 'nonfund-donation'
             }"
             class="px-4 py-2 transition duration-300">
             Donasi Non-Dana
@@ -56,8 +56,8 @@
         </div>
 
         <!-- Conditional Rendering -->
-        <FundDonationCard v-if="activeTabDonatur === 'fund-donation'" class="relative" />
-        <NonFundDonationCard v-else-if="activeTabDonatur === 'nonfund-donation'" class="relative" />
+        <FundDonationCard v-if="activeTabDonaturTab === 'fund-donation'" class="relative" />
+        <NonFundDonationCard v-else-if="activeTabDonaturTab === 'nonfund-donation'" class="relative" />
       </div>
     </div>
   </section>
@@ -71,7 +71,7 @@ import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import { useAuthStore } from "@/stores/authStore";
 
 const authStore = useAuthStore();
-const activeTabDonatur = ref("fund-donation");
+const activeTabDonaturTab = ref("fund-donation");
 const apiUrl = import.meta.env.VITE_API_URL;
 const fetching = ref(true);
 
@@ -83,12 +83,13 @@ onMounted(async () => {
     await authStore.fetchUser();
     fetching.value = false;
 
+    const savedTab = localStorage.getItem("activeTabDonaturTab");
     if (savedTab) {
-      activeTabDonatur.value = savedTab;
+      activeTabDonaturTab.value = savedTab;
     }
 });
 
-watch(activeTabDonatur, (newValue) => {
-  localStorage.setItem("activeTabDonatur", newValue);
+watch(activeTabDonaturTab, (newValue) => {
+  localStorage.setItem("activeTabDonaturTab", newValue);
 });
 </script>

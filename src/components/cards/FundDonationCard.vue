@@ -15,18 +15,27 @@
       <div v-for="donation in paginatedData" :key="donation.id"
         class="bg-white shadow-md rounded-xl p-4 border border-gray-200 w-full max-w-[600px] lg:max-w-full flex flex-col h-full"
       >
-        <div>
-          <h2 class="text-lg font-semibold text-gray-800">
-            {{ donation.panti_name || '-' }}
-          </h2>
+        <div class="flex space-x-4">
+          <img 
+            :src="`${apiUrl}/storage/image/${donation.image}`" 
+            alt="Gambar Donasi" 
+            class="w-24 h-24 object-cover rounded-md border border-gray-300"
+          />
+          <div class="flex-1">
+            <h2 class="text-lg font-semibold text-gray-800">
+              {{ donation.panti_name || '-' }}
+            </h2>
 
-          <p class="text-sm text-gray-600">
-            <span class="font-medium">Tanggal Donasi:</span> {{ donation.donation_date }}
-          </p>
+            <p class="text-sm text-gray-600">
+              <span class="font-medium">Tanggal Donasi:</span> 
+              {{ donation.donation_date }}
+            </p>
 
-          <p class="text-sm text-gray-600 mb-2">
-            <span class="font-medium">Nominal:</span> Rp.{{ donation.nominal_amount.toLocaleString() }}
-          </p>
+            <p class="text-sm text-gray-600 mb-2">
+              <span class="font-medium">Nominal:</span>
+              Rp.{{ donation.nominal_amount.toLocaleString() }}
+            </p>
+          </div>
         </div>
 
         <div class="mt-3 flex justify-between items-center">
@@ -79,6 +88,7 @@ const fundDonationList = ref([]);
 const fetching = ref(true);
 const currentPage = ref(1);
 const itemsPerPage = 5;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
