@@ -54,6 +54,9 @@
                 </span>
               </div>
             </td>
+            <td class="border p-2">
+              {{ donation.is_onsite  === 1 ? 'Onsite' : 'Online' }}
+            </td>
             <td class="border p-2 whitespace-pre-line">
               {{ formatNotes(donation.notes) }}
             </td>
@@ -112,10 +115,11 @@ const authStore = useAuthStore();
 const contactedDonations = ref(new Set());
 
 const headers = [
-  "Donatur", 
+  "Donatur",
   "Tanggal Donasi",
   "Status", 
   "Tipe Donasi",
+  "Onsite/Online",
   "Catatan", 
   "PIC",
   "Aksi"

@@ -57,6 +57,9 @@
                 </span>
               </div>
             </td>
+            <td class="border p-2">
+              {{ donation.is_onsite  === 1 ? 'Onsite' : 'Online' }}
+            </td>
             <td class="border p-2 whitespace-pre-line">
               {{ formatNotes(donation.notes) }}
             </td>
@@ -100,6 +103,7 @@ const headers = [
   "Tanggal Donasi",
   "Status", 
   "Tipe Donasi",
+  "Onsite/Online",
   "Catatan", 
   "PIC",
   "Kontak"
