@@ -1,5 +1,5 @@
 <template>
-  <section class="min-h-screen pt-36 bg-gray-100">
+  <section class="min-h-screen bg-gray-100 pt-16 md:pt-12 lg:pt-28">
     <LoadingIndicator v-if="fetching" 
       text="Memuat data..." 
       color="text-secondary-500" 
@@ -28,6 +28,18 @@
               @submit.prevent="submitForm" 
               class="space-y-4"
             >
+              <!-- Donatur name section -->
+              <div class="input-container text-gray-600 text-lg flex flex-row items-center justify-center w-full px-6 mb-6">
+                <div class="flex flex-col text-center">
+                  <span class="font-medium text-gray-700">Donatur</span>
+                  <span>{{ donation.donatur_name }}</span>
+                </div>
+                <div class="flex flex-col text-center ml-10"> <!-- Bisa pakai gap kalau perlu -->
+                  <span class="font-medium text-gray-700">Kontak</span>
+                  <span>{{ donation.active_phone }}</span>
+                </div>
+              </div>
+
               <!-- Donation date section -->
               <div class="input-container mt-2">
                 <label
@@ -76,6 +88,7 @@
                 </div>
               </div>
 
+              <!-- show donation type -->
               <div class="input-container mt-2">
                 <label class="text-base font-medium text-secondary-500 sm:text-lg"
                   >Tipe Donasi</label
@@ -96,6 +109,7 @@
                 </div>
               </div>
 
+              <!-- Show Donatur Notes -->
               <div class="input-container mt-2">
                 <label for="notes" class="text-base font-medium text-secondary-500 sm:text-lg">
                   Catatan Donatur
@@ -111,6 +125,7 @@
                 ></textarea>
               </div>
 
+              <!-- stattus section -->
               <div class="input-container mt-2">
                 <label class="text-base font-medium text-secondary-500 sm:text-lg">
                   Status
@@ -138,7 +153,6 @@
             </form>
           </div>
         </div>
-
       </div>
     </div>
   </section>
