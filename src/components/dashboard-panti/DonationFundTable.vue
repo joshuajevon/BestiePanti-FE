@@ -26,7 +26,7 @@
               {{ donation.donatur_name? donation.donatur_name : '-' }}
             </td>
             <td class="border p-2">
-              {{ donation.donation_date }}
+              {{ formatDate(donation.donation_date) }}
             </td>
             <td class="border p-2">
               <span 
@@ -71,6 +71,7 @@ import { fetchFundDonationsById } from "@/services/api-donation";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
 import { useAuthStore } from "@/stores/authStore";
+import { formatDate } from "@/utils/date";
 
 const authStore = useAuthStore();
 

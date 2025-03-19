@@ -25,7 +25,7 @@
             <td class="border p-2">
               {{ donation.donatur_name? donation.donatur_name : '-' }}
             </td>
-            <td class="border p-2">{{ donation.donation_date }}</td>
+            <td class="border p-2">{{ formatDate(donation.donation_date) }}</td>
              <td class="border p-2">
               <span 
                 :class="{
@@ -100,6 +100,7 @@ import { ref, computed, onMounted } from "vue";
 import { fetchNonFundDonationsById } from "@/services/api-donation";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
+import { formatDate } from "@/utils/date";
 
 const nonFundDonationList = ref([]);
 const fetching = ref(true);

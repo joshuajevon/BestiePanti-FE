@@ -28,7 +28,8 @@
             </h2>
 
             <p class="text-sm text-gray-600">
-              <span class="font-medium">Tanggal Donasi:</span> {{ donation.donation_date }}
+              <span class="font-medium">Tanggal Donasi:</span> 
+              {{ formatDate(donation.donation_date) }}
             </p>
             <p class="text-sm">
               <span class="font-medium">Jenis Donasi: </span>
@@ -91,6 +92,7 @@ import { fetchNonFundDonationsById } from "@/services/api-donation";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
 import { useAuthStore } from "@/stores/authStore";
+import { formatDate } from "@/utils/date";
 
 const authStore = useAuthStore();
 
