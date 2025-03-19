@@ -70,15 +70,14 @@
                 Hubungi
               </a>
               <br>
-              <a 
-                href="#" 
+              <router-link 
+                :to="{ name: 'donasi-nondana', params: { id: donation.id } }"
                 class="text-green-600 hover:underline"
                 :class="{ 'pointer-events-none opacity-45': 
-                !contactedDonations.has(donation.id) && 
-                donation.status === 'PENDING' }"
+                  !contactedDonations.has(donation.id) && donation.status === 'PENDING' }"
               >
                 Verifikasi
-              </a>
+              </router-link>
             </td>
           </tr>
         </tbody>

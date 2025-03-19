@@ -59,6 +59,18 @@ const router = createRouter({
       component: () => import("../views/user/DonasiSaya.vue"),
       meta: { requiresAuth: true },
     },
+    {
+      path: "/verifikasi/donasi-dana/:id",
+      name: "donasi-dana",
+      component: () => import("../views/user/VerificationFundDonation.vue"),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/verifikasi/donasi-nondana/:id",
+      name: "donasi-nondana",
+      component: () => import("../views/user/VerificationNonFundDonation.vue"),
+      meta: { requiresAuth: true },
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     // If there's a saved scroll position (e.g., going back in history), use it

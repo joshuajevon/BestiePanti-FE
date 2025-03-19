@@ -1,4 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL;
+const token = localStorage.getItem("token");
 
 export async function createDonationDana(id, donationData) {
   const token = localStorage.getItem("token");
@@ -159,6 +160,72 @@ export async function fetchNonFundDonationsById(id) {
 
     const data = await response.json();
 
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+export async function fetchFundDonationByDonationId(id) {
+  try {
+    const response = await fetch(
+      `${API_URL}/api/v1/donation/fund/view/donation/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.status === 403) {
+      console.warn("Akses ditolak (403 Forbidden).");
+      return { forbidden: true };
+    }
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.log("Error response:", errorResponse);
+      return errorResponse;
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+export async function verifyDonationDana(id, donationData) {
+  const token = localStorage.getItem("token");
+
+  const formData = new FormData();
+  formData.append("accountNumber", donationData.accountNumber);
+  formData.append("accountName", donationData.accountName);
+  formData.append("nominalAmount", String(donationData.nominalAmount));
+  formData.append("status", donationData.status);
+
+  try {
+    const response = await fetch(
+      `${API_URL}/api/v1/donation/fund/verify/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.log("Response Error:", errorResponse);
+      return errorResponse;
+    }
+
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error("API Error:", error);

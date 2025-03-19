@@ -42,9 +42,12 @@
             </td>
             <td class="border p-2">{{ donation.nominal_amount }}</td>
             <td class="border p-2">
-              <a href="#" class="text-green-600 hover:underline">
+              <router-link 
+                :to="{ name: 'donasi-dana', params: { id: donation.id } }" 
+                class="text-green-600 hover:underline"
+              >
                 Verifikasi
-              </a>
+              </router-link>
             </td>
           </tr>
         </tbody>
