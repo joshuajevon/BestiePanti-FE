@@ -122,6 +122,9 @@
                   v-model="donation.notes"
                   class="w-full border bg-gray-100 text-gray-700 px-3 py-2 rounded"
                 ></textarea>
+                <p v-if="errorMessages.notes" class="error-message">
+                  {{ errorMessages.notes }}
+                </p>
               </div>
 
               <!-- stattus section -->
@@ -225,7 +228,24 @@ const fetchDonationData = async () => {
   }
 };
 
+const errorMessages = ref({
+  notes: "",
+});
+
+const validateForm = () => {
+  let isValid = true;
+  errorMessages.value.notes = "";
+
+  if (!donation.value.notes.trim()) {
+    errorMessages.value.notes = "Catatan tidak boleh kosong";
+    isValid = false;
+  }
+
+  return isValid;
+};
+
 const submitForm = async () => {
+  if (!validateForm()) return;
 
   try {
     const verifyDonation = {
