@@ -17,7 +17,7 @@
           <div class="text-center border-b pb-4">
             <h1 class="text-3xl font-semibold text-primary-500">Verifikasi Donasi Non Dana</h1>
             <p class="text-gray-600 text-sm mt-2">
-              Pastikan donasi dana anda telah sesuai.
+              Pastikan donasi anda telah sesuai.
             </p>
           </div>
 
