@@ -180,7 +180,36 @@ export async function fetchFundDonationByDonationId(id) {
     );
 
     if (response.status === 403) {
-      console.warn("Akses ditolak (403 Forbidden).");
+      return { forbidden: true };
+    }
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.log("Error response:", errorResponse);
+      return errorResponse;
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+export async function fetchNonFundDonationByDonationId(id) {
+  try {
+    const response = await fetch(
+      `${API_URL}/api/v1/donation/nonfund/view/donation/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.status === 403) {
       return { forbidden: true };
     }
 
@@ -199,8 +228,6 @@ export async function fetchFundDonationByDonationId(id) {
 }
 
 export async function verifyDonationDana(id, donationData) {
-  const token = localStorage.getItem("token");
-
   const formData = new FormData();
   formData.append("accountNumber", donationData.accountNumber);
   formData.append("accountName", donationData.accountName);
@@ -227,6 +254,45 @@ export async function verifyDonationDana(id, donationData) {
 
     const data = await response.json();
     return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+export async function verifyDonationNonDana(id, donationData) {
+  const jsonData = {
+    donation_date: donationData.donationDate,
+    is_onsite: donationData.isOnsite === "1" ? 1 : 0, // Pastikan ini number
+    donation_types: donationData.donationTypes, // Kirim sebagai array
+    pic: donationData.pic,
+    active_phone: donationData.activePhone,
+    notes: donationData.notes,
+    status: donationData.status,
+  };
+
+  console.log("Data setelah diproses sebelum dikirim:", jsonData);
+
+  try {
+    const response = await fetch(
+      `${API_URL}/api/v1/donation/nonfund/verify/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.log("Response Error dari backend:", errorResponse);
+      return errorResponse;
+    }
+
+    return await response.json();
   } catch (error) {
     console.error("API Error:", error);
     throw error;
