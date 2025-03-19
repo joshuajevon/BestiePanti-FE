@@ -41,7 +41,9 @@
                 {{ donation.status }}
               </span>
             </td>
-            <td class="border p-2">{{ donation.nominal_amount }}</td>
+            <td class="border p-2">
+              {{ formatRupiah(donation.nominal_amount) }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -64,6 +66,7 @@ import { fetchAllFundDonation } from "@/services/api-donation";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
 import { formatDate } from "@/utils/date";
+import { formatRupiah  } from "@/utils/amount";
 
 const fundDonationList = ref([]);
 const fetching = ref(true);

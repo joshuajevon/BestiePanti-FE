@@ -33,7 +33,7 @@
 
             <p class="text-sm text-gray-600 mb-2">
               <span class="font-medium">Nominal:</span>
-              Rp.{{ donation.nominal_amount.toLocaleString() }}
+              {{ formatRupiah(donation.nominal_amount) }}
             </p>
           </div>
         </div>
@@ -82,6 +82,7 @@ import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
 import { useAuthStore } from "@/stores/authStore";
 import { formatDate } from "@/utils/date";
+import { formatRupiah  } from "@/utils/amount";
 
 const authStore = useAuthStore();
 

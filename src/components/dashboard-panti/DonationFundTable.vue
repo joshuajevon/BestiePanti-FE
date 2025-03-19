@@ -40,7 +40,9 @@
                 {{ donation.status }}
               </span>
             </td>
-            <td class="border p-2">{{ donation.nominal_amount }}</td>
+            <td class="border p-2">
+              {{ formatRupiah(donation.nominal_amount) }}
+            </td>
             <td class="border p-2">
               <router-link 
                 :to="{ name: 'donasi-dana', params: { id: donation.id } }" 
@@ -72,6 +74,7 @@ import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
 import { useAuthStore } from "@/stores/authStore";
 import { formatDate } from "@/utils/date";
+import { formatRupiah  } from "@/utils/amount";
 
 const authStore = useAuthStore();
 
