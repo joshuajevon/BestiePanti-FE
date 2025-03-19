@@ -53,7 +53,7 @@
                 class="odd:bg-gray-50"
               >
                 <td class="whitespace-nowrap px-4 py-2 font-medium">
-                  {{ donation.donation_date }}
+                  {{ formatDate(donation.donation_date) }}
                 </td>
                 <td class="whitespace-nowrap px-4 py-2">
                   {{ donation.donation_types }}
@@ -87,6 +87,8 @@ import {
   fetchNonFundDonationsById,
 } from "@/services/api-donation";
 import LoadingIndicator from "../loading/LoadingIndicator.vue";
+import { formatDate } from "@/utils/date";
+import { formatRupiah } from "@/utils/amount";
 
 const props = defineProps({
   isDonationReportOpen: {
@@ -119,14 +121,14 @@ onMounted(async () => {
         .filter((donation) => donation.status === "COMPLETED") // Filter only "COMPLETED" donations
         .map((donation) => ({
           donation_date: donation.donation_date,
-          donation_types: "Fund Donation",
-          notes: donation.nominal_amount,
+          donation_types: "Donasi Dana",
+          notes: formatRupiah(donation.nominal_amount),
         })),
       ...nonfundDonationsData.nonfund_donation_responses
         .filter((donation) => donation.status === "COMPLETED") // Filter only "COMPLETED" donations
         .map((donation) => ({
           donation_date: donation.donation_date,
-          donation_types: "Non-Fund Donation",
+          donation_types: "Donasi Non Dana",
           notes: donation.notes,
         })),
     ];
