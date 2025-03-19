@@ -120,7 +120,6 @@
                   id="notes"
                   rows="5"
                   v-model="donation.notes"
-                  readonly
                   class="w-full border bg-gray-100 text-gray-700 px-3 py-2 rounded"
                 ></textarea>
               </div>
