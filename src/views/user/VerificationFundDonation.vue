@@ -26,7 +26,7 @@
               <img 
                 alt="Gambar Donasi"
                 :src="`${apiUrl}/storage/donation/${donation.image}`" 
-                class="h-40 w-40 rounded-lg"
+                class="h-80 w-auto max-w-full rounded-lg object-contain"
               />
             </div>
             

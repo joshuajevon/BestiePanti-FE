@@ -170,7 +170,7 @@ export async function fetchNonFundDonationsById(id) {
 export async function fetchFundDonationByDonationId(id) {
   try {
     const response = await fetch(
-      `${API_URL}/api/v1/donation/fund/view/donation/${id}`,
+      `${API_URL}/api/v1/donation/fund/get/${id}`,
       {
         method: "GET",
         headers: {
@@ -200,7 +200,7 @@ export async function fetchFundDonationByDonationId(id) {
 export async function fetchNonFundDonationByDonationId(id) {
   try {
     const response = await fetch(
-      `${API_URL}/api/v1/donation/nonfund/view/donation/${id}`,
+      `${API_URL}/api/v1/donation/nonfund/get/${id}`,
       {
         method: "GET",
         headers: {
@@ -263,8 +263,8 @@ export async function verifyDonationDana(id, donationData) {
 export async function verifyDonationNonDana(id, donationData) {
   const jsonData = {
     donation_date: donationData.donationDate,
-    is_onsite: donationData.isOnsite === "1" ? 1 : 0, // Pastikan ini number
-    donation_types: donationData.donationTypes, // Kirim sebagai array
+    is_onsite: donationData.isOnsite === "1" ? 1 : 0, 
+    donation_types: donationData.donationTypes, 
     pic: donationData.pic,
     active_phone: donationData.activePhone,
     notes: donationData.notes,
