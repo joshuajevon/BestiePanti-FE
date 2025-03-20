@@ -27,7 +27,10 @@
             <td class="border p-2">{{ donatur.phone }}</td>
             <td class="border p-2">{{ donatur.address }}</td>
             <td class="border p-2">
-              <a href="#" class="text-red-600 hover:underline">
+              <a href="#" 
+                class="text-red-600 hover:underline"
+                @click.prevent="showConfirmation(donatur.id)"
+              >
                 Hapus
               </a>
             </td>
@@ -44,19 +47,32 @@
         class="mt-4" 
       />
     </div>
+
+    <!-- Confirmation Modal -->
+    <ConfirmationModal 
+      :show="modalVisible" 
+      :message="modalMessage" 
+      @confirm="handleDeleteConfirm"
+      @cancel="modalVisible = false"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { fetchAllDonatur } from "@/services/api-donatur";
+import { fetchAllDonatur, deleteDonatur } from "@/services/api-donatur";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
+import ConfirmationModal from "@/components/modal/ConfirmationModal.vue"; 
 
 const donaturList = ref([]);
 const fetching = ref(true);
 const currentPage = ref(1);
 const itemsPerPage = 10;
+
+const modalVisible = ref(false);
+const modalMessage = ref("");
+const selectedMessageId = ref(null);
 
 const headers = [
   "Nama Donatur", 
@@ -70,6 +86,22 @@ const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   return donaturList.value.slice(start, start + itemsPerPage);
 });
+
+const showConfirmation = (id) => {
+  selectedMessageId.value = id;
+  modalMessage.value = "Apakah kamu yakin ingin menghapus donatur ini?";
+  modalVisible.value = true;
+};
+
+const handleDeleteConfirm = async () => {
+
+  await deleteDonatur(selectedMessageId.value);
+  modalVisible.value = false;
+  
+  fetching.value = true;
+  fetchData();
+};
+
 
 const fetchData = async () => {
   try {

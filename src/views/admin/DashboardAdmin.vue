@@ -100,7 +100,7 @@ onMounted(async () => {
   
   const savedTab = localStorage.getItem("activeTab");
   if (savedTab) {
-    activeTabPanti.value = savedTab;
+    activeTab.value = savedTab;
   }
 });
 
