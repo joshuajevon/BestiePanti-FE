@@ -55,7 +55,6 @@ export async function deleteDonatur(id) {
 export async function updateProileDonaturByUser(donaturData) {
   const formData = new FormData();
   formData.append("name", donaturData.name);
-  formData.append("email", donaturData.email);
   formData.append("phone", donaturData.phone);
   formData.append("gender", donaturData.gender);
   formData.append("dob", donaturData.dob);
