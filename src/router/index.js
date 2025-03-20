@@ -71,6 +71,12 @@ const router = createRouter({
       component: () => import("../views/panti/VerificationNonFundDonation.vue"),
       meta: { requiresAuth: true },
     },
+    {
+      path: "/ubah/profile/donatur",
+      name: "ubah-profile-donatur",
+      component: () => import("../views/donatur/UpdateDonaturProfile.vue"),
+      meta: { requiresAuth: true },
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     // If there's a saved scroll position (e.g., going back in history), use it
