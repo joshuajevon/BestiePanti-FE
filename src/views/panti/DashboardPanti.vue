@@ -1,5 +1,5 @@
 <template>
-  <section class="min-h-screen pt-36">
+  <section class="min-h-screen pt-36 md:pt-40">
     <LoadingIndicator v-if="fetching" 
       text="Memuat data..." 
       color="text-secondary-500" 
