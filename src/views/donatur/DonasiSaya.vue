@@ -1,5 +1,5 @@
 <template>
-  <section class="min-h-screen pt-36">
+  <section class="min-h-screen flex flex-col gap-8 pb-8 pt-36 lg:gap-12 lg:pb-16 lg:pt-40 xl:gap-16 xl:pb-32 xl:pt-44 2xl:pt-48">
     <LoadingIndicator v-if="fetching" 
       text="Memuat data..." 
       color="text-secondary-500" 
