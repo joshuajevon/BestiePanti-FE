@@ -38,7 +38,12 @@
               <td class="border p-2">
                 <a href="#" class="text-blue-600 hover:underline">Ubah</a>
                 <br>
-                <a href="#" class="text-red-600 hover:underline">Hapus</a>
+                <a href="#" 
+                  class="text-red-600 hover:underline"
+                  @click.prevent="showConfirmation(panti.id)"
+                >
+                Hapus
+              </a>
               </td>
             </tr>
           </tbody>
@@ -55,19 +60,31 @@
         class="mt-4" />
     </div>
 
+    <!-- Confirmation Modal -->
+    <ConfirmationModal 
+      :show="modalVisible" 
+      :message="modalMessage" 
+      @confirm="handleDeleteConfirm"
+      @cancel="modalVisible = false"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { fetchAllPanti } from "@/services/api-panti";
+import { fetchAllPanti, deletePanti } from "@/services/api-panti";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
+import ConfirmationModal from "@/components/modal/ConfirmationModal.vue"; 
 
 const pantiList = ref([]);
 const fetching = ref(true);
 const currentPage = ref(1);
 const itemsPerPage = 10;
+
+const modalVisible = ref(false);
+const modalMessage = ref("");
+const selectedMessageId = ref(null);
 
 const headers = [
   "Nama Panti",
@@ -85,6 +102,21 @@ const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   return pantiList.value.slice(start, start + itemsPerPage);
 });
+
+const showConfirmation = (id) => {
+  selectedMessageId.value = id;
+  modalMessage.value = "Apakah kamu yakin ingin menghapus panti ini?";
+  modalVisible.value = true;
+};
+
+const handleDeleteConfirm = async () => {
+
+  await deletePanti(selectedMessageId.value);
+  modalVisible.value = false;
+  
+  fetching.value = true;
+  fetchData();
+};
 
 const fetchData = async () => {
   try {
