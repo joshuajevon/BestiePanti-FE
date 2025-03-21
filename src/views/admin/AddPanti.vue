@@ -75,7 +75,7 @@
                 v-model="form.donation_types"
                 value="Pangan"
               />
-              <label for="makanan"></label>
+              <label for="makanan">Makanan</label>
             </div>
 
             <div class="flex items-center gap-2">

@@ -88,19 +88,16 @@ export async function createPanti(pantiData) {
   formData.append("bankAccountNumber", pantiData.bank_account_number);
   formData.append("bankAccountName", pantiData.bank_account_name);
 
-  // Mengirim daftar tipe donasi dengan format yang benar
   if (pantiData.donation_types.length > 0) {
     pantiData.donation_types.forEach(type => {
       formData.append("donationTypes", type);
     });
   }
 
-  // Mengirim QRIS jika ada
   if (pantiData.qris) {
     formData.append("qris", pantiData.qris);
   }
 
-  // Mengirim gambar satu per satu
   if (Array.isArray(pantiData.image) && pantiData.image.length > 0) {
     pantiData.image.forEach(file => {
       formData.append("image", file);
@@ -111,7 +108,7 @@ export async function createPanti(pantiData) {
     const response = await fetch(`${API_URL}/api/v1/panti/create`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`, // Tidak menambahkan `Content-Type`, karena `FormData` akan otomatis menentukannya
+        Authorization: `Bearer ${token}`, 
       },
       body: formData,
     });
