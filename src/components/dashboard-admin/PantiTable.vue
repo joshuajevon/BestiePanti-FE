@@ -13,7 +13,9 @@
     <div v-else>
 
       <div class="mt-4 md:text-right mb-5">
-        <button class="px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300">
+        <button
+          @click="$router.push({ name: 'tambah-panti' })"
+          class="px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300">
           Tambah Panti
         </button>
       </div>

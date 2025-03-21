@@ -71,3 +71,60 @@ export async function deletePanti(id) {
     throw error;
   }
 }
+
+export async function createPanti(pantiData) {
+  const formData = new FormData();
+
+  formData.append("name", pantiData.name);
+  formData.append("email", pantiData.email);
+  formData.append("password", pantiData.password);
+  formData.append("confirmationPassword", pantiData.confrimation_password);
+  formData.append("description", pantiData.description);
+  formData.append("phone", pantiData.phone);
+  formData.append("isUrgent", pantiData.is_urgent);
+  formData.append("address", pantiData.address);
+  formData.append("region", pantiData.region);
+  formData.append("bankName", pantiData.bank_name);
+  formData.append("bankAccountNumber", pantiData.bank_account_number);
+  formData.append("bankAccountName", pantiData.bank_account_name);
+
+  // Mengirim daftar tipe donasi dengan format yang benar
+  if (pantiData.donation_types.length > 0) {
+    pantiData.donation_types.forEach(type => {
+      formData.append("donationTypes", type);
+    });
+  }
+
+  // Mengirim QRIS jika ada
+  if (pantiData.qris) {
+    formData.append("qris", pantiData.qris);
+  }
+
+  // Mengirim gambar satu per satu
+  if (Array.isArray(pantiData.image) && pantiData.image.length > 0) {
+    pantiData.image.forEach(file => {
+      formData.append("image", file);
+    });
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/v1/panti/create`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`, // Tidak menambahkan `Content-Type`, karena `FormData` akan otomatis menentukannya
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.log("Response Error:", errorResponse);
+      return errorResponse;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
