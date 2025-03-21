@@ -15,7 +15,7 @@
         <img
           v-if="panti?.image"
           class="rounded-md lg:rounded-lg object-cover w-full h-full"
-          :src="`${apiUrl}/storage/image/${panti.image}`"
+          :src="`${apiUrl}/storage/image/${panti.image[0]}`"
           :alt="`${panti?.name || 'Panti'}'s image`"
         />
       </div>
