@@ -2,28 +2,27 @@
   <section
     class=" min-h-screen c-container flex flex-col gap-8 pb-8 pt-36 lg:gap-12 lg:pb-16 lg:pt-40 xl:gap-16 xl:pb-32 xl:pt-44 2xl:pt-48 bg-primary-50 text-secondary-500"
   >
-    <div 
+    <LoadingIndicator 
+        v-if="fetching" 
+        text="Memuat data..." 
+        color="text-secondary-500" 
+    />
+    <div v-else-if="!hasAccess" class="p-6">
+      <h1 class="text-4xl font-bold text-center text-red-700 justify-center">
+        Kamu Tidak Memiliki Akses
+      </h1>
+    </div>
+
+    <div v-if="!fetching" 
       class="flex items-center justify-center gap-3 lg:gap-4 xl:gap-6 2xl:gap-8">
       <h1 class="text-2xl font-bold text-secondary-500 xl:text-3xl 2xl:text-4xl">
         Ubah Profile
       </h1>
       <div class="h-0.5 flex-1 bg-secondary-500"></div>
     </div>
-
-    <LoadingIndicator 
-        v-if="fetching" 
-        text="Memuat data..." 
-        color="text-secondary-500" 
-    />
-    <div v-else-if="!hasAcccess" class="p-6">
-      <h1 class="text-4xl font-bold text-center text-red-700 justify-center">
-        Kamu Tidak Memiliki Akses
-      </h1>
-    </div>
-
     <!-- Form -->
     <form
-      v-else
+      v-if="!fetching" 
       method="PUT"
       class="flex flex-col items-center gap-6 rounded-md bg-white px-6 py-12 shadow-[0px_4.7451px_41.5196px_rgba(41,82,144,0.25)] sm:rounded-lg sm:px-8 sm:py-16 md:rounded-xl md:px-10 md:py-20 lg:rounded-2xl lg:px-12 lg:py-24 xl:rounded-3xl xl:px-14 xl:py-28 2xl:px-16 2xl:py-32"
       @submit.prevent="submitForm"
@@ -208,15 +207,13 @@ const selectedFile = ref(null);
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB dalam byte
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
-const hasAcccess = computed(() => {
+const hasAccess = computed(() => {
   return authStore.user?.role === "ROLE_DONATUR";
 });
 
 const form = reactive({
   name: "",
   email: "",
-  password: "",
-  confirmation_password: "",
   phone: "",
   dob: "",
   address: "",
@@ -226,13 +223,9 @@ const form = reactive({
 
 const errorMessages = reactive({
   name: "",
-  email: "",
-  password: "",
-  confirmation_password: "",
   phone: "",
   dob: "",
   address: "",
-  gender: "",
   profile: "",
 });
 
@@ -294,6 +287,11 @@ const validateForm = () => {
   // Gender validation
   if (!form.gender) {
     errorMessages.gender = "Jenis kelamin tidak boleh kosong";
+    isValid = false;
+  }
+
+  if (!form.dob) {
+    authStore.errorMessages.dob = "Tanggal Lahir tidak boleh kosong";
     isValid = false;
   }
 
