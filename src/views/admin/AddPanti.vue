@@ -875,8 +875,8 @@ const submitForm = async () => {
 
     const response = await createPanti(pantiData);
 
-    if (!response) {
-      // goBack();
+    if (!response.message) {
+      goBack();
     } else {
       alert(`Gagal: ${response.message || "Terjadi kesalahan."}`);
     }
