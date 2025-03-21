@@ -37,7 +37,7 @@
           <input 
             type="text" 
             v-model="form.name" 
-            placeholder="Masukkan nama lengkap" 
+            placeholder="Masukkan nama panti" 
           />
 
           <p
@@ -118,7 +118,7 @@
           <input 
             type="text" 
             v-model="form.email" 
-            placeholder="Masukkan nama lengkap" 
+            placeholder="Masukkan email" 
           />
 
           <p
@@ -483,6 +483,7 @@
             id="description"
             rows="10"
             v-model="form.description"
+            placeholder="Masukkan deskripsi panti asuhan" 
           ></textarea>
 
           <p v-if="errorMessages.description" class="error-message">
