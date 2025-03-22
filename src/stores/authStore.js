@@ -98,6 +98,7 @@ export const useAuthStore = defineStore("auth", {
       this.token = null;
       this.user = null;
       localStorage.removeItem("token");
+      window.location.reload(true);
       router.push({
         path: "/login",
         query: { showLogoutSuccessAlert: "true" },
