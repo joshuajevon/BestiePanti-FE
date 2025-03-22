@@ -536,7 +536,7 @@ const handleScroll = () => {
   const windowHeight = window.innerHeight;
   const fullHeight = document.documentElement.scrollHeight;
 
-  if (scrollTop + windowHeight >= fullHeight - 10) {
+  if (scrollTop + windowHeight >= fullHeight - 200) {
     loadMore();
   }
 };
