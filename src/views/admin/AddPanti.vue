@@ -608,6 +608,7 @@ const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB dalam byte
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 const REGEX_PHONE_NUMERIC = /^\d{10,15}$/;
 const REGEX_BANK_ACCOUNT_NUMBER = /^\d+$/;
+const REGEX_EMAIL = /^\S+@\S+\.\S+$/;
 
 const confirmPassword = ref(null);
 const showConfirmPassword = ref(false);
@@ -695,7 +696,7 @@ const validateForm = () => {
   if (!form.email) {
     errorMessages.email = "Email tidak boleh kosong";
     isValid = false;
-  } else if (!/^\S+@\S+\.\S+$/.test(form.email)) {
+  } else if (!REGEX_EMAIL.test(form.email)) {
     errorMessages.email = "Format email tidak valid";
     isValid = false;
   }
