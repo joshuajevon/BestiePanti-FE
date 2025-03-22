@@ -22,7 +22,7 @@
           </p>
         </div>
 
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto max-h-80">
           <div v-if="isFetching">
             <LoadingIndicator text="Memuat data donasi panti asuhan..." />
           </div>
