@@ -105,26 +105,47 @@
 
     <!-- Title -->
     <section
-      v-if="!isFetchingDatas"
-      class="c-container flex flex-col items-center justify-center gap-8 pb-8 lg:pb-12 xl:pb-16 pt-32 lg:pt-40 xl:pt-48"
+      class="c-container flex flex-col md:flex-row md:gap-8 gap-16 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
     >
-      <div
-        class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6"
-      >
+      <!-- Image Carousel -->
+      <div v-if="!isFetchingDatas">
+        <swiper
+          :pagination="{
+            clickable: true,
+          }"
+          :navigation="true"
+          :modules="modules"
+          :loop="true"
+          class="mySwiper aspect-video w-full md:w-[300px] lg:w-[400px] xl:w-[500px]"
+        >
+          <swiper-slide
+            v-if="panti"
+            v-for="(image, index) in panti.image"
+            :key="index"
+          >
+            <img
+              class="h-full w-full object-contain"
+              :src="`${apiUrl}/storage/image/${image}`"
+              :alt="`${panti.name}'s image ${index + 1}`"
+            />
+          </swiper-slide>
+        </swiper>
+      </div>
+
+      <!-- Details -->
+      <div v-if="!isFetchingDatas" class="flex flex-col gap-4">
         <h1 v-if="panti" class="text-3xl font-bold lg:text-4xl xl:text-5xl">
           {{ panti.name || "" }}
         </h1>
 
-        <span
-          class="flex justify-center items-center gap-0.5 text-secondary-500"
-        >
+        <span class="flex items-center gap-0.5 text-secondary-500">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="size-6 lg:size-7 xl:size-8"
+            class="size-6"
           >
             <path
               stroke-linecap="round"
@@ -138,40 +159,19 @@
             />
           </svg>
 
-          <p class="text-lg lg:text-xl xl:text-2xl">
+          <p>
             {{ panti.region }}
           </p>
         </span>
 
-        <p v-if="panti" class="text-lg lg:text-xl xl:text-2xl">
+        <p v-if="panti">
           {{ panti.address || "" }}
         </p>
-      </div>
-    </section>
 
-    <!-- Image Carousel -->
-    <section v-if="!isFetchingDatas" class="c-container pb-8 lg:pb-12 xl:pb-16">
-      <swiper
-        :pagination="{
-          clickable: true,
-        }"
-        :navigation="true"
-        :modules="modules"
-        :loop="true"
-        class="mySwiper h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] xl:h-[800px]"
-      >
-        <swiper-slide
-          v-if="panti"
-          v-for="(image, index) in panti.image"
-          :key="index"
-        >
-          <img
-            class="h-full w-full object-contain"
-            :src="`${apiUrl}/storage/image/${image}`"
-            :alt="`${panti.name}'s image ${index + 1}`"
-          />
-        </swiper-slide>
-      </swiper>
+        <p v-if="panti" class="text-justify text-secondary-500">
+          {{ panti.description }}
+        </p>
+      </div>
     </section>
 
     <!-- Details -->
@@ -255,12 +255,6 @@
           </p>
         </div>
       </div>
-
-      <div class="w-full">
-        <p v-if="panti" class="text-justify text-lg text-secondary-500">
-          {{ panti.description }}
-        </p>
-      </div>
     </section>
 
     <!-- Pesan -->
@@ -327,7 +321,6 @@ import { fetchPaymentByPantiId } from "@/services/api-payment";
 import { fetchAllMessagesById } from "@/services/api-message";
 import { useAuthStore } from "@/stores/authStore";
 
-import "@/assets/swiper.css";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -443,7 +436,7 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
+<style>
 .slide-fade-enter-active {
   transition: all 0.5s ease-out;
 }
@@ -456,5 +449,102 @@ onMounted(async () => {
 .slide-fade-leave-to {
   transform: translateX(100%);
   opacity: 0;
+}
+.swiper-slide {
+  background-color: #e5e9f2;
+}
+
+span.swiper-pagination-bullet {
+  background-color: white;
+  opacity: 100;
+  border-radius: 9999px;
+  width: 8px;
+}
+
+span.swiper-pagination-bullet-active {
+  background-color: #2547fa;
+  width: 32px;
+}
+
+div.swiper-button-prev,
+div.swiper-button-next {
+  border: 5px solid #2547fa;
+  border-radius: 999px;
+  width: 64px;
+  height: 64px;
+  color: white;
+  background: #2547fa;
+  transition-property: all;
+  transition-timing-function: var(cubic-bezier(0.4, 0, 0.2, 1));
+  transition-duration: 150ms;
+  outline-style: solid;
+  outline-width: 4px;
+  outline-offset: -4px;
+  outline-color: transparent;
+  scale: 0.8;
+}
+
+div.swiper-button-prev:hover,
+div.swiper-button-next:hover {
+  outline-offset: 0;
+  outline-color: rgb(37 71 250 / 0.5);
+}
+
+div.swiper-button-prev::after,
+div.swiper-button-next::after {
+  scale: 0.8;
+}
+
+div.swiper-button-prev {
+  margin-left: 0.5rem;
+}
+
+div.swiper-button-next {
+  margin-right: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    scale: 0.6;
+  }
+
+  div.swiper-button-prev {
+    margin-left: 0.3rem;
+  }
+
+  div.swiper-button-next {
+    margin-right: 0.3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    scale: 0.7;
+  }
+
+  div.swiper-button-prev {
+    margin-left: 0.4rem;
+  }
+
+  div.swiper-button-next {
+    margin-right: 0.4rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  div.swiper-button-prev,
+  div.swiper-button-next {
+    scale: 0.8;
+  }
+
+  div.swiper-button-prev {
+    margin-left: 0.5rem;
+  }
+
+  div.swiper-button-next {
+    margin-right: 0.5rem;
+  }
 }
 </style>
