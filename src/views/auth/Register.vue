@@ -561,7 +561,6 @@ const submitForm = async () => {
 
   isLoading.value = true;
 
-  form.phone;
   const success = await authStore.register(form);
 
   isLoading.value = false;

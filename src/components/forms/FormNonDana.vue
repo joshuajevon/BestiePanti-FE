@@ -187,13 +187,29 @@
               >Nomor Telepon Yang Dapat Dihubungi</label
             >
 
-            <input
-              type="text"
-              id="active_phone"
-              name="active_phone"
-              placeholder="Masukkan nomor telepon yang dapat dihubungi"
-              v-model="donationData.active_phone"
-            />
+            <div class="relative">
+              <div
+                class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
+              >
+                <p>+62</p>
+              </div>
+
+              <input
+                type="text"
+                id="active_phone"
+                name="active_phone"
+                placeholder="Masukkan nomor telepon yang dapat dihubungi"
+                v-model="donationData.active_phone"
+                class="pl-14 sm:pl-16"
+                inputmode="numeric"
+                @input="
+                  donationData.active_phone = $event.target.value.replace(
+                    /\D/g,
+                    ''
+                  )
+                "
+              />
+            </div>
 
             <p
               v-if="errorMessages.active_phone"
@@ -304,6 +320,19 @@ const validateForm = () => {
   if (!donationData.active_phone.trim()) {
     errorMessages.active_phone =
       "Nomor Telepon Yang Dapat Dihubungi tidak boleh kosong";
+    isValid = false;
+  } else if (!/^\d+$/.test(donationData.active_phone)) {
+    errorMessages.active_phone = "Nomor Telepon hanya boleh mengandung angka";
+    isValid = false;
+  } else if (donationData.active_phone.startsWith("0")) {
+    errorMessages.active_phone = "Nomor Telepon tidak boleh diawali dengan 0";
+    isValid = false;
+  } else if (
+    donationData.active_phone.length < 10 ||
+    donationData.active_phone.length > 13
+  ) {
+    errorMessages.active_phone =
+      "Nomor Telepon harus memiliki 10 hingga 13 digit";
     isValid = false;
   }
 
