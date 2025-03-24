@@ -511,7 +511,6 @@ const validateForm = () => {
       "Konfirmasi Kata Sandi tidak boleh kosong";
     isValid = false;
   } else if (form.password !== form.confirmation_password) {
-    console.log(9);
     authStore.errorMessages.confirmationPassword =
       "Konfirmasi Kata Sandi tidak cocok";
     isValid = false;
@@ -528,6 +527,10 @@ const validateForm = () => {
   } else if (form.phone.startsWith("0")) {
     authStore.errorMessages.phone =
       "Nomor Whatsapp tidak boleh diawali dengan 0";
+    isValid = false;
+  } else if (form.phone.length < 10 || form.phone.length > 13) {
+    authStore.errorMessages.phone =
+      "Nomor Whatsapp harus memiliki 10 hingga 13 digit";
     isValid = false;
   }
 
