@@ -212,6 +212,8 @@
               />
             </div>
 
+            <p class="text-xs">*Contoh: 87812341234</p>
+
             <p
               v-if="errorMessages.active_phone"
               id="active-phone-error-message"
@@ -325,8 +327,8 @@ const validateForm = () => {
   } else if (!/^\d+$/.test(donationData.active_phone)) {
     errorMessages.active_phone = "Nomor Telepon hanya boleh mengandung angka";
     isValid = false;
-  } else if (donationData.active_phone.startsWith("0")) {
-    errorMessages.active_phone = "Nomor Telepon tidak boleh diawali dengan 0";
+  } else if (donationData.active_phone.startsWith("8")) {
+    errorMessages.active_phone = "Nomor Telepon harus diawali dengan 8";
     isValid = false;
   } else if (
     donationData.active_phone.length < 10 ||
