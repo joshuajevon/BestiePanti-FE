@@ -182,6 +182,10 @@
           </router-link>
         </span>
       </div>
+
+      <button class="btn-primary" @click="handleLoginWithGoogle">
+        Google Login
+      </button>
     </form>
   </section>
 </template>
@@ -199,6 +203,8 @@ const router = useRouter();
 
 const showLogoutSuccessAlert = ref(false);
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const handleLogoutSuccess = () => {
   router.replace({ query: {} });
   showLogoutSuccessAlert.value = true;
@@ -206,6 +212,14 @@ const handleLogoutSuccess = () => {
   setTimeout(() => {
     showLogoutSuccessAlert.value = false;
   }, 3000);
+};
+
+const handleLoginWithGoogle = async () => {
+  const success = await authStore.login(form);
+
+  if (success) {
+    console.log("Success login with Google!");
+  }
 };
 
 const showPassword = ref(false);
