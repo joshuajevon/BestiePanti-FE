@@ -21,7 +21,7 @@
             Berikut adalah daftar donasi yang telah diterima oleh panti asuhan.
           </p>
         </div>
-
+        <!-- 
         <div class="overflow-x-auto max-h-80">
           <div v-if="isFetching">
             <LoadingIndicator text="Memuat data donasi panti asuhan..." />
@@ -59,6 +59,38 @@
                   {{ donation.donation_types }}
                 </td>
                 <td class="whitespace-nowrap px-4 py-2">
+                  {{ donation.notes }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
+
+        <div
+          class="max-h-80 overflow-y-auto overscroll-none border border-gray-200 rounded-md"
+        >
+          <table class="min-w-full bg-white text-sm text-secondary-500">
+            <thead class="bg-gray-100 sticky top-0 z-10">
+              <tr>
+                <th class="px-4 py-2">Tanggal Donasi</th>
+                <th class="px-4 py-2">Jenis Donasi</th>
+                <th class="px-4 py-2">Catatan</th>
+              </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-200">
+              <tr
+                v-for="donation in combinedDonations"
+                :key="donation.donation_date"
+                class="odd:bg-gray-50"
+              >
+                <td class="px-4 py-2 font-medium">
+                  {{ formatDate(donation.donation_date) }}
+                </td>
+                <td class="px-4 py-2">
+                  {{ donation.donation_types }}
+                </td>
+                <td class="px-4 py-2">
                   {{ donation.notes }}
                 </td>
               </tr>

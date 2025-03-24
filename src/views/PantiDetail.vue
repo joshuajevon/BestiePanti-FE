@@ -69,7 +69,7 @@
     />
 
     <!-- Go back -->
-    <section
+    <!-- <section
       class="c-container flex flex-col items-center justify-center gap-8 pb-8 pt-32 lg:pb-12 lg:pt-36 xl:pb-16 xl:pt-40"
     >
       <div class="flex w-full">
@@ -90,7 +90,7 @@
           Kembali
         </button>
       </div>
-    </section>
+    </section> -->
 
     <!-- Loading -->
     <section
@@ -106,7 +106,7 @@
     <!-- Title -->
     <section
       v-if="!isFetchingDatas"
-      class="c-container flex flex-col items-center justify-center gap-8 pb-8 lg:pb-12 xl:pb-16"
+      class="c-container flex flex-col items-center justify-center gap-8 pb-8 lg:pb-12 xl:pb-16 pt-32 lg:pt-40 xl:pt-48"
     >
       <div
         class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6"
@@ -272,7 +272,7 @@
         class="flex w-full items-center justify-center gap-3 lg:gap-4 xl:gap-6 2xl:gap-8"
       >
         <h1 class="text-xl font-bold lg:text-2xl xl:text-3xl 2xl:text-4xl">
-          Pesan
+          Pesan dari Donatur
         </h1>
         <div class="h-0.5 flex-1 bg-secondary-500"></div>
       </div>
