@@ -186,7 +186,8 @@
               v-model="form.phone"
               placeholder="Masukkan nomor Whatsapp"
               class="pl-14 sm:pl-16"
-              oninput="this.value = this.value.replace(/\D/g, '')"
+              inputmode="numeric"
+              @input="form.phone = $event.target.value.replace(/\D/g, '')"
             />
           </div>
 
@@ -551,8 +552,6 @@ const validateForm = () => {
     authStore.errorMessages.gender = "Jenis kelamin tidak boleh kosong";
     isValid = false;
   }
-
-  console.log(form);
 
   return isValid;
 };
