@@ -171,14 +171,24 @@
             <span class="text-red-500">*</span>
           </div>
 
-          <input
-            type="text"
-            autocomplete="false"
-            id="phone"
-            name="phone"
-            v-model="form.phone"
-            placeholder="Masukkan nomor Whatsapp"
-          />
+          <div class="relative">
+            <div
+              class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
+            >
+              <p>+62</p>
+            </div>
+
+            <input
+              type="text"
+              autocomplete="false"
+              id="phone"
+              name="phone"
+              v-model="form.phone"
+              placeholder="Masukkan nomor Whatsapp"
+              class="pl-14 sm:pl-16"
+              oninput="this.value = this.value.replace(/\D/g, '')"
+            />
+          </div>
 
           <p
             id="phone-error-message"
@@ -509,7 +519,15 @@ const validateForm = () => {
 
   // Phone number validation
   if (!form.phone) {
-    authStore.errorMessages.phone = "Nomor Telepon tidak boleh kosong";
+    authStore.errorMessages.phone = "Nomor Whatsapp tidak boleh kosong";
+    isValid = false;
+  } else if (!/^\d+$/.test(form.phone)) {
+    authStore.errorMessages.phone =
+      "Nomor Whatsapp hanya boleh mengandung angka";
+    isValid = false;
+  } else if (form.phone.startsWith("0")) {
+    authStore.errorMessages.phone =
+      "Nomor Whatsapp tidak boleh diawali dengan 0";
     isValid = false;
   }
 
@@ -541,6 +559,7 @@ const submitForm = async () => {
 
   isLoading.value = true;
 
+  form.phone;
   const success = await authStore.register(form);
 
   isLoading.value = false;
