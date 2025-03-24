@@ -34,7 +34,7 @@
         :navigation="true"
         :modules="modules"
         :loop="true"
-        class="mySwiper h-[500px] sm:h-[550px] md:h-[600px] lg:h-[650px] xl:h-[700px]"
+        class="mySwiper h-[300px] sm:h-[350px] md:h-[400px] lg:h-[450px] xl:h-[500px]"
       >
         <swiper-slide>
           <img
