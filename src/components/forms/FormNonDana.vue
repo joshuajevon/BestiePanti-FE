@@ -58,6 +58,7 @@
               name="donation_date"
               placeholder="Masukkan tanggal donasi"
               v-model="donationData.donation_date"
+              :min="new Date().toISOString().split('T')[0]"
             />
 
             <p

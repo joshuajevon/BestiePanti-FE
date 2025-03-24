@@ -148,6 +148,7 @@
             name="dob"
             v-model="form.dob"
             placeholder="Masukkan tanggal lahir"
+            :max="new Date().toISOString().split('T')[0]"
           />
 
           <p
