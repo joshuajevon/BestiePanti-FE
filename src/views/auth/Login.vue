@@ -175,7 +175,7 @@
         <span>
           Belum punya akun?
           <router-link
-            class="font-bold hover:underline"
+            class="font-bold hover:underline text-primary-500"
             :to="{ name: 'register' }"
           >
             Daftar di sini
