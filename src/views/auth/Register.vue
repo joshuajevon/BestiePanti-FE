@@ -485,9 +485,13 @@ const validateForm = () => {
   if (!form.password) {
     authStore.errorMessages.password = "Kata Sandi tidak boleh kosong";
     isValid = false;
-  } else if (form.password.length < 6) {
+  } else if (
+    form.password.length < 8 ||
+    !/[A-Za-z]/.test(form.password) ||
+    !/\d/.test(form.password)
+  ) {
     authStore.errorMessages.password =
-      "Kata Sandi harus memiliki minimal 6 karakter";
+      "Kata Sandi harus memiliki minimal 8 karakter dan mengandung huruf dan angka";
     isValid = false;
   }
 
