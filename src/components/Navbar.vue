@@ -2,7 +2,7 @@
   <!-- Navbar -->
   <nav id="navbar" class="fixed z-50 w-full">
     <div
-      class="c-container mx-auto flex h-20 w-full items-center justify-between gap-12 bg-primary-900 lg:h-24"
+      class="c-container mx-auto flex h-20 w-full items-center justify-between lg:gap-12 bg-primary-900 lg:h-24"
     >
       <!-- Left Side (Logo & Navigation) -->
       <div class="flex items-center gap-4 lg:gap-6 flex-none">
@@ -36,28 +36,6 @@
             alt="logo"
           />
         </router-link>
-
-        <!-- Search Bar Button -->
-        <button
-          class="rounded-full p-2 hover:bg-primary-500 transition"
-          :class="{ 'bg-primary-500': isSearchBarOpen }"
-          @click="toggleSearchBar"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-5 sm:size-6 text-white"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-            />
-          </svg>
-        </button>
 
         <!-- Desktop Navigation -->
         <div class="hidden lg:flex">
@@ -100,6 +78,48 @@
 
       <!-- Right Side (Auth & Profile) -->
       <div class="flex items-center gap-4 flex-none">
+        <!-- Search Bar Button -->
+        <div class="mr-2">
+          <button
+            class="rounded-full transition flex items-center text-white gap-2 px-3 py-2 hover:bg-primary-500"
+            :class="{
+              'bg-primary-500': isSearchBarOpen,
+              'bg-primary-500/50': !isSearchBarOpen,
+            }"
+            @click="toggleSearchBar"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+
+            <div
+              v-if="userOS === 'windows'"
+              class="text-xs flex items-center gap-0.5"
+            >
+              <p>Ctrl</p>
+              <p>K</p>
+            </div>
+            <div
+              v-else-if="userOS === 'mac'"
+              class="text-xs flex items-center gap-0.5"
+            >
+              <p>⌘</p>
+              <p>K</p>
+            </div>
+          </button>
+        </div>
+
         <div
           v-if="!authStore.isAuthenticated()"
           class="flex items-center gap-4"
@@ -298,7 +318,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
 
@@ -317,6 +337,26 @@ const redirectToSearch = () => {
 
     searchQuery.value = "";
     isSearchBarOpen.value = false;
+  }
+};
+
+const userOS = computed(() => {
+  const platform = navigator.userAgent.toLowerCase();
+
+  if (platform.includes("win")) return "windows";
+  if (platform.includes("mac")) return "mac";
+  if (/android|iphone|ipad|ipod|mobile/i.test(platform)) return "phone";
+
+  return "unknown";
+});
+
+const handleKeydown = (event) => {
+  if (userOS.value === "windows" && event.ctrlKey && event.key === "k") {
+    event.preventDefault();
+    toggleSearchBar();
+  } else if (userOS.value === "mac" && event.metaKey && event.key === "k") {
+    event.preventDefault();
+    toggleSearchBar();
   }
 };
 
@@ -357,8 +397,12 @@ function isActiveRoute(routeName) {
 function logout() {
   authStore.logout();
 }
-</script>
 
-<style scoped>
-/* Add styles here if necessary */
-</style>
+onMounted(() => {
+  window.addEventListener("keydown", handleKeydown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleKeydown);
+});
+</script>
