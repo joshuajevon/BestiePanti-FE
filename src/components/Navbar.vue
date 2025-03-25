@@ -2,7 +2,7 @@
   <!-- Navbar -->
   <nav id="navbar" class="fixed z-50 w-full">
     <div
-      class="c-container mx-auto flex h-20 w-full items-center justify-between lg:gap-12 bg-primary-900 lg:h-24"
+      class="c-container mx-auto flex h-20 w-full items-center justify-between lg:gap-12 bg-primary-900 lg:h-24 z-50"
     >
       <!-- Left Side (Logo & Navigation) -->
       <div class="flex items-center gap-4 lg:gap-6 flex-none">
@@ -232,37 +232,39 @@
       </div>
     </div>
 
-    <!-- Search Bar -->
-    <div
-      v-show="isSearchBarOpen"
-      class="c-container mx-auto flex h-20 w-full items-center justify-between gap-12 bg-secondary-300/80 lg:h-24 backdrop-blur-sm"
-    >
-      <form @submit.prevent="redirectToSearch" class="w-full">
-        <div class="relative">
-          <input
-            type="text"
-            v-model="searchQuery"
-            placeholder="Cari panti asuhan..."
-            class="pl-12 sm:pl-16"
-          />
-
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-5 sm:size-6 absolute left-5 sm:left-6 top-0 bottom-0 my-auto"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+    <transition name="slide">
+      <div
+        v-show="isSearchBarOpen"
+        class="absolute top-20 lg:top-24 left-0 c-container mx-auto flex h-20 w-full items-center justify-between gap-12 bg-secondary-300/80 lg:h-24 backdrop-blur-sm -z-10"
+      >
+        <form @submit.prevent="redirectToSearch" class="w-full">
+          <div class="relative">
+            <input
+              ref="searchInput"
+              type="text"
+              v-model="searchQuery"
+              placeholder="Cari panti asuhan..."
+              class="pl-12 sm:pl-16"
             />
-          </svg>
-        </div>
-      </form>
-    </div>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-5 sm:size-6 absolute left-5 sm:left-6 top-0 bottom-0 my-auto"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </div>
+        </form>
+      </div>
+    </transition>
   </nav>
 
   <!-- Mobile Navigation -->
@@ -328,6 +330,7 @@ const isNavbarOpen = ref(false);
 const isSearchBarOpen = ref(false);
 const isProfileWebOpen = ref(false);
 
+const searchInput = ref(null);
 const searchQuery = ref("");
 const router = useRouter();
 
@@ -388,6 +391,9 @@ function toggleProfileWeb() {
 
 function toggleSearchBar() {
   isSearchBarOpen.value = !isSearchBarOpen.value;
+  if (isSearchBarOpen.value) {
+    setTimeout(() => searchInput.value?.focus(), 100);
+  }
 }
 
 function isActiveRoute(routeName) {
@@ -406,3 +412,20 @@ onUnmounted(() => {
   window.removeEventListener("keydown", handleKeydown);
 });
 </script>
+
+<style scoped>
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.slide-enter-from {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.slide-leave-to {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+</style>
