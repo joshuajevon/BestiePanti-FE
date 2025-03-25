@@ -5,7 +5,7 @@
       class="c-container mx-auto flex h-20 w-full items-center justify-between gap-12 bg-primary-900 lg:h-24"
     >
       <!-- Left Side (Logo & Navigation) -->
-      <div class="flex items-center gap-4 lg:gap-6">
+      <div class="flex items-center gap-4 lg:gap-6 flex-none">
         <!-- Mobile Menu Button -->
         <button
           class="text-white transition hover:text-white/75 lg:hidden"
@@ -36,6 +36,28 @@
             alt="logo"
           />
         </router-link>
+
+        <!-- Search Bar Button -->
+        <button
+          class="rounded-full p-2 hover:bg-primary-500 transition"
+          :class="{ 'bg-primary-500': isSearchBarOpen }"
+          @click="toggleSearchBar"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-5 sm:size-6 text-white"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            />
+          </svg>
+        </button>
 
         <!-- Desktop Navigation -->
         <div class="hidden lg:flex">
@@ -77,7 +99,7 @@
       </div>
 
       <!-- Right Side (Auth & Profile) -->
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-4 flex-none">
         <div
           v-if="!authStore.isAuthenticated()"
           class="flex items-center gap-4"
@@ -137,7 +159,7 @@
 
           <div
             v-show="isProfileWebOpen"
-            class="absolute right-0 mt-2 w-56 rounded-xl divide-y divide-secondary-100 bg-white text-base text-primary-300"
+            class="absolute right-0 mt-2 w-56 rounded-xl divide-y divide-secondary-100 bg-white text-base text-primary-300 z-50"
           >
             <div class="p-2">
               <router-link
@@ -188,6 +210,38 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div
+      v-show="isSearchBarOpen"
+      class="c-container mx-auto flex h-20 w-full items-center justify-between gap-12 bg-secondary-300/80 lg:h-24 backdrop-blur-sm"
+    >
+      <form @submit.prevent="redirectToSearch" class="w-full">
+        <div class="relative">
+          <input
+            type="text"
+            v-model="searchQuery"
+            placeholder="Cari panti asuhan..."
+            class="pl-12 sm:pl-16"
+          />
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-5 sm:size-6 absolute left-5 sm:left-6 top-0 bottom-0 my-auto"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            />
+          </svg>
+        </div>
+      </form>
     </div>
   </nav>
 
@@ -245,13 +299,26 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
 
 const route = useRoute();
 const authStore = useAuthStore();
 const isNavbarOpen = ref(false);
+const isSearchBarOpen = ref(false);
 const isProfileWebOpen = ref(false);
+
+const searchQuery = ref("");
+const router = useRouter();
+
+const redirectToSearch = () => {
+  if (searchQuery.value.trim()) {
+    router.push({ path: "/panti", query: { search: searchQuery.value } });
+
+    searchQuery.value = "";
+    isSearchBarOpen.value = false;
+  }
+};
 
 const profileOpenMenuDashboardName = computed(() => {
   return authStore.user?.role === "ROLE_DONATUR" ? "Donasi Saya" : "Dashboard";
@@ -267,7 +334,6 @@ const dashboardRoute = computed(() => {
   }
 });
 
-
 function toggleNavbar() {
   isNavbarOpen.value = !isNavbarOpen.value;
 }
@@ -278,6 +344,10 @@ function closeNavbar() {
 
 function toggleProfileWeb() {
   isProfileWebOpen.value = !isProfileWebOpen.value;
+}
+
+function toggleSearchBar() {
+  isSearchBarOpen.value = !isSearchBarOpen.value;
 }
 
 function isActiveRoute(routeName) {

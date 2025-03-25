@@ -400,7 +400,7 @@
   </section>
 </template>
 
-<script setup>
+<!-- <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
 import { fetchAllPanti } from "@/services/api-panti";
 import PantiCard from "@/components/cards/PantiCard.vue";
@@ -495,6 +495,160 @@ const filteredPanti = computed(() => {
   let results = pantiList.value;
 
   if (searchPanti.value !== "") {
+    results = results.filter((panti) =>
+      panti.name.toLowerCase().includes(searchPanti.value.toLowerCase())
+    );
+  }
+
+  if (selectedRegions.value.length > 0) {
+    results = results.filter((panti) =>
+      selectedRegions.value.includes(panti.region)
+    );
+  }
+
+  if (selectedDonationTypes.value.length > 0) {
+    results = results.filter((panti) =>
+      selectedDonationTypes.value.some((filter) =>
+        panti.donation_types.includes(filter)
+      )
+    );
+  }
+
+  if (selectedStatuses.value.length > 0) {
+    results = results.filter((panti) =>
+      selectedStatuses.value.some((filter) => panti.is_urgent === filter)
+    );
+  }
+
+  return results;
+});
+
+// Show only a limited number of items
+const visiblePanti = computed(() =>
+  filteredPanti.value.slice(0, itemsToShow.value)
+);
+
+// Infinite Scroll Function
+const handleScroll = () => {
+  if (loading.value) return;
+
+  const scrollTop = document.documentElement.scrollTop;
+  const windowHeight = window.innerHeight;
+  const fullHeight = document.documentElement.scrollHeight;
+
+  if (scrollTop + windowHeight >= fullHeight - 200) {
+    loadMore();
+  }
+};
+
+// Load more items when scrolling to the bottom
+const loadMore = async () => {
+  if (itemsToShow.value < filteredPanti.value.length) {
+    loading.value = true;
+    await nextTick();
+    setTimeout(() => {
+      itemsToShow.value += 8;
+      loading.value = false;
+    }, 1000);
+  }
+};
+</script> -->
+
+<script setup>
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from "vue";
+import { useRoute } from "vue-router";
+import { fetchAllPanti } from "@/services/api-panti";
+import PantiCard from "@/components/cards/PantiCard.vue";
+import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
+
+// Get route
+const route = useRoute();
+
+// Reactive state
+const searchPanti = ref(route.query.search || ""); // Set initial search value from query
+const pantiList = ref([]);
+const itemsToShow = ref(8);
+const loading = ref(false);
+const fetching = ref(true);
+
+const selectedFilter = ref("");
+
+// Reset all filters
+const resetAllFilters = () => {
+  selectedRegions.value = [];
+  selectedDonationTypes.value = [];
+  selectedStatuses.value = [];
+};
+
+// Regions filter states
+const regions = ["Jakarta", "Bogor", "Depok", "Tangerang", "Bekasi"];
+const selectedRegions = ref([]);
+
+const toggleRegionsFilter = () => {
+  selectedFilter.value = selectedFilter.value === "Regions" ? "" : "Regions";
+};
+
+const resetRegionsFilter = () => {
+  selectedRegions.value = [];
+};
+
+// Donation Types filter states
+const donationTypes = ["Barang", "Pangan", "Dana", "Tenaga"];
+const selectedDonationTypes = ref([]);
+
+const toggleDonationTypesFilter = () => {
+  selectedFilter.value =
+    selectedFilter.value === "Donation Types" ? "" : "Donation Types";
+};
+
+const resetDonationTypesFilter = () => {
+  selectedDonationTypes.value = [];
+};
+
+// Statuses filter states
+const selectedStatuses = ref([]);
+
+const toggleStatusesFilter = () => {
+  selectedFilter.value = selectedFilter.value === "Statuses" ? "" : "Statuses";
+};
+
+const resetStatusesFilter = () => {
+  selectedStatuses.value = [];
+};
+
+// Fetch data
+onMounted(async () => {
+  try {
+    const data = await fetchAllPanti();
+    pantiList.value = data.panti_responses;
+  } catch (error) {
+    console.error("Error fetching panti data:", error);
+  } finally {
+    fetching.value = false;
+  }
+
+  window.addEventListener("scroll", handleScroll);
+});
+
+// Cleanup listener when component unmounts
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+
+// Watch for changes in the route and update searchPanti accordingly
+watch(
+  () => route.query.search,
+  (newSearch) => {
+    searchPanti.value = newSearch || "";
+  },
+  { immediate: true }
+);
+
+// Computed: Filtered search results
+const filteredPanti = computed(() => {
+  let results = pantiList.value;
+
+  if (searchPanti.value) {
     results = results.filter((panti) =>
       panti.name.toLowerCase().includes(searchPanti.value.toLowerCase())
     );
