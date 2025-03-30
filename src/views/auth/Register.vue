@@ -536,7 +536,7 @@ const validateForm = () => {
     authStore.errorMessages.phone =
       "Nomor Whatsapp hanya boleh mengandung angka";
     isValid = false;
-  } else if (form.phone.startsWith("8")) {
+  } else if (!form.phone.startsWith("8")) {
     authStore.errorMessages.phone = "Nomor Whatsapp harus diawali dengan 8";
     isValid = false;
   } else if (form.phone.length < 10 || form.phone.length > 13) {
