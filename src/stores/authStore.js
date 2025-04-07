@@ -88,6 +88,32 @@ export const useAuthStore = defineStore("auth", {
 
         const data = await response.json();
 
+        return true;
+      } catch (error) {
+        console.error("Registration error:", error);
+        return false;
+      }
+    },
+
+    async verifyOTP(form) {
+      const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/verify-otp`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+          mode: "cors",
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          this.errorMessages = errorData;
+          throw new Error("Validation failed");
+        }
+
+        const data = await response.json();
+
         await this.login(form);
 
         return true;

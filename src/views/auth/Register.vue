@@ -15,6 +15,13 @@
       </div>
     </div>
 
+    <!-- Form Pesan -->
+    <FormVerifyOTP
+      :isFormVerifyOTPOpen="isFormVerifyOTPOpen"
+      :form="form"
+      @closeFormVerifyOTP="closeFormVerifyOTP"
+    />
+
     <div
       class="flex items-center justify-center gap-3 lg:gap-4 xl:gap-6 2xl:gap-8"
     >
@@ -451,11 +458,20 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { useAuthStore } from "@/stores/authStore";
-import { useRouter } from "vue-router";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
+import FormVerifyOTP from "@/components/forms/FormVerifyOTP.vue";
 
 const authStore = useAuthStore();
-const router = useRouter();
+
+const isFormVerifyOTPOpen = ref(false);
+
+function openFormVerifyOTP() {
+  isFormVerifyOTPOpen.value = true;
+}
+
+function closeFormVerifyOTP() {
+  isFormVerifyOTPOpen.value = false;
+}
 
 const password = ref(null);
 const showPassword = ref(false);
@@ -480,6 +496,7 @@ const form = reactive({
   dob: "",
   address: "",
   gender: "",
+  otp: "",
 });
 
 const isLoading = ref(false);
@@ -576,7 +593,8 @@ const submitForm = async () => {
   isLoading.value = false;
 
   if (success) {
-    router.push({ path: "/", query: { showRegisterSuccessAlert: "true" } });
+    // router.push({ path: "/", query: { showRegisterSuccessAlert: "true" } });
+    openFormVerifyOTP();
   }
 };
 </script>
