@@ -40,7 +40,7 @@
           Daftar diri Anda di
           <span class="font-bold text-primary-300">BestiePanti</span>
         </h1>
-        <p class="text-base sm:text-lg">
+        <p class="text-base sm:text-lg text-center">
           Silakan lengkapi form pendaftaran berikut. Akun pengguna yang
           didaftarkan
           <span class="font-bold">harus atas nama perorangan</span>.

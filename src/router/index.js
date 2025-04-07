@@ -37,6 +37,24 @@ const router = createRouter({
       meta: { requiresGuest: true },
     },
     {
+      path: "/forget-password/verify-email",
+      name: "forgetPassword",
+      component: () => import("../views/auth/VerifyEmail.vue"),
+      meta: { requiresGuest: true },
+    },
+    {
+      path: "/forget-password/verify-otp",
+      name: "verifyOTP",
+      component: () => import("../views/auth/VerifyOTP.vue"),
+      meta: { requiresGuest: true },
+    },
+    {
+      path: "/forget-password/reset-password",
+      name: "resetPassword",
+      component: () => import("../views/auth/ResetPassword.vue"),
+      meta: { requiresGuest: true },
+    },
+    {
       path: "/panti-detail/:id",
       name: "pantiDetail",
       component: () => import("../views/PantiDetail.vue"),

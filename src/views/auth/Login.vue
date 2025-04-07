@@ -13,6 +13,14 @@
           text2="Anda telah keluar. Sampai jumpa lagi!"
         />
       </transition>
+
+      <transition name="slide-fade">
+        <SuccessAlert
+          v-if="showResetPasswordSuccessAlert"
+          text1="Reset kata sandi berhasil!"
+          text2="Silakan masuk menggunakan kata sandi baru Anda."
+        />
+      </transition>
     </div>
 
     <!-- Loading Overlay -->
@@ -173,6 +181,15 @@
         class="flex flex-col items-start justify-center gap-4 px-2 text-base lg:px-4"
       >
         <span>
+          <router-link
+            class="font-bold hover:underline text-primary-500"
+            :to="{ name: 'forgetPassword' }"
+          >
+            Lupa kata sandi Anda?
+          </router-link>
+        </span>
+
+        <span>
           Belum punya akun?
           <router-link
             class="font-bold hover:underline text-primary-500"
@@ -203,14 +220,23 @@ const router = useRouter();
 
 const showLogoutSuccessAlert = ref(false);
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 const handleLogoutSuccess = () => {
   router.replace({ query: {} });
   showLogoutSuccessAlert.value = true;
 
   setTimeout(() => {
     showLogoutSuccessAlert.value = false;
+  }, 3000);
+};
+
+const showResetPasswordSuccessAlert = ref(false);
+
+const handleResetPasswordSuccess = () => {
+  router.replace({ query: {} });
+  showResetPasswordSuccessAlert.value = true;
+
+  setTimeout(() => {
+    showResetPasswordSuccessAlert.value = false;
   }, 3000);
 };
 
@@ -276,6 +302,10 @@ const submitForm = async () => {
 onMounted(async () => {
   if (route.query.showLogoutSuccessAlert) {
     handleLogoutSuccess();
+  }
+
+  if (route.query.showResetPasswordSuccessAlert) {
+    handleResetPasswordSuccess();
   }
 });
 </script>

@@ -124,15 +124,103 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
+    async forgetPasswordVerifyEmail(form) {
+      const apiUrl = `${
+        import.meta.env.VITE_API_URL
+      }/api/v1/forgot-password/verify-email`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+          mode: "cors",
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          this.errorMessages = errorData;
+          throw new Error("Validation failed");
+        }
+
+        const data = await response.json();
+
+        return true;
+      } catch (error) {
+        console.error("Login error:", error);
+        return false;
+      }
+    },
+
+    async forgetPasswordVerifyOTP(form) {
+      const apiUrl = `${
+        import.meta.env.VITE_API_URL
+      }/api/v1/forgot-password/verify-otp`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+          mode: "cors",
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          this.errorMessages = errorData;
+          throw new Error("Validation failed");
+        }
+
+        const data = await response.json();
+
+        return true;
+      } catch (error) {
+        console.error("Login error:", error);
+        return false;
+      }
+    },
+
+    async forgetPasswordResetPassword(form) {
+      const apiUrl = `${
+        import.meta.env.VITE_API_URL
+      }/api/v1/forgot-password/reset-password`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+          mode: "cors",
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          this.errorMessages = errorData;
+          throw new Error("Validation failed");
+        }
+
+        const data = await response.json();
+
+        return true;
+      } catch (error) {
+        console.error("Login error:", error);
+        return false;
+      }
+    },
+
     logout() {
       this.token = null;
       this.user = null;
       localStorage.removeItem("token");
-      window.location.reload(true);
-      router.push({
-        path: "/login",
-        query: { showLogoutSuccessAlert: "true" },
-      });
+
+      router
+        .push({
+          path: "/login",
+          query: { showLogoutSuccessAlert: "true" },
+        })
+        .then(() => {
+          window.location.reload();
+        });
     },
 
     isAuthenticated() {
