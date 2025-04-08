@@ -199,16 +199,15 @@
           </router-link>
         </span>
       </div>
-
-      <button class="btn-primary" @click="handleLoginWithGoogle">
-        Google Login
-      </button>
     </form>
+    <button type="button" class="btn-primary" @click="handleLoginWithGoogle">
+      Google Login
+    </button>
   </section>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, watchEffect } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRoute, useRouter } from "vue-router";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
@@ -217,6 +216,14 @@ import SuccessAlert from "@/components/alerts/SuccessAlert.vue";
 const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
+
+const handleLoginWithGoogle = async () => {
+  const success = await authStore.loginWithGoogle(form);
+
+  if (success) {
+    console.log("Success login with Google!");
+  }
+};
 
 const showLogoutSuccessAlert = ref(false);
 
@@ -238,14 +245,6 @@ const handleResetPasswordSuccess = () => {
   setTimeout(() => {
     showResetPasswordSuccessAlert.value = false;
   }, 3000);
-};
-
-const handleLoginWithGoogle = async () => {
-  const success = await authStore.login(form);
-
-  if (success) {
-    console.log("Success login with Google!");
-  }
 };
 
 const showPassword = ref(false);
