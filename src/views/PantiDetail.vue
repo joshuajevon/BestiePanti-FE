@@ -108,7 +108,7 @@
       class="c-container flex flex-col md:flex-row md:gap-8 gap-16 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
     >
       <!-- Image Carousel -->
-      <div v-if="!isFetchingDatas">
+      <div v-if="!isFetchingDatas" class="flex flex-col gap-4">
         <swiper
           :pagination="{
             clickable: true,
@@ -130,6 +130,17 @@
             />
           </swiper-slide>
         </swiper>
+
+        <iframe
+          v-if="panti.maps"
+          :src="`${panti.maps}`"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="w-full md:w-[300px] lg:w-[400px] xl:w-[500px] aspect-video"
+        >
+        </iframe>
       </div>
 
       <!-- Details -->
