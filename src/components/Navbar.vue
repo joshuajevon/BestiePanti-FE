@@ -122,13 +122,33 @@
 
         <div
           v-if="!authStore.isAuthenticated()"
-          class="flex items-center gap-4"
+          class="flex items-center gap-3"
         >
-          <router-link class="nav-link-web" :to="{ name: 'login' }"
-            >MASUK</router-link
+          <router-link
+            class="flex justify-center items-center"
+            :to="{ name: 'login' }"
           >
-          <router-link class="btn-primary-sm" :to="{ name: 'register' }"
-            >DAFTAR</router-link
+            <button
+              :class="
+                isActiveRoute('login') ? 'btn-primary-sm' : 'btn-secondary-sm'
+              "
+            >
+              MASUK
+            </button>
+          </router-link>
+
+          <router-link
+            class="flex justify-center items-center"
+            :to="{ name: 'register' }"
+            ><button
+              :class="
+                isActiveRoute('register')
+                  ? 'btn-primary-sm'
+                  : 'btn-secondary-sm'
+              "
+            >
+              DAFTAR
+            </button></router-link
           >
         </div>
 
