@@ -1,7 +1,7 @@
 <template>
   <section
     v-show="isDonationReportOpen"
-    class="c-container fixed z-[100] h-screen w-screen bg-black/80"
+    class="c-container fixed z-[100] h-screen w-screen bg-black/80 top-0 left-0"
   >
     <div class="flex h-full w-full items-center justify-center relative">
       <div
@@ -21,55 +21,19 @@
             Berikut adalah daftar donasi yang telah diterima oleh panti asuhan.
           </p>
         </div>
-        <!-- 
-        <div class="overflow-x-auto max-h-80">
-          <div v-if="isFetching">
-            <LoadingIndicator text="Memuat data donasi panti asuhan..." />
-          </div>
 
-          <div
-            v-else-if="combinedDonations.length === 0"
-            class="flex justify-center"
-          >
-            <p class="error-message">Panti asuhan ini belum menerima donasi</p>
+        <div class="max-h-80 overflow-y-auto overscroll-none rounded-md">
+          <div v-if="isFetching" class="flex justify-center items-center">
+            <LoadingIndicator
+              text="Memuat data laporan donasi panti asuhan..."
+              color="text-secondary-500"
+            />
           </div>
 
           <table
-            v-else
-            class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm text-secondary-500"
+            v-else-if="combinedDonations.length > 0"
+            class="min-w-full bg-white text-sm text-secondary-500 border border-secondary-100"
           >
-            <thead class="ltr:text-left rtl:text-right font-bold">
-              <tr>
-                <th class="whitespace-nowrap px-4 py-2">Tanggal Donasi</th>
-                <th class="whitespace-nowrap px-4 py-2">Jenis Donasi</th>
-                <th class="whitespace-nowrap px-4 py-2">Catatan</th>
-              </tr>
-            </thead>
-
-            <tbody class="divide-y divide-gray-200">
-              <tr
-                v-for="donation in combinedDonations"
-                :key="donation.donation_date"
-                class="odd:bg-gray-50"
-              >
-                <td class="whitespace-nowrap px-4 py-2 font-medium">
-                  {{ formatDate(donation.donation_date) }}
-                </td>
-                <td class="whitespace-nowrap px-4 py-2">
-                  {{ donation.donation_types }}
-                </td>
-                <td class="whitespace-nowrap px-4 py-2">
-                  {{ donation.notes }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div> -->
-
-        <div
-          class="max-h-80 overflow-y-auto overscroll-none border border-gray-200 rounded-md"
-        >
-          <table class="min-w-full bg-white text-sm text-secondary-500">
             <thead class="bg-gray-100 sticky top-0 z-10">
               <tr>
                 <th class="px-4 py-2">Tanggal Donasi</th>
@@ -96,6 +60,12 @@
               </tr>
             </tbody>
           </table>
+
+          <div v-else class="flex justify-center items-center">
+            <p class="error-message text-center">
+              Panti asuhan ini belum pernah menerima donasi
+            </p>
+          </div>
         </div>
 
         <div class="flex items-center justify-center gap-4">

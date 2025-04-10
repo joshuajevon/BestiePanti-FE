@@ -15,7 +15,7 @@
           <div class="relative h-5 w-5">
             <span
               class="absolute inset-x-0 top-0.5 mx-auto h-[0.125rem] w-5 rounded-full bg-white transition"
-              :class="{ 'rotate-45 translate-y-[6px]': isNavbarOpen }"
+              :class="{ 'rotate-[45deg] translate-y-[6px]': isNavbarOpen }"
             ></span>
             <span
               class="absolute inset-0 m-auto h-[0.125rem] w-5 rounded-full bg-white transition"
@@ -176,9 +176,9 @@
               />
             </svg>
 
-            <span class="max-w-[100px] truncate py-2 text-base font-medium">
+            <!-- <span class="max-w-[100px] truncate py-2 text-base font-medium">
               {{ authStore.user.name }}
-            </span>
+            </span> -->
 
             <span
               class="transition"

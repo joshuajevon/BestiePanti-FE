@@ -256,7 +256,7 @@
 
       <div class="px-2 lg:px-4">
         <button id="submit" type="submit" class="btn-primary">
-          Verifikasi OTP
+          Reset Kata Sandi
         </button>
       </div>
     </form>

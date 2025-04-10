@@ -1,5 +1,19 @@
 <template>
-  <section class="bg-primary-50 text-secondary-500">
+  <!-- Loading -->
+  <section
+    v-if="isFetchingDatas"
+    class="bg-primary-50 text-secondary-500 min-h-screen flex justify-center items-center"
+  >
+    <LoadingIndicator
+      text="Memuat data panti asuhan..."
+      color="text-secondary-500"
+    />
+  </section>
+
+  <section
+    v-else-if="panti"
+    class="c-container bg-primary-50 text-secondary-500"
+  >
     <!-- Success Alerts -->
     <div
       class="p-8 fixed z-[100] h-screen w-screen flex justify-end items-end pointer-events-none top-0 left-0"
@@ -68,47 +82,92 @@
       @closeDonationReport="closeDonationReport"
     />
 
-    <!-- Go back -->
-    <!-- <section
-      class="c-container flex flex-col items-center justify-center gap-8 pb-8 pt-32 lg:pb-12 lg:pt-36 xl:pb-16 xl:pt-40"
+    <!-- Donation and Message Buttons -->
+    <section
+      class="c-container flex flex-col justify-center items-center gap-2 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
     >
-      <div class="flex w-full">
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <!-- Dana -->
         <button
-          class="btn-primary flex justify-center items-center gap-2 lg:gap-3"
-          @click="$router.go(-1)"
+          class="btn-primary"
+          :class="{
+            'pointer-events-none opacity-50':
+              !authStore.user ||
+              isFetchingDatas ||
+              authStore.user.role === 'ROLE_PANTI',
+          }"
+          @click="openFormDana"
+        >
+          Donasi Dana
+        </button>
+
+        <!-- Non Dana -->
+        <button
+          class="btn-primary"
+          :class="{
+            'pointer-events-none opacity-50':
+              !authStore.user ||
+              isFetchingDatas ||
+              authStore.user.role === 'ROLE_PANTI',
+          }"
+          @click="openFormNonDana"
+        >
+          Donasi Non Dana
+        </button>
+
+        <!-- Message -->
+        <button
+          class="btn-primary"
+          :class="{
+            'pointer-events-none opacity-50':
+              !authStore.user ||
+              isFetchingDatas ||
+              authStore.user.role === 'ROLE_PANTI',
+          }"
+          @click="openFormPesan"
+        >
+          Kirim Pesan
+        </button>
+
+        <!-- Donation Report -->
+        <button
+          class="flex items-center justify-center rounded-full bg-primary-500 text-center text-base font-bold text-white outline outline-4 -outline-offset-4 outline-transparent transition-all hover:outline-offset-0 hover:outline-primary-500/50 p-3 lg:p-3.5 lg:text-lg"
+          @click="openDonationReport"
         >
           <svg
-            class="w-5 lg:w-6 h-5 lg:h-6"
+            class="size-6 lg:size-7"
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 448 512"
+            viewBox="0 0 512 512"
           >
             <path
-              d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
+              d="M64 144a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L192 64zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-288 0zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-288 0zM64 464a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm48-208a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z"
             />
           </svg>
-          Kembali
         </button>
       </div>
-    </section> -->
 
-    <!-- Loading -->
-    <section
-      v-if="isFetchingDatas"
-      class="c-container flex flex-col items-center pb-8 lg:pb-12 xl:pb-16 min-h-screen"
-    >
-      <LoadingIndicator
-        text="Memuat data panti asuhan..."
-        color="text-secondary-500"
-      />
+      <div v-if="!authStore.user">
+        <p class="error-message">
+          *Anda harus login terlebih dahulu untuk melakukan donasi atau kirim
+          pesan
+        </p>
+      </div>
+
+      <div v-else-if="authStore.user.role === 'ROLE_PANTI'">
+        <p class="error-message">
+          Akun panti asuhan tidak dapat digunakan untuk berdonasi atau mengirim
+          pesan
+        </p>
+      </div>
     </section>
 
-    <!-- Title -->
+    <!-- Panti Informations -->
     <section
-      class="c-container flex flex-col md:flex-row md:gap-8 gap-16 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
+      class="c-container flex flex-col md:flex-row md:gap-8 gap-16 pb-8 lg:pb-12 xl:pb-16"
     >
       <!-- Image Carousel -->
-      <div v-if="!isFetchingDatas" class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4">
         <swiper
           :pagination="{
             clickable: true,
@@ -118,11 +177,7 @@
           :loop="true"
           class="mySwiper aspect-video w-full md:w-[300px] lg:w-[400px] xl:w-[500px]"
         >
-          <swiper-slide
-            v-if="panti"
-            v-for="(image, index) in panti.image"
-            :key="index"
-          >
+          <swiper-slide v-for="(image, index) in panti.image" :key="index">
             <img
               class="h-full w-full object-contain"
               :src="`${apiUrl}/storage/image/${image}`"
@@ -144,8 +199,8 @@
       </div>
 
       <!-- Details -->
-      <div v-if="!isFetchingDatas" class="flex flex-col gap-4">
-        <h1 v-if="panti" class="text-3xl font-bold lg:text-4xl xl:text-5xl">
+      <div class="flex flex-col gap-4">
+        <h1 class="text-3xl font-bold lg:text-4xl xl:text-5xl">
           {{ panti.name || "" }}
         </h1>
 
@@ -175,102 +230,18 @@
           </p>
         </span>
 
-        <p v-if="panti">
+        <p>
           {{ panti.address || "" }}
         </p>
 
-        <p v-if="panti" class="text-justify text-secondary-500">
+        <p class="text-justify text-secondary-500">
           {{ panti.description }}
         </p>
       </div>
     </section>
 
-    <!-- Details -->
-    <section
-      v-if="!isFetchingDatas"
-      class="c-container flex flex-col items-center justify-center gap-8 pb-8 lg:pb-12 xl:pb-16"
-    >
-      <!-- Donation and Message Buttons -->
-      <div class="flex flex-col justify-center items-center gap-2">
-        <div class="flex flex-wrap items-center justify-center gap-4">
-          <!-- Dana -->
-          <button
-            class="btn-primary"
-            :class="{
-              'pointer-events-none opacity-50':
-                !authStore.user ||
-                isFetchingDatas ||
-                authStore.user.role === 'ROLE_PANTI',
-            }"
-            @click="openFormDana"
-          >
-            Donasi Dana
-          </button>
-
-          <!-- Non Dana -->
-          <button
-            class="btn-primary"
-            :class="{
-              'pointer-events-none opacity-50':
-                !authStore.user ||
-                isFetchingDatas ||
-                authStore.user.role === 'ROLE_PANTI',
-            }"
-            @click="openFormNonDana"
-          >
-            Donasi Non Dana
-          </button>
-
-          <!-- Message -->
-          <button
-            class="btn-primary"
-            :class="{
-              'pointer-events-none opacity-50':
-                !authStore.user ||
-                isFetchingDatas ||
-                authStore.user.role === 'ROLE_PANTI',
-            }"
-            @click="openFormPesan"
-          >
-            Kirim Pesan
-          </button>
-
-          <!-- Donation Report -->
-          <button
-            class="flex items-center justify-center rounded-full bg-primary-500 text-center text-base font-bold text-white outline outline-4 -outline-offset-4 outline-transparent transition-all hover:outline-offset-0 hover:outline-primary-500/50 p-3 lg:p-3.5 lg:text-lg"
-            @click="openDonationReport"
-          >
-            <svg
-              class="size-6 lg:size-7"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <path
-                d="M64 144a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L192 64zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-288 0zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-288 0zM64 464a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm48-208a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <div v-if="!authStore.user && !isFetchingDatas">
-          <p class="error-message">
-            *Anda harus login terlebih dahulu untuk melakukan donasi atau kirim
-            pesan
-          </p>
-        </div>
-        <div v-else-if="authStore.user.role === 'ROLE_PANTI'">
-          <p class="error-message">
-            Akun panti asuhan tidak dapat digunakan untuk berdonasi atau
-            mengirim pesan
-          </p>
-        </div>
-      </div>
-    </section>
-
     <!-- Pesan -->
     <section
-      v-if="!isFetchingDatas"
       class="c-container flex flex-col items-center justify-center gap-8 pb-16 lg:pb-20 xl:pb-24"
     >
       <div
@@ -284,7 +255,7 @@
 
       <LoadingIndicator
         v-if="isFetchingDatas"
-        text="Memuat data pesan panti asuhan..."
+        text="Memuat data pesan dari donatur..."
         color="text-secondary-500"
       />
 
@@ -320,6 +291,19 @@
 
       <p v-else class="error-message">Panti asuhan ini belum memiliki pesan</p>
     </section>
+  </section>
+
+  <section
+    v-else
+    class="c-container bg-primary-50 text-secondary-500 min-h-screen flex flex-col justify-center items-center gap-8"
+  >
+    <p class="error-message text-center">
+      Maaf, Panti Asuhan ini tidak dapat ditemukan
+    </p>
+
+    <a href="/">
+      <button class="btn-primary">Kembali ke Beranda</button>
+    </a>
   </section>
 </template>
 
@@ -429,6 +413,7 @@ function loadMoreMessages() {
 onMounted(async () => {
   try {
     const pantiData = await fetchPantiById(pantiId);
+
     panti.value = pantiData;
 
     const paymentData = await fetchPaymentByPantiId(pantiId);

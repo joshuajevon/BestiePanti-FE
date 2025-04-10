@@ -1,7 +1,7 @@
 <template>
   <section
     v-show="isFormDanaOpen"
-    class="c-container fixed z-[100] h-screen w-screen bg-black/80 py-8"
+    class="c-container fixed z-[100] h-screen w-screen bg-black/80 py-8 top-0 left-0"
   >
     <!-- Loading Overlay -->
     <div

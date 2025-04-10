@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center mt-4 space-x-2">
-    <button 
+    <button
       @click="prevPage"
       :disabled="currentPage === 1"
       class="px-3 py-1 border rounded disabled:opacity-50"
@@ -8,17 +8,17 @@
       « Prev
     </button>
 
-    <button 
+    <button
       v-for="page in totalPages"
       :key="page"
       @click="$emit('update:currentPage', page)"
       class="px-3 py-1 border rounded"
-      :class="{'bg-blue-500 text-white': currentPage === page}"
+      :class="{ 'bg-blue-500 text-white': currentPage === page }"
     >
       {{ page }}
     </button>
 
-    <button 
+    <button
       @click="nextPage"
       :disabled="currentPage === totalPages"
       class="px-3 py-1 border rounded disabled:opacity-50"
@@ -29,18 +29,18 @@
 </template>
 
 <script setup>
-import { computed, defineProps, defineEmits } from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
   totalItems: Number,
   itemsPerPage: { type: Number, default: 10 },
-  currentPage: Number
+  currentPage: Number,
 });
 
 const emit = defineEmits(["update:currentPage"]);
 
 const totalPages = computed(() =>
- Math.ceil(props.totalItems / props.itemsPerPage)
+  Math.ceil(props.totalItems / props.itemsPerPage)
 );
 
 const prevPage = () => {
@@ -48,7 +48,7 @@ const prevPage = () => {
 };
 
 const nextPage = () => {
-  if (props.currentPage < totalPages.value) emit("update:currentPage", props.currentPage + 1);
+  if (props.currentPage < totalPages.value)
+    emit("update:currentPage", props.currentPage + 1);
 };
-
 </script>
