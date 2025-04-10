@@ -10,10 +10,7 @@
     />
   </section>
 
-  <section
-    v-else-if="panti"
-    class="c-container bg-primary-50 text-secondary-500"
-  >
+  <section v-else-if="panti" class="bg-primary-50 text-secondary-500">
     <!-- Success Alerts -->
     <div
       class="p-8 fixed z-[100] h-screen w-screen flex justify-end items-end pointer-events-none top-0 left-0"
@@ -84,7 +81,7 @@
 
     <!-- Donation and Message Buttons -->
     <section
-      class="c-container flex flex-col justify-center items-center gap-2 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
+      class="flex flex-col justify-center items-center gap-2 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
     >
       <div class="flex flex-wrap items-center justify-center gap-4">
         <!-- Dana -->
@@ -186,16 +183,22 @@
           </swiper-slide>
         </swiper>
 
-        <iframe
+        <div
           v-if="panti.maps"
-          :src="`${panti.maps}`"
-          style="border: 0"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
           class="w-full md:w-[300px] lg:w-[400px] xl:w-[500px] aspect-video"
         >
-        </iframe>
+          <iframe
+            :src="`${panti.maps}`"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="w-full h-full"
+          >
+          </iframe>
+        </div>
+
+        <div v-else></div>
       </div>
 
       <!-- Details -->
@@ -295,7 +298,7 @@
 
   <section
     v-else
-    class="c-container bg-primary-50 text-secondary-500 min-h-screen flex flex-col justify-center items-center gap-8"
+    class="bg-primary-50 text-secondary-500 min-h-screen flex flex-col justify-center items-center gap-8"
   >
     <p class="error-message text-center">
       Maaf, Panti Asuhan ini tidak dapat ditemukan
