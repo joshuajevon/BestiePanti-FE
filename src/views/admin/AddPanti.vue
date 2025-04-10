@@ -250,36 +250,88 @@
         <!-- Nomor telepon -->
          <div class="col-span-1 input-container">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Nomor Telepon
+            Nomor Telepon <span class="text-red-500">*</span>
           </label>
-          <input 
-            type="text" 
-            v-model="form.phone" 
-            placeholder="Masukkan nomor telepon" 
-          />
+          <div class="relative">
+              <div
+                class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
+              >
+                <p>+62</p>
+              </div>
+
+              <input
+                type="text"
+                autocomplete="false"
+                id="phone"
+                name="phone"
+                v-model="form.phone"
+                placeholder="Masukkan nomor Whatsapp"
+                class="pl-14 sm:pl-16"
+                inputmode="numeric"
+                @input="form.phone = $event.target.value.replace(/\D/g, '')"
+              />
+            </div>
+
           <p v-if="errorMessages.phone" class="text-red-500 text-sm">
             {{ errorMessages.phone }}
           </p>
          </div>
 
         <!-- Nama Bank -->
-        <div class="col-span-1 input-container">
+        <div class="col-span-1 input-container relative">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
             Nama Bank <span class="text-red-500">*</span>
           </label>
-          <input 
-            type="text" 
-            v-model="form.bank_name" 
-            placeholder="Masukkan nama bank" 
-            />
 
-            <p
-              class="error-message"
-                v-if="errorMessages.bank_name"
+          <div
+            class="flex justify-between items-center w-full px-4 py-3 bg-[#e5e9f2] border border-gray-300 rounded-3xl cursor-pointer relative"
+            @click="showBankOptions = !showBankOptions"
+          >
+            <span class="text-gray-700">{{ form.bank_name || 'Pilih nama bank' }}</span>
+            <svg
+              class="w-4 h-4 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
             >
-              {{ errorMessages.bank_name }}
-            </p>
-            
+              <path
+                fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+
+          <div
+          v-if="showBankOptions"
+          class="absolute z-10 left-0 right-0 top-full bg-white border border-gray-300 rounded-2xl shadow-lg max-h-60 overflow-y-auto"
+          @click.stop
+        >
+            <div class="px-3 pt-3">
+              <input
+                type="text"
+                v-model="searchBank"
+                placeholder="Cari bank..."
+                class="w-full px-3 py-2 border border-gray-200 rounded-xl bg-gray-50 outline-none"
+              />
+            </div>
+
+            <div
+              v-for="bank in filteredBanks"
+              :key="bank"
+              @click="selectBank(bank)"
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+            >
+              {{ bank }}
+            </div>
+
+            <div v-if="filteredBanks.length === 0" class="px-4 py-2 text-gray-400">
+              Tidak ada hasil
+            </div>
+          </div>
+
+          <p class="error-message" v-if="errorMessages.bank_name">
+            {{ errorMessages.bank_name }}
+          </p>
         </div>
 
         <!-- Kata Sandi -->
@@ -460,7 +512,8 @@
           <input 
             type="text" 
             v-model="form.bank_account_number" 
-            placeholder="Masukkan nomor rekening" 
+            placeholder="Masukkan nomor rekening"
+            @input="form.bank_account_number = $event.target.value.replace(/\D/g, '')"
             />
 
             <p
@@ -492,13 +545,30 @@
 
         </div>
 
-        <div class="input-container mt-2">
+        <!-- Maps -->
+        <div class="col-span-1 input-container">
+          <label class="text-base font-medium text-secondary-500 sm:text-lg">
+            Google Maps <span class="text-red-500">*</span>
+          </label>
+          <input 
+            type="text" 
+            v-model="form.maps" 
+            placeholder="Masukkan google maps panti asuhan" 
+            />
+
+            <p
+              class="error-message"
+              v-if="errorMessages.maps"
+            >
+              {{ errorMessages.maps }}
+            </p>
+
         </div>
 
         <!-- Upload Qris -->
          <div class="input-container mt-2">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Upload Gambar QRIS <span class="text-red-500">*</span>
+            Upload Gambar QRIS
           </label>
 
           <div class="flex items-center gap-3">
@@ -528,9 +598,6 @@
             </button>
           </div>
 
-          <p v-if="errorMessages.qris" class="error-message">
-            {{ errorMessages.qris }}
-          </p>
         </div>
 
         <!-- Upload Image Panti -->
@@ -606,7 +673,7 @@ const previewPantiImages = ref([]);
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB dalam byte
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
-const REGEX_PHONE_NUMERIC = /^\d{10,15}$/;
+const REGEX_PHONE_NUMERIC = /^\d+$/;
 const REGEX_BANK_ACCOUNT_NUMBER = /^\d+$/;
 const REGEX_EMAIL = /^\S+@\S+\.\S+$/;
 
@@ -628,6 +695,41 @@ const hasAccess = computed(() => {
   return authStore.user?.role === "ROLE_ADMIN";
 });
 
+const bankOptions = [
+    "BCA", 
+    "BNI", 
+    "BRI", 
+    "Mandiri", 
+    "CIMB Niaga",
+    "Danamon", 
+    "Permata", 
+    "Maybank", 
+    "BTPN", 
+    "Bank Mega", 
+    "Bank Syariah Indonesia"
+];
+
+// Dropdown behavior
+const showBankOptions = ref(false)
+const searchBank = ref('')
+const dropdownRef = ref(null)
+
+const toggleDropdown = () => {
+  showBankOptions.value = !showBankOptions.value
+  if (showBankOptions.value) searchBank.value = ''
+}
+
+const selectBank = (bank) => {
+  form.bank_name = bank
+  showBankOptions.value = false
+}
+
+const filteredBanks = computed(() =>
+  bankOptions.filter(bank =>
+    bank.toLowerCase().includes(searchBank.value.toLowerCase())
+  )
+)
+
 const form = reactive({
   name: "",
   email: "",
@@ -644,6 +746,7 @@ const form = reactive({
   bank_account_number: "",
   bank_account_name: "",
   qris: null,
+  maps: "",
 });
 
 const errorMessages = reactive({
@@ -662,6 +765,7 @@ const errorMessages = reactive({
   bank_account_number: "",
   bank_account_name: "",
   qris: "",
+  maps: "",
 });
 
 const goBack = () => {
@@ -702,11 +806,24 @@ const validateForm = () => {
   }
 
   // Password validation
+  // if (!form.password) {
+  //   errorMessages.password = "Password tidak boleh kosong";
+  //   isValid = false;
+  // } else if (form.password.length < 6) {
+  //   errorMessages.password = "Password minimal 6 karakter";
+  //   isValid = false;
+  // }
+
   if (!form.password) {
-    errorMessages.password = "Password tidak boleh kosong";
+    errorMessages.password = "Kata Sandi tidak boleh kosong";
     isValid = false;
-  } else if (form.password.length < 6) {
-    errorMessages.password = "Password minimal 6 karakter";
+  } else if (
+    form.password.length < 8 ||
+    !/[A-Za-z]/.test(form.password) ||
+    !/\d/.test(form.password)
+  ) {
+    errorMessages.password =
+      "Kata Sandi harus memiliki minimal 8 karakter dan mengandung huruf dan angka";
     isValid = false;
   }
 
@@ -720,11 +837,27 @@ const validateForm = () => {
   }
 
   // Phone number validation
+  // if (!form.phone) {
+  //   errorMessages.phone = "Nomor Telepon tidak boleh kosong";
+  //   isValid = false;
+  // } else if (!.test(form.phone)) {
+  //   errorMessages.phone = "Nomor Telepon harus berisi 10-15 digit angka";
+  //   isValid = false;
+  // }
+
   if (!form.phone) {
-    errorMessages.phone = "Nomor Telepon tidak boleh kosong";
+    errorMessages.phone = "Nomor Whatsapp tidak boleh kosong";
     isValid = false;
   } else if (!REGEX_PHONE_NUMERIC.test(form.phone)) {
-    errorMessages.phone = "Nomor Telepon harus berisi 10-15 digit angka";
+    errorMessages.phone =
+      "Nomor Whatsapp hanya boleh mengandung angka";
+    isValid = false;
+  } else if (!form.phone.startsWith("8")) {
+    errorMessages.phone = "Nomor Whatsapp harus diawali dengan 8";
+    isValid = false;
+  } else if (form.phone.length < 10 || form.phone.length > 13) {
+    errorMessages.phone =
+      "Nomor Whatsapp harus memiliki 10 hingga 13 digit";
     isValid = false;
   }
 
@@ -733,6 +866,12 @@ const validateForm = () => {
     errorMessages.address = "Alamat tidak boleh kosong";
     isValid = false;
   }
+
+  if (!form.maps) {
+    errorMessages.maps = "google maps tidak boleh kosong";
+    isValid = false;
+  }
+
 
   // Region validation
   if (!form.region) {
@@ -860,6 +999,7 @@ const submitForm = async () => {
       donation_types: [...form.donation_types],
       is_urgent: form.is_urgent,
       address: form.address,
+      maps: form.maps,
       region: form.region,
       bank_name: form.bank_name,
       bank_account_number: form.bank_account_number,
@@ -876,10 +1016,14 @@ const submitForm = async () => {
 
     const response = await createPanti(pantiData);
 
-    if (!response.message) {
-      goBack();
+    if (response.email === "Email sudah terdaftar") {
+      
+      errorMessages.email = response.email;
     } else {
-      alert(`Gagal: ${response.message || "Terjadi kesalahan."}`);
+      // if (response.email) {
+      goBack();
+      // return;
+      // alert(`Gagal: ${response.email || "Terjadi kesalahan."}`);
     }
   } catch (error) {
     console.error("Terjadi kesalahan saat update profile:", error);

@@ -87,6 +87,7 @@ export async function createPanti(pantiData) {
   formData.append("bankName", pantiData.bank_name);
   formData.append("bankAccountNumber", pantiData.bank_account_number);
   formData.append("bankAccountName", pantiData.bank_account_name);
+  formData.append("maps", pantiData.maps);
 
   if (pantiData.donation_types.length > 0) {
     pantiData.donation_types.forEach(type => {
