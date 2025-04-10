@@ -728,7 +728,6 @@ const bankOptions = [
 // Dropdown behavior
 const showBankOptions = ref(false)
 const searchBank = ref('')
-const dropdownRef = ref(null)
 
 const toggleDropdown = () => {
   showBankOptions.value = !showBankOptions.value
