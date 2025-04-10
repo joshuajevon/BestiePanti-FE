@@ -860,11 +860,11 @@ const validateForm = () => {
     isValid = false;
   }
 
+  // Maps validation
   if (!form.maps) {
     errorMessages.maps = "google maps tidak boleh kosong";
     isValid = false;
   }
-
 
   // Region validation
   if (!form.region) {
@@ -1010,13 +1010,9 @@ const submitForm = async () => {
     const response = await createPanti(pantiData);
 
     if (response.email === "Email sudah terdaftar") {
-      
       errorMessages.email = response.email;
     } else {
-      // if (response.email) {
       goBack();
-      // return;
-      // alert(`Gagal: ${response.email || "Terjadi kesalahan."}`);
     }
   } catch (error) {
     console.error("Terjadi kesalahan saat update profile:", error);
