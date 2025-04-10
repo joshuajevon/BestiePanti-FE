@@ -5,7 +5,7 @@
       color="text-secondary-500" 
     />
 
-    <div v-else-if="!hasAccess" class="p-6">
+    <div v-else-if="!hasAccess && !fetching" class="p-6">
       <h1 class="text-4xl font-bold text-center text-red-700">
         Kamu Tidak Memiliki Akses
       </h1>
@@ -136,7 +136,7 @@ const fetchDonationData = async () => {
     const data = await fetchFundDonationByDonationId(donationId);
 
     if (data.forbidden) {
-      hasAccess.value = false;
+      
       return;
     }
 
@@ -150,6 +150,7 @@ const fetchDonationData = async () => {
         nominal_amount: data.nominal_amount,
         image: data.image,
       };
+      hasAccess.value = true;
     }
   } catch (error) {
     console.error("Gagal mengambil data donasi:", error);
