@@ -51,10 +51,11 @@
                   Jumlah Transfer
                   </label>
                 <input 
-                  type="number" 
+                  type="text" 
                   v-model="donation.nominal_amount" 
                   placeholder="Verifikasi jumlah transfer" 
-                  class="w-full border rounded-full px-3 py-2" 
+                  class="w-full border rounded-full px-3 py-2"
+                  @input="donation.nominal_amount = $event.target.value.replace(/\D/g, '')" 
                 />
                 <p v-if="errorMessages.nominalAmount" class="text-red-500 text-sm">
                   {{ errorMessages.nominalAmount }}
