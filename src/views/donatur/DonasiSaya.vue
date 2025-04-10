@@ -16,16 +16,18 @@
         <!-- Profile Section -->
         <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-10 md:mb-20">
           <img 
-            :src="`${apiUrl}/storage/profile/${authStore.user?.profile}`"
+            :src="authStore.user?.profile ? 
+              `${apiUrl}/storage/profile/${authStore.user.profile}` 
+              : '/assets/default-profile/admin-profile.jpg'"
             :alt="`${authStore.user?.name || 'User'}'image`" 
             class="w-40 h-40 md:w-52 md:h-52 rounded-full border-2 border-gray-300"
           />
           
           <div class="text-center md:text-left">
             <h2 class="text-2xl font-bold">{{ authStore.user?.name }}</h2>
-            <p class="text-gray-600">Email: {{ authStore.user?.email }}</p>
-            <p class="text-gray-600">Telepon: {{ authStore.user?.phone }}</p>
-            <p class="text-gray-600">Alamat: {{ authStore.user?.address }}</p>
+            <p class="text-gray-600">Email: {{ authStore.user?.email  }}</p>
+            <p class="text-gray-600">Telepon: {{ authStore.user?.phone || "-" }}</p>
+            <p class="text-gray-600">Alamat: {{ authStore.user?.address || "-" }}</p>
             <div class="mt-4 md:text-right">
               <router-link
                   :to="{ name: 'ubah-profile-donatur' }"
