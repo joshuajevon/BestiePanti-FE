@@ -625,7 +625,10 @@
 
           <div v-if="form.image.length" class="mt-2 flex gap-3 flex-wrap">
             <div v-for="(img, index) in previewPantiImages" :key="index" class="relative w-40">
-              <img :src="img" alt="Preview" class="w-40 h-40 object-contain border rounded-lg shadow-md" />
+              <img 
+                :src="img" 
+                alt="Preview" 
+                class="w-40 h-40 object-contain border rounded-lg shadow-md" />
               <button 
                 type="button"
                 @click="removeImagePanti(index)"
@@ -648,8 +651,21 @@
         <p class="text-sm text-red-500 sm:text-base lg:text-lg">*Wajib diisi</p>
       </div>
 
-      <div class="self-end px-2 lg:px-4">
-        <button id="submit" type="submit" class="btn-primary">
+      <div class="self-end px-2 lg:px-4 flex gap-2">
+        <!-- Tombol Kembali -->
+        <button
+          type="button"
+          @click="goBack"
+          class="btn-secondary"
+        >
+          Kembali
+        </button>
+
+        <!-- Tombol Tambah -->
+        <button 
+          id="submit" 
+          type="submit" 
+          class="btn-primary">
           Tambah
         </button>
       </div>
