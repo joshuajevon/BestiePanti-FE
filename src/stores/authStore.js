@@ -39,34 +39,10 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
-    async loginWithGoogle(form) {
-      const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/login/google`;
-
-      try {
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
-          mode: "cors",
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          this.errorMessages = errorData;
-          throw new Error("Validation failed");
-        }
-
-        const data = await response.json();
-        this.token = data.token;
-        localStorage.setItem("token", data.token);
-
-        await this.fetchUser();
-
-        return true;
-      } catch (error) {
-        console.error("Login error:", error);
-        return false;
-      }
+    async loginWithGoogle() {
+      window.location.href = `${
+        import.meta.env.VITE_API_URL
+      }/api/v1/login/google`;
     },
 
     async register(form) {
@@ -120,6 +96,34 @@ export const useAuthStore = defineStore("auth", {
       } catch (error) {
         console.error("Registration error:", error);
         return false;
+      }
+    },
+
+    async fetchUserGoogle(token) {
+      try {
+        const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/user`;
+
+        const response = await fetch(apiUrl, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = await response.json();
+
+        this.user = data;
+        this.token = token;
+
+        return true;
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // Optionally, log the user out if fetching the user fails
+        this.logout();
       }
     },
 
@@ -234,19 +238,32 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
-    logout() {
-      this.token = null;
-      this.user = null;
-      localStorage.removeItem("token");
+    async logout() {
+      const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/logout`;
 
-      router
-        .push({
-          path: "/login",
-          query: { showLogoutSuccessAlert: "true" },
-        })
-        .then(() => {
-          window.location.reload();
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
+
+        if (response.ok) {
+          localStorage.removeItem("token");
+          this.user = null;
+          this.token = null;
+
+          return true;
+        } else {
+          console.error("Logout failed with status:", response.status);
+          return false;
+        }
+      } catch (error) {
+        console.error("Logout error:", error);
+        return false;
+      }
     },
 
     isAuthenticated() {

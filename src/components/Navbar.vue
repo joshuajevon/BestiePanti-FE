@@ -15,7 +15,7 @@
           <div class="relative h-5 w-5">
             <span
               class="absolute inset-x-0 top-0.5 mx-auto h-[0.125rem] w-5 rounded-full bg-white transition"
-              :class="{ 'rotate-45 translate-y-[6px]': isNavbarOpen }"
+              :class="{ 'rotate-[45deg] translate-y-[6px]': isNavbarOpen }"
             ></span>
             <span
               class="absolute inset-0 m-auto h-[0.125rem] w-5 rounded-full bg-white transition"
@@ -122,13 +122,33 @@
 
         <div
           v-if="!authStore.isAuthenticated()"
-          class="flex items-center gap-4"
+          class="flex items-center gap-3"
         >
-          <router-link class="nav-link-web" :to="{ name: 'login' }"
-            >MASUK</router-link
+          <router-link
+            class="flex justify-center items-center"
+            :to="{ name: 'login' }"
           >
-          <router-link class="btn-primary-sm" :to="{ name: 'register' }"
-            >DAFTAR</router-link
+            <button
+              :class="
+                isActiveRoute('login') ? 'btn-primary-sm' : 'btn-secondary-sm'
+              "
+            >
+              MASUK
+            </button>
+          </router-link>
+
+          <router-link
+            class="flex justify-center items-center"
+            :to="{ name: 'register' }"
+            ><button
+              :class="
+                isActiveRoute('register')
+                  ? 'btn-primary-sm'
+                  : 'btn-secondary-sm'
+              "
+            >
+              DAFTAR
+            </button></router-link
           >
         </div>
 
@@ -156,9 +176,9 @@
               />
             </svg>
 
-            <span class="max-w-[100px] truncate py-2 text-base font-medium">
+            <!-- <span class="max-w-[100px] truncate py-2 text-base font-medium">
               {{ authStore.user.name }}
-            </span>
+            </span> -->
 
             <span
               class="transition"
@@ -206,6 +226,7 @@
             </div>
             <div class="p-2">
               <button
+                type="button"
                 @click="logout"
                 class="flex w-full items-center gap-2 px-4 py-2 text-red-700 hover:bg-red-50 rounded-lg"
               >
@@ -400,8 +421,15 @@ function isActiveRoute(routeName) {
   return route.name === routeName;
 }
 
-function logout() {
-  authStore.logout();
+async function logout() {
+  const success = await authStore.logout();
+
+  if (success) {
+    console.log("Redirectin to login");
+    router.push({ path: "/login", query: { showLogoutSuccessAlert: true } });
+  } else {
+    console.error("Logout failed, staying on the page.");
+  }
 }
 
 onMounted(() => {

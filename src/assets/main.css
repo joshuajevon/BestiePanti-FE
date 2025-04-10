@@ -83,6 +83,10 @@ span.swiper-pagination-bullet-active {
     @apply flex items-center justify-center rounded-full bg-primary-500 px-8 py-3 text-center text-base font-bold text-white outline outline-4 -outline-offset-4 outline-transparent transition-all hover:outline-offset-0 hover:outline-primary-500/50 lg:px-10 lg:py-3.5 lg:text-lg;
   }
 
+  .btn-secondary-sm {
+    @apply flex items-center justify-center rounded-full bg-secondary-100 px-5 py-2.5 text-center text-sm font-bold text-secondary-500 outline outline-4 -outline-offset-4 outline-transparent transition-all hover:outline-offset-0 hover:outline-secondary-100/50 lg:px-8 lg:py-3 lg:text-base;
+  }
+
   .btn-secondary {
     @apply flex items-center justify-center rounded-full bg-secondary-100 px-8 py-3 text-center text-base font-bold text-secondary-500 outline outline-4 -outline-offset-4 outline-transparent transition-all hover:outline-offset-0 hover:outline-secondary-100/50 lg:px-10 lg:py-3.5 lg:text-lg;
   }
