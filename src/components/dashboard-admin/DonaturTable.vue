@@ -24,8 +24,8 @@
           <tr v-for="donatur in paginatedData" :key="donatur.id">
             <td class="border p-2">{{ donatur.name }}</td>
             <td class="border p-2">{{ donatur.email }}</td>
-            <td class="border p-2">{{ donatur.phone }}</td>
-            <td class="border p-2">{{ donatur.address }}</td>
+            <td class="border p-2">{{ donatur.phone || "-" }}</td>
+            <td class="border p-2">{{ donatur.address || "-" }}</td>
             <td class="border p-2">
               <a href="#" 
                 class="text-red-600 hover:underline"

@@ -5,7 +5,9 @@
     <div class="w-24 h-24 rounded-full bg-secondary-300 overflow-hidden">
       <img
         class="h-full w-full object-cover object-center"
-        :src="`${apiUrl}/storage/profile/${profile}`"
+        :src="profile ? 
+              `${apiUrl}/storage/profile/${profile}` : 
+              '/assets/default-profile/profile.jpg'"
         :alt="`${name}'s profile image`"
       />
     </div>
