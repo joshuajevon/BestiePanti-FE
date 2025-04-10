@@ -725,14 +725,8 @@ const bankOptions = [
     "Bank Syariah Indonesia"
 ];
 
-// Dropdown behavior
 const showBankOptions = ref(false)
 const searchBank = ref('')
-
-const toggleDropdown = () => {
-  showBankOptions.value = !showBankOptions.value
-  if (showBankOptions.value) searchBank.value = ''
-}
 
 const selectBank = (bank) => {
   form.bank_name = bank
@@ -821,14 +815,6 @@ const validateForm = () => {
   }
 
   // Password validation
-  // if (!form.password) {
-  //   errorMessages.password = "Password tidak boleh kosong";
-  //   isValid = false;
-  // } else if (form.password.length < 6) {
-  //   errorMessages.password = "Password minimal 6 karakter";
-  //   isValid = false;
-  // }
-
   if (!form.password) {
     errorMessages.password = "Kata Sandi tidak boleh kosong";
     isValid = false;
@@ -852,14 +838,6 @@ const validateForm = () => {
   }
 
   // Phone number validation
-  // if (!form.phone) {
-  //   errorMessages.phone = "Nomor Telepon tidak boleh kosong";
-  //   isValid = false;
-  // } else if (!.test(form.phone)) {
-  //   errorMessages.phone = "Nomor Telepon harus berisi 10-15 digit angka";
-  //   isValid = false;
-  // }
-
   if (!form.phone) {
     errorMessages.phone = "Nomor Whatsapp tidak boleh kosong";
     isValid = false;
