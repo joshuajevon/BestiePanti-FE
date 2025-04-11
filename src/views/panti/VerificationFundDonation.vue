@@ -137,7 +137,7 @@ const fetchDonationData = async () => {
     const data = await fetchFundDonationByDonationId(donationId);
 
     if (data.forbidden) {
-      
+    
       return;
     }
 

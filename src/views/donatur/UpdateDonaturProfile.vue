@@ -141,22 +141,32 @@
 
         <!-- Nomor Whatsapp -->
         <div class="col-span-1 input-container">
-          <label class="text-base font-medium text-secondary-500">
-            Nomor Whatsapp <span class="text-red-500">*</span>
+          <label class="text-base font-medium text-secondary-500 sm:text-lg">
+            Nomor Telepon <span class="text-red-500">*</span>
           </label>
-          <input 
-            type="text" 
-            v-model="form.phone" 
-            placeholder="Masukkan nomor Whatsapp" 
-            />
-
-            <p
-              class="error-message"
-              v-if="errorMessages.phone"
+          <div class="relative">
+            <div
+              class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
             >
-              {{ errorMessages.phone }}
-            </p>
+              <p>+62</p>
+            </div>
 
+            <input
+              type="text"
+              autocomplete="false"
+              id="phone"
+              name="phone"
+              v-model="form.phone"
+              placeholder="Masukkan nomor Whatsapp"
+              class="pl-14 sm:pl-16"
+              inputmode="numeric"
+              @input="form.phone = $event.target.value.replace(/\D/g, '')"
+            />
+          </div>
+
+          <p v-if="errorMessages.phone" class="text-red-500 text-sm">
+            {{ errorMessages.phone }}
+          </p>
         </div>
 
         <!-- Alamat -->
@@ -207,6 +217,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const previewImage = ref("");
 const selectedFile = ref(null);
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB dalam byte
+const REGEX_PHONE_NUMERIC = /^\d+$/;
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 const hasAccess = computed(() => {
@@ -242,7 +253,7 @@ const fetchUserData = async () => {
     if (authStore.user) {
       form.name = authStore.user.name;
       form.email = authStore.user.email;
-      form.phone = authStore.user.phone;
+      form.phone = authStore.user.phone.slice(2);
       form.dob = authStore.user.dob;
       form.address = authStore.user.address;
       form.gender = authStore.user.gender;
@@ -270,7 +281,18 @@ const validateForm = () => {
 
   // Phone number validation
   if (!form.phone) {
-    errorMessages.phone = "Nomor Telepon tidak boleh kosong";
+    errorMessages.phone = "Nomor Whatsapp tidak boleh kosong";
+    isValid = false;
+  } else if (!REGEX_PHONE_NUMERIC.test(form.phone)) {
+    errorMessages.phone =
+      "Nomor Whatsapp hanya boleh mengandung angka";
+    isValid = false;
+  } else if (!form.phone.startsWith("8")) {
+    errorMessages.phone = "Nomor Whatsapp harus diawali dengan 8";
+    isValid = false;
+  } else if (form.phone.length < 10 || form.phone.length > 13) {
+    errorMessages.phone =
+      "Nomor Whatsapp harus memiliki 10 hingga 13 digit";
     isValid = false;
   }
 
