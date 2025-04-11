@@ -11,37 +11,62 @@
       Tidak ada data donatur tersedia.
     </p>
 
-    <div v-else class="overflow-x-auto rounded-xl">
-      <table class="w-full min-w-max border-collapse border border-gray-300">
-        <thead class="bg-blue-700 text-white">
-          <tr>
-            <th v-for="header in headers" :key="header" class="p-2">
-              {{ header }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="donatur in paginatedData" :key="donatur.id">
-            <td class="border p-2">{{ donatur.name }}</td>
-            <td class="border p-2">{{ donatur.email }}</td>
-            <td class="border p-2">{{ donatur.phone || "-" }}</td>
-            <td class="border p-2">{{ donatur.address || "-" }}</td>
-            <td class="border p-2">
-              <a href="#" 
-                class="text-red-600 hover:underline"
-                @click.prevent="showConfirmation(donatur.id)"
-              >
-                Hapus
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div v-else >
+      <!-- filter -->
+      <div class="bg-gray-300 px-4 py-3 rounded-xl flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-5">
+        
+        <div class="flex flex-col md:flex-row gap-3 w-full">
+          
+          <!-- filter Nama Donatur -->
+          <input
+            type="text"
+            v-model="searchDonatur"
+            placeholder="Cari donatur..."
+            class="w-full md:max-w-xs px-4 py-2 border border-gray-300 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+
+        </div>
+
+      </div>
+
+      <!-- table -->
+      <p v-if="paginatedData.length === 0" 
+      class="text-center text-red-500 mt-4">
+        Tidak ada data donatur yang sesuai.
+      </p>
+
+      <div v-else class="overflow-x-auto rounded-xl">
+        <table class="w-full min-w-max border-collapse border border-gray-300">
+          <thead class="bg-blue-700 text-white">
+            <tr>
+              <th v-for="header in headers" :key="header" class="p-2">
+                {{ header }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="donatur in paginatedData" :key="donatur.id">
+              <td class="border p-2">{{ donatur.name }}</td>
+              <td class="border p-2">{{ donatur.email }}</td>
+              <td class="border p-2">{{ donatur.phone || "-" }}</td>
+              <td class="border p-2">{{ donatur.address || "-" }}</td>
+              <td class="border p-2">
+                <a href="#" 
+                  class="text-red-600 hover:underline"
+                  @click.prevent="showConfirmation(donatur.id)"
+                >
+                  Hapus
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="flex justify-end mt-4">
-      <Pagination v-if="donaturList.length > 0" 
-        :totalItems="donaturList.length" 
+      <Pagination v-if="filteredDonaturList.length > 0" 
+        :totalItems="filteredDonaturList.length" 
         :itemsPerPage="itemsPerPage" 
         v-model:currentPage="currentPage" 
         class="mt-4" 
@@ -59,7 +84,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { fetchAllDonatur, deleteDonatur } from "@/services/api-donatur";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
@@ -74,6 +99,9 @@ const modalVisible = ref(false);
 const modalMessage = ref("");
 const selectedMessageId = ref(null);
 
+// filter behavior
+const searchDonatur = ref('')
+
 const headers = [
   "Nama Donatur", 
   "Email", 
@@ -84,7 +112,21 @@ const headers = [
 
 const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
-  return donaturList.value.slice(start, start + itemsPerPage);
+  return filteredDonaturList.value.slice(start, start + itemsPerPage);
+});
+
+const filteredDonaturList = computed(() => {
+  
+  return donaturList.value.filter((donatur) => {
+
+    const matchesSearch = donatur.name.toLowerCase().includes(searchDonatur.value.toLowerCase());
+
+    return matchesSearch;
+  });
+});
+
+watch(searchDonatur, () => {
+  currentPage.value = 1;
 });
 
 const showConfirmation = (id) => {
