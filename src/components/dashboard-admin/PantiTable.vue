@@ -29,7 +29,7 @@
             <button
               @click="toggleRegionsFilter"
               :class="[
-                'border rounded-md h-10 px-3 shadow-sm flex items-center transition duration-200 text-sm',
+                'w-full justify-between border rounded-md h-10 px-3 shadow-sm flex items-center transition duration-200 text-sm',
                 selectedFilter === 'Regions' 
                   ? 'bg-blue-600 border-blue-600 text-white' 
                   : 'bg-white border-gray-300 text-gray-800'
@@ -64,7 +64,7 @@
             <button
               @click="toggleDonationTypesFilter"
               :class="[
-                'border rounded-md h-10 px-3 shadow-sm flex items-center transition duration-200 text-sm',
+                'w-full justify-between border rounded-md h-10 px-3 shadow-sm flex items-center transition duration-200 text-sm',
                 selectedFilter === 'Donation Types' 
                   ? 'bg-blue-600 border-blue-600 text-white' 
                   : 'bg-white border-gray-300 text-gray-800'
@@ -99,7 +99,7 @@
             <button
               @click="toggleStatusesFilter"
               :class="[
-                'border rounded-md h-10 px-3 shadow-sm flex items-center transition duration-200 text-sm',
+                'w-full justify-between border rounded-md h-10 px-3 shadow-sm flex items-center transition duration-200 text-sm',
                 selectedFilter === 'Statuses' 
                   ? 'bg-blue-600 border-blue-600 text-white' 
                   : 'bg-white border-gray-300 text-gray-800'
@@ -311,7 +311,6 @@ const resetAllFilters = () => {
   selectedStatuses.value = []
   searchPanti.value = ''
 }
-
 
 const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
