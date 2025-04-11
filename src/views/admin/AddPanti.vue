@@ -253,29 +253,29 @@
             Nomor Telepon <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-              <div
-                class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
-              >
-                <p>+62</p>
-              </div>
-
-              <input
-                type="text"
-                autocomplete="false"
-                id="phone"
-                name="phone"
-                v-model="form.phone"
-                placeholder="Masukkan nomor Whatsapp"
-                class="pl-14 sm:pl-16"
-                inputmode="numeric"
-                @input="form.phone = $event.target.value.replace(/\D/g, '')"
-              />
+            <div
+              class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
+            >
+              <p>+62</p>
             </div>
+
+            <input
+              type="text"
+              autocomplete="false"
+              id="phone"
+              name="phone"
+              v-model="form.phone"
+              placeholder="Masukkan nomor Whatsapp"
+              class="pl-14 sm:pl-16"
+              inputmode="numeric"
+              @input="form.phone = $event.target.value.replace(/\D/g, '')"
+            />
+          </div>
 
           <p v-if="errorMessages.phone" class="text-red-500 text-sm">
             {{ errorMessages.phone }}
           </p>
-         </div>
+        </div>
 
         <!-- Nama Bank -->
         <div class="col-span-1 input-container relative">
