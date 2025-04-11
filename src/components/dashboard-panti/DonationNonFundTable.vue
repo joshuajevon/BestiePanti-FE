@@ -77,8 +77,6 @@
             </div>
           </div>
 
-          
-
         </div>
 
         <!-- Action Filter -->
@@ -226,6 +224,12 @@ const searchDonatur = ref('')
 const selectedStatuses = ref('')
 const selectedDonationTypes = ref([])
 const selectedFilter = ref('')
+
+const donationTypes = [
+  "Barang", 
+  "Pangan", 
+  "Tenaga"
+];
 
 const headers = [
   "Donatur",
