@@ -176,9 +176,11 @@
               />
             </svg>
 
-            <!-- <span class="max-w-[100px] truncate py-2 text-base font-medium">
+            <span
+              class="hidden lg:inline max-w-[100px] truncate py-2 text-base font-medium"
+            >
               {{ authStore.user.name }}
-            </span> -->
+            </span>
 
             <span
               class="transition"
