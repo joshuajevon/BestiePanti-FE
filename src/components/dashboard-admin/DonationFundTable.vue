@@ -17,14 +17,6 @@
         
         <div class="flex flex-col md:flex-row gap-3 w-full">
           
-          <!-- filter Nama Panti -->
-          <input
-            type="text"
-            v-model="searchPanti"
-            placeholder="Cari panti..."
-            class="w-full md:max-w-xs px-4 py-2 border border-gray-300 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          />
-
           <!-- filter Nama Donatur -->
           <input
             type="text"
@@ -32,9 +24,16 @@
             placeholder="Cari donatur..."
             class="w-full md:max-w-xs px-4 py-2 border border-gray-300 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
           />
+          <!-- filter Nama Panti -->
+          <input
+            type="text"
+            v-model="searchPanti"
+            placeholder="Cari panti..."
+            class="w-full md:max-w-xs px-4 py-2 border border-gray-300 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
           
           <!-- filter Status -->
-          <div class="relative w-full md:w-44">
+          <div class="relative w-full md:w-64 lg:w-32">
             <select
               :value="selectedStatuses || ''"
               @change="handleStatusChange"
@@ -42,7 +41,7 @@
                     bg-white text-gray-800 transition-colors
                     focus:bg-blue-600 focus:border-blue-600 focus:text-white" 
             >
-              <option disabled value="" hidden>Status Donasi</option>
+              <option disabled value="" hidden>Status</option>
               <option value="PENDING" class="text-black bg-white">PENDING</option>
               <option value="COMPLETED" class="text-black bg-white">COMPLETED</option>
               <option value="REJECTED" class="text-black bg-white">REJECTED</option>
@@ -84,7 +83,13 @@
       </div>
 
       <!-- table -->
-      <div class="overflow-x-auto rounded-xl">
+       <p v-if="paginatedData.length === 0" 
+        class="text-center text-red-500 mt-4"
+      >
+        Tidak ada data donasi yang sesuai.
+      </p>
+
+      <div v-else class="overflow-x-auto rounded-xl">
         <table class="w-full min-w-max border-collapse border border-gray-300">
           <thead class="bg-blue-700 text-white">
             <tr>
