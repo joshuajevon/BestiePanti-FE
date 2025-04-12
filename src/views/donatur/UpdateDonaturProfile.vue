@@ -253,7 +253,7 @@ const fetchUserData = async () => {
     if (authStore.user) {
       form.name = authStore.user.name;
       form.email = authStore.user.email;
-      form.phone = authStore.user.phone.slice(2);
+      form.phone = authStore.user.phone.slice(3);
       form.dob = authStore.user.dob;
       form.address = authStore.user.address;
       form.gender = authStore.user.gender;

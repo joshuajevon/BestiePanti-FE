@@ -327,7 +327,7 @@ const validateForm = () => {
   } else if (!/^\d+$/.test(donationData.active_phone)) {
     errorMessages.active_phone = "Nomor Telepon hanya boleh mengandung angka";
     isValid = false;
-  } else if (donationData.active_phone.startsWith("8")) {
+  } else if (!donationData.active_phone.startsWith("8")) {
     errorMessages.active_phone = "Nomor Telepon harus diawali dengan 8";
     isValid = false;
   } else if (
