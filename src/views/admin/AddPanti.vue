@@ -862,7 +862,7 @@ const validateForm = () => {
 
   // Maps validation
   if (!form.maps) {
-    errorMessages.maps = "google maps tidak boleh kosong";
+    errorMessages.maps = "Google maps tidak boleh kosong";
     isValid = false;
   }
 
@@ -907,7 +907,7 @@ const validateForm = () => {
 
   // Region validation
   if (!form.region) {
-    errorMessages.region = "region tidak boleh kosong";
+    errorMessages.region = "Region tidak boleh kosong";
     isValid = false;
   }
 
