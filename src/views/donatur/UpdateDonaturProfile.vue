@@ -355,6 +355,7 @@ const submitForm = async () => {
       gender: form.gender,
       dob: form.dob,
       address: form.address,
+      profile: form.profile
     };
 
     if (selectedFile.value instanceof File) {
