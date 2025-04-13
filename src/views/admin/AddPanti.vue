@@ -654,6 +654,7 @@
       <div class="self-end px-2 lg:px-4 flex gap-2">
         <!-- Tombol Kembali -->
         <button
+          id="back"
           type="button"
           @click="goBack"
           class="btn-secondary"

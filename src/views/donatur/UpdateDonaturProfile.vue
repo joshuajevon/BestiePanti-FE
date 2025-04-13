@@ -194,8 +194,20 @@
         <p class="text-sm text-red-500 sm:text-base lg:text-lg">*Wajib diisi</p>
       </div>
 
-      <div class="self-end px-2 lg:px-4">
-        <button id="submit" type="submit" class="btn-primary">
+      <div class="self-end px-2 lg:px-4 flex gap-2">
+        <button 
+          id="back" 
+          class="btn-secondary"
+          @click="goBack"
+        >
+          Kembali
+        </button>
+
+        <button 
+          id="submit" 
+          type="submit" 
+          class="btn-primary"
+        >
           Update
         </button>
       </div>
@@ -354,8 +366,7 @@ const submitForm = async () => {
       phone: form.phone,
       gender: form.gender,
       dob: form.dob,
-      address: form.address,
-      profile: form.profile
+      address: form.address
     };
 
     if (selectedFile.value instanceof File) {
