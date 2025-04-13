@@ -223,10 +223,7 @@
         </h1>
 
         <p class="text-primary text-lg text-secondary-300 lg:text-xl">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni
-          inventore quis sed, reiciendis, ut consequatur totam eveniet eaque
-          quae voluptatibus earum optio sequi ipsam. Eveniet necessitatibus
-          facilis ipsam ratione et?
+          Kami datang sebagai platform manajemen donasi yang berkomitmen untuk menjadi jembatan kebaikan antara para donatur dan panti asuhan di Jabodetabek.
         </p>
       </div>
 
