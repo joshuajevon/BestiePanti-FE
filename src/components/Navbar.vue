@@ -387,7 +387,7 @@ const handleKeydown = (event) => {
 };
 
 const profileOpenMenuDashboardName = computed(() => {
-  return authStore.user?.role === "ROLE_DONATUR" ? "Donasi Saya" : "Dashboard";
+  return authStore.user?.role === "ROLE_ADMIN" ? "Manajemen" : "Donasi Saya" ;
 });
 
 const dashboardRoute = computed(() => {
