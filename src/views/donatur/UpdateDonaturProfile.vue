@@ -116,6 +116,12 @@
               Perempuan
             </label>
           </div>
+          <p
+            class="error-message"
+            v-if="errorMessages.gender"
+          >
+            {{ errorMessages.gender }}
+          </p>
         </div>
 
         <!-- Tanggal Lahir -->
