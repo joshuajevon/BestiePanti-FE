@@ -126,3 +126,36 @@ export async function createPanti(pantiData) {
     throw error;
   }
 }
+
+
+export async function updateIsUrgentPanti(id, panti_urgent) {
+  console.log(panti_urgent);
+  try {
+    const response = await fetch(
+      `${API_URL}/api/v1/panti/update/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          is_urgent: panti_urgent,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.log(errorResponse);
+      return errorResponse;
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}

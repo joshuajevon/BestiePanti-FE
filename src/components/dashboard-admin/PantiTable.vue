@@ -198,14 +198,48 @@
               <td class="border p-2">{{ panti.email }}</td>
               <td class="border p-2">{{ panti.phone }}</td>
               <td class="border p-2">{{ panti.address }}</td>
-              <td class="border p-2">{{ panti.is_urgent ? "Darurat" : "Tidak Darurat" }}</td>
               <td class="border p-2">{{ panti.region }}</td>
               <td class="border p-2">{{ panti.bank_name }} - {{ panti.bank_account_number }}</td>
               <td class="border p-2">{{ panti.bank_account_name }}</td>
               <td class="border p-2">
+                <label class="flex items-center cursor-pointer">
+                  <div class="relative">
+                    <input
+                      type="checkbox"
+                      :checked="panti.is_urgent"
+                      @change="() => triggerUrgentChange(
+                        panti.id, 
+                        panti.is_urgent
+                        )"
+                      class="sr-only"
+                    />
+                    
+                    <div
+                      class="block w-12 h-6 rounded-full transition-colors duration-300"
+                      :class="{
+                        'bg-gray-300': !panti.is_urgent,
+                        'bg-green-500': panti.is_urgent
+                      }"
+                    ></div>
+                    
+                    <div
+                      class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-300"
+                      :class="{ 'translate-x-6': panti.is_urgent }"
+                    ></div>
+                  </div>
+                  <span class="ml-3 text-sm">
+                    {{ panti.is_urgent ? "Darurat" : "Tidak Darurat" }}
+                  </span>
+                </label>
+              </td>
+              <td class="border p-2">
                 <a href="#" 
                   class="text-red-600 hover:underline"
-                  @click.prevent="showConfirmation(panti.id)"
+                  @click.prevent="showConfirmation(
+                    panti.id, 
+                    'delete', 
+                    'Apakah kamu yakin ingin menghapus panti ini?'
+                    )"
                 >
                 Hapus
               </a>
@@ -237,7 +271,7 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from "vue";
-import { fetchAllPanti, deletePanti } from "@/services/api-panti";
+import { fetchAllPanti, deletePanti, updateIsUrgentPanti } from "@/services/api-panti";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
 import ConfirmationModal from "@/components/modal/ConfirmationModal.vue";
@@ -247,9 +281,11 @@ const fetching = ref(true);
 const currentPage = ref(1);
 const itemsPerPage = 10;
 
-const modalVisible = ref(false);
-const modalMessage = ref("");
-const selectedMessageId = ref(null);
+const modalVisible = ref(false)
+const modalMessage = ref("")
+const selectedPantiId = ref(null)
+const actionType = ref("delete")
+const urgentTargetValue = ref("")
 
 // Filter Beehavior
 const selectedFilter = ref('')
@@ -279,10 +315,10 @@ const headers = [
   "Email",
   "Kontak",
   "Alamat",
-  "Darurat",
   "Region",
   "Bank",
   "Nama Pemilik Rekening",
+  "Darurat",
   "Aksi"
 ];
 
@@ -341,20 +377,35 @@ watch([searchPanti, selectedRegions, selectedDonationTypes, selectedStatuses], (
 });
 
 
-const showConfirmation = (id) => {
-  selectedMessageId.value = id;
-  modalMessage.value = "Apakah kamu yakin ingin menghapus panti ini?";
-  modalVisible.value = true;
+const showConfirmation = (id, type, message, urgentValue = null) => {
+  selectedPantiId.value = id
+  modalMessage.value = message
+  modalVisible.value = true
+  actionType.value = type
+  urgentTargetValue.value = urgentValue
 };
+
+const triggerUrgentChange = (id, currentStatus) => {
+  const newStatus = currentStatus ? 0 : 1;
+  showConfirmation(
+    id,
+    "update_urgent",
+    `Apakah kamu yakin ingin mengubah status menjadi ${newStatus ? "Darurat" : "Tidak Darurat"}?`,
+    newStatus
+  )
+}
 
 const handleDeleteConfirm = async () => {
+  if (actionType.value === "delete") {
+    await deletePanti(selectedPantiId.value)
+  } else if (actionType.value === "update_urgent") {
+    await updateIsUrgentPanti(selectedPantiId.value, urgentTargetValue.value)
+  }
 
-  await deletePanti(selectedMessageId.value);
-  modalVisible.value = false;
-  
-  fetching.value = true;
-  fetchData();
-};
+  modalVisible.value = false
+  fetching.value = true
+  fetchData()
+}
 
 const fetchData = async () => {
   try {
