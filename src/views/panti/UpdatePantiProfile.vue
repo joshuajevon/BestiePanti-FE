@@ -437,7 +437,7 @@
         <!-- Upload Image Panti -->
          <div class="input-container mt-2">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Upload Gambar Panti <span class="text-red-500">*</span>
+            Upload Gambar Panti
           </label>
 
           <div class="flex items-center gap-3">
