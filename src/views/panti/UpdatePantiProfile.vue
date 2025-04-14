@@ -522,8 +522,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 //qris
 const previewImageQris = ref("");
-const qrisOriginal = ref("");  // Nama file QRIS asli dari backend
-const qrisRemoved = ref(false); // Flag kalau user klik hapus
+const qrisOriginal = ref("");  
+const qrisRemoved = ref(false); 
 
 // image panti exist
 const previewPantiExistImages = ref([]);
@@ -788,7 +788,7 @@ const handleQrisFileUpload = (event) => {
   if (file) {
     form.qris = file;
     previewImageQris.value = URL.createObjectURL(file);
-    qrisRemoved.value = false; // Reset flag hapus jika upload baru
+    qrisRemoved.value = false;
   }
 };
 
@@ -802,16 +802,16 @@ const removeImagePantiExist = (index) => {
   const removedFileName = form.existing_image[index];
   removedPantiExistImages.value.push(removedFileName);
   previewPantiExistImages.value.splice(index, 1);
-  form.existing_image.splice(index, 1); // Hapus dari form.existing_image
+  form.existing_image.splice(index, 1); 
 };
 
-const resetImagePantiExist = () => {
-  previewPantiExistImages.value = originalPreviewImageList.value.map(
-    image => image
-  );
-  removedPantiExistImages.value = [];
-  form.existing_image = form.prev_images; // Reset form.existing_image
-};
+// const resetImagePantiExist = () => {
+//   previewPantiExistImages.value = originalPreviewImageList.value.map(
+//     image => image
+//   );
+//   removedPantiExistImages.value = [];
+//   form.existing_image = form.prev_images; 
+// };
 
 const submitForm = async () => {
   if (!validateForm()) return;
