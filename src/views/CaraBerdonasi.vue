@@ -1,6 +1,7 @@
 <template>
   <section class="bg-primary-50 text-secondary-500">
     <section
+      v-motion-fade-visible-once
       class="c-container flex items-center justify-center bg-cover bg-center pt-16 text-white sm:pt-[4.5rem] md:pt-20 lg:pt-[5.5rem] xl:pt-24"
       style="background-image: url('/assets/cara-berdonasi/banner-1.jpg')"
     >
@@ -24,6 +25,7 @@
       class="c-container flex flex-col gap-8 pt-8 lg:gap-12 lg:pt-16 xl:gap-16 xl:pt-32"
     >
       <div
+        v-motion-slide-visible-once-left
         class="flex items-center justify-center gap-3 lg:gap-4 xl:gap-6 2xl:gap-8"
       >
         <h1 class="text-xl font-bold lg:text-2xl xl:text-3xl 2xl:text-4xl">
@@ -36,12 +38,14 @@
         class="flex flex-col items-start justify-center gap-4 self-end sm:w-4/5 sm:gap-6 lg:gap-8"
       >
         <img
+          v-motion-slide-visible-once-left
           class="w-28 sm:w-32 md:w-36 lg:w-40 xl:w-44 2xl:w-48"
           src="/assets/logos/logo-icon-text-color.svg"
           alt="logo"
         />
 
         <div
+          v-motion-slide-visible-once-left
           class="flex flex-col text-justify text-sm sm:text-base lg:text-lg gap-8 sm:gap-10 lg:gap-12"
         >
           <div class="flex flex-col gap-2">
@@ -59,10 +63,14 @@
           class="flex flex-col gap-8 sm:gap-10 lg:gap-12 relative pb-8 lg:pb-12 xl:pb-16"
         >
           <span
+            v-motion-slide-visible-once-lef
             class="absolute w-1 sm:w-1.5 lg:w-2 h-full top-0 bg-primary-200 left-[1.125rem] sm:left-6 lg:left-7"
           ></span>
 
-          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+          <div
+            v-motion-slide-visible-once-left
+            class="flex gap-4 sm:gap-5 lg:gap-6 z-10"
+          >
             <div
               class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
             >
@@ -96,7 +104,10 @@
             </div>
           </div>
 
-          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+          <div
+            v-motion-slide-visible-once-left
+            class="flex gap-4 sm:gap-5 lg:gap-6 z-10"
+          >
             <div
               class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
             >
@@ -131,7 +142,10 @@
             </div>
           </div>
 
-          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+          <div
+            v-motion-slide-visible-once-left
+            class="flex gap-4 sm:gap-5 lg:gap-6 z-10"
+          >
             <div
               class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
             >
@@ -165,7 +179,10 @@
             </div>
           </div>
 
-          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+          <div
+            v-motion-slide-visible-once-left
+            class="flex gap-4 sm:gap-5 lg:gap-6 z-10"
+          >
             <div
               class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
             >
@@ -205,7 +222,10 @@
             </div>
           </div>
 
-          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+          <div
+            v-motion-slide-visible-once-left
+            class="flex gap-4 sm:gap-5 lg:gap-6 z-10"
+          >
             <div
               class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
             >
@@ -241,7 +261,10 @@
             </div>
           </div>
 
-          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+          <div
+            v-motion-slide-visible-once-left
+            class="flex gap-4 sm:gap-5 lg:gap-6 z-10"
+          >
             <div
               class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
             >
@@ -280,7 +303,10 @@
             </div>
           </div>
 
-          <div class="flex gap-4 sm:gap-5 lg:gap-6 z-10">
+          <div
+            v-motion-slide-visible-once-left
+            class="flex gap-4 sm:gap-5 lg:gap-6 z-10"
+          >
             <div
               class="bg-primary-500 text-white rounded-full p-3 sm:p-3.5 lg:p-4 w-fit h-fit"
             >
@@ -321,6 +347,7 @@
 
     <!-- Hubungi Kami -->
     <section
+      v-motion-slide-visible-once-left
       class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24 bg-secondary-100"
     >
       <div class="flex flex-col items-center justify-center gap-4 text-center">

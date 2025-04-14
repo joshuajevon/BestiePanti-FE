@@ -77,6 +77,7 @@
       class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24 bg-primary-900"
     >
       <div
+        v-motion-slide-visible-once-left
         class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6 text-white"
       >
         <h1 class="text-3xl font-bold lg:text-4xl xl:text-5xl">
@@ -115,7 +116,7 @@
         />
       </div>
 
-      <router-link :to="{ name: 'panti' }">
+      <router-link v-motion-slide-visible-once-left :to="{ name: 'panti' }">
         <button class="btn-primary">Lihat Selengkapnya</button>
       </router-link>
     </section>
@@ -125,6 +126,7 @@
       class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24"
     >
       <div
+        v-motion-slide-visible-once-left
         class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6"
       >
         <h1 class="text-3xl font-bold lg:text-4xl xl:text-5xl">Panti Asuhan</h1>
@@ -161,7 +163,7 @@
         />
       </div>
 
-      <router-link :to="{ name: 'panti' }">
+      <router-link v-motion-slide-visible-once-left :to="{ name: 'panti' }">
         <button class="btn-primary">Lihat Selengkapnya</button>
       </router-link>
     </section>
@@ -172,12 +174,16 @@
     >
       <div class="flex flex-col items-center gap-12 lg:flex-row">
         <img
+          v-motion-fade-visible-once
           src="/assets/beranda/banner-3.jpg"
           alt=""
           class="h-auto w-full rounded-xl lg:h-96 lg:w-auto"
         />
 
-        <div class="flex flex-col justify-center gap-8">
+        <div
+          v-motion-slide-visible-once-left
+          class="flex flex-col justify-center gap-8"
+        >
           <div class="flex flex-col justify-center gap-3">
             <h1 class="text-3xl font-bold text-white lg:text-4xl xl:text-5xl">
               Ingin Berdonasi?
@@ -209,6 +215,7 @@
 
     <!-- Tentang Kami -->
     <section
+      v-motion-slide-visible-once-left
       class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24"
     >
       <img
@@ -223,7 +230,9 @@
         </h1>
 
         <p class="text-primary text-lg text-secondary-300 lg:text-xl">
-          Kami datang sebagai platform manajemen donasi yang berkomitmen untuk menjadi jembatan kebaikan antara para donatur dan panti asuhan di Jabodetabek.
+          Kami datang sebagai platform manajemen donasi yang berkomitmen untuk
+          menjadi jembatan kebaikan antara para donatur dan panti asuhan di
+          Jabodetabek.
         </p>
       </div>
 
@@ -234,6 +243,7 @@
 
     <!-- Hubungi Kami -->
     <section
+      v-motion-slide-visible-once-left
       class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24 bg-secondary-100"
     >
       <div class="flex flex-col items-center justify-center gap-4 text-center">
