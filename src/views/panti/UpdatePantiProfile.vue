@@ -521,8 +521,7 @@ const fetching = ref(true);
 const apiUrl = import.meta.env.VITE_API_URL;
 
 //qris
-const previewImageQris = ref("");
-const qrisOriginal = ref("");  
+const previewImageQris = ref(""); 
 const qrisRemoved = ref(false); 
 
 // image panti exist
@@ -634,7 +633,6 @@ const fetchUserData = async () => {
       removedPantiExistImages.value = []; 
 
       //fetch qris
-      qrisOriginal.value = authStore.user.qris,
       previewImageQris.value = `${apiUrl}/storage/qris/${authStore.user.qris}`
     }
       
