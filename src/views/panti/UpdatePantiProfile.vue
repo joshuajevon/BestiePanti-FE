@@ -501,7 +501,7 @@
           id="submit" 
           type="submit" 
           class="btn-primary">
-          Tambah
+          Ubah
         </button>
       </div>
 
