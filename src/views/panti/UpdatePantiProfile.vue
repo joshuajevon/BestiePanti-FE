@@ -761,6 +761,9 @@ const validateForm = () => {
         isValid = false;
       }
     });
+  } else if (form.existing_image.length === 0 && form.image.length === 0) {
+    errorMessages.image = "Gambar panti tidak boleh kosong";
+    isValid = false;
   }
     
   return isValid;
