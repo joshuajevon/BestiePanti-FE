@@ -379,6 +379,7 @@ const submitForm = async () => {
     if (fileInput.value) {
       fileInput.value.value = "";
     }
+    fileName.value = "";
 
     emit("success");
     closeFormDana();
