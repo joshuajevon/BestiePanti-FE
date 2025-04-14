@@ -503,7 +503,6 @@
           class="btn-primary">
           Tambah
         </button>
-        <h1>{{ removedPantiExistImages }}</h1>
       </div>
 
     </form>
