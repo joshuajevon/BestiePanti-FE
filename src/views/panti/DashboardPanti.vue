@@ -27,9 +27,12 @@
           <p class="text-gray-600">Telepon: {{ authStore.user.phone }}</p>
           <p class="text-gray-600">Alamat: {{ authStore.user.address }}</p>
           <div class="mt-4 md:text-right">
-            <button class="px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300">
-              Edit Profile
-            </button>
+            <router-link
+                  :to="{ name: 'ubah-profile-panti' }"
+                  class="px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300"
+              >
+                Ubah Profile
+              </router-link>
           </div>
         </div>
       </div>

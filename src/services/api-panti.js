@@ -129,7 +129,6 @@ export async function createPanti(pantiData) {
 
 
 export async function updateIsUrgentPanti(id, panti_urgent) {
-  console.log(panti_urgent);
   try {
     const response = await fetch(
       `${API_URL}/api/v1/panti/update/${id}`,
@@ -154,6 +153,89 @@ export async function updateIsUrgentPanti(id, panti_urgent) {
     const data = await response.json();
 
     return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+export async function deleteExistingImages(id, deleted_images) {
+  try {
+    const response = await fetch(
+      `${API_URL}/api/v1/panti/delete-image/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          image_list: deleted_images,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.log(errorResponse);
+      return errorResponse;
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+export async function updatePantiProfile(pantiData) {
+  const formData = new FormData();
+
+  formData.append("name", pantiData.name);
+  formData.append("description", pantiData.description);
+  formData.append("phone", pantiData.phone);
+  formData.append("isUrgent", pantiData.is_urgent);
+  formData.append("address", pantiData.address);
+  formData.append("region", pantiData.region);
+  formData.append("bankName", pantiData.bank_name);
+  formData.append("bankAccountNumber", pantiData.bank_account_number);
+  formData.append("bankAccountName", pantiData.bank_account_name);
+  formData.append("maps", pantiData.maps);
+
+  if (pantiData.donation_types.length > 0) {
+    pantiData.donation_types.forEach(type => {
+      formData.append("donationTypes", type);
+    });
+  }
+
+  if (pantiData.qris) {
+    formData.append("qris", pantiData.qris);
+  }
+
+  if (Array.isArray(pantiData.image) && pantiData.image.length > 0) {
+    pantiData.image.forEach(file => {
+      formData.append("image", file);
+    });
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/v1/panti/profile/update`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.log("Response Error:", errorResponse);
+      return errorResponse;
+    }
+
+    return await response.json();
   } catch (error) {
     console.error("API Error:", error);
     throw error;
