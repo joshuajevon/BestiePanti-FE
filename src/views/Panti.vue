@@ -4,6 +4,7 @@
       class="c-container flex flex-col items-center gap-8 pb-16 pt-32 lg:pb-20 lg:pt-36 xl:pb-24 xl:pt-40 min-h-screen"
     >
       <div
+        v-motion-slide-visible-once-left
         class="flex flex-col items-center justify-center gap-2 text-center lg:gap-4 xl:gap-6"
       >
         <h1 class="text-3xl font-bold lg:text-4xl xl:text-5xl">Panti Asuhan</h1>
@@ -13,7 +14,7 @@
       </div>
 
       <!-- Search bar -->
-      <div class="w-full">
+      <div v-motion-slide-visible-once-left class="w-full">
         <input
           type="search"
           id="search-panti"
@@ -25,6 +26,7 @@
 
       <!-- Filters -->
       <div
+        v-motion-slide-visible-once-left
         class="flex flex-wrap items-center justify-center gap-2 relative bg-white p-3 rounded-full"
       >
         <!-- Region Filters -->
@@ -353,6 +355,7 @@
 
     <!-- Hubungi Kami -->
     <section
+      v-motion-slide-visible-once-lef
       class="c-container flex flex-col items-center justify-center gap-8 py-16 lg:py-20 xl:py-24 bg-secondary-100"
     >
       <div class="flex flex-col items-center justify-center gap-4 text-center">
