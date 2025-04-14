@@ -513,7 +513,7 @@
 <script setup>
 import { reactive, ref, onMounted, computed } from 'vue';
 import { useAuthStore } from "@/stores/authStore";
-import { updatePantiProfile, deleteExistingImages } from "@/services/api-panti";
+import { updatePantiProfile, deleteExistingImages, deleteQris } from "@/services/api-panti";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 
 const authStore = useAuthStore();
@@ -634,7 +634,6 @@ const fetchUserData = async () => {
       removedPantiExistImages.value = []; 
 
       //fetch qris
-      form.qris = authStore.user.qris,
       qrisOriginal.value = authStore.user.qris,
       previewImageQris.value = `${apiUrl}/storage/qris/${authStore.user.qris}`
     }
@@ -838,12 +837,10 @@ const submitForm = async () => {
     if (form.qris instanceof File) {
       pantiData.qris = form.qris;
     } 
-    
+
     // else if (qrisRemoved.value) {
-    //   formData.append("qris", ""); // case: user hapus gambar tapi tidak upload baru
-    // } else {
-    //   formData.append("qris", qrisOriginal.value); // case: tidak diubah
-    // }
+    //   deleteQris(useAuthStore.user?.id); // case: hapus qris
+    // } 
 
     if (Array.isArray(form.image) && form.image.every(file => file instanceof File)) {
       pantiData.image = [...form.image]; 

@@ -190,6 +190,34 @@ export async function deleteExistingImages(id, deleted_images) {
   }
 }
 
+export async function deleteQris(id) {
+  try {
+    const response = await fetch(
+      `${API_URL}/api/v1/panti/delete-qris/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.log(errorResponse);
+      return errorResponse;
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
 export async function updatePantiProfile(pantiData) {
   const formData = new FormData();
 
