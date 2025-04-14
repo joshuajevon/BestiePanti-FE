@@ -1,6 +1,5 @@
 <template>
   <router-link
-    v-motion-pop-visible-once
     class="w-full h-full"
     :to="{ name: 'pantiDetail', params: { id: panti.id } }"
   >
