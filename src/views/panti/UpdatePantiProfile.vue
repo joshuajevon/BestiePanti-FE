@@ -836,9 +836,9 @@ const submitForm = async () => {
       pantiData.qris = form.qris;
     } 
 
-    // else if (qrisRemoved.value) {
-    //   deleteQris(useAuthStore.user?.id); // case: hapus qris
-    // } 
+    else if (qrisRemoved.value) {
+      await deleteQris(authStore.user.id); // case: hapus qris
+    } 
 
     if (Array.isArray(form.image) && form.image.every(file => file instanceof File)) {
       pantiData.image = [...form.image]; 
