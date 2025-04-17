@@ -78,7 +78,7 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: "/dashboard-panti",
+      path: "/donasi-panti",
       name: "dashboard-panti",
       component: () => import("../views/panti/DashboardPanti.vue"),
       meta: { requiresAuth: true },

@@ -13,17 +13,17 @@
       </h1>
     </div>
 
-    <div v-if="!fetching" 
+    <div v-if="!fetching && hasAccess" 
       class="flex items-center justify-center gap-3 lg:gap-4 xl:gap-6 2xl:gap-8">
       <h1 class="text-2xl font-bold text-secondary-500 xl:text-3xl 2xl:text-4xl">
-        Ubah Profile Panti
+        Ubah Profile
       </h1>
       <div class="h-0.5 flex-1 bg-secondary-500"></div>
     </div>
 
     <!-- Form -->
     <form
-      v-if="!fetching"
+      v-if="!fetching && hasAccess"
       method="PUT"
       class="flex flex-col items-center gap-6 rounded-md bg-white px-6 py-12 shadow-[0px_4.7451px_41.5196px_rgba(41,82,144,0.25)] sm:rounded-lg sm:px-8 sm:py-16 md:rounded-xl md:px-10 md:py-20 lg:rounded-2xl lg:px-12 lg:py-24 xl:rounded-3xl xl:px-14 xl:py-28 2xl:px-16 2xl:py-32"
       @submit.prevent="submitForm"

@@ -387,12 +387,14 @@ const handleKeydown = (event) => {
 };
 
 const profileOpenMenuDashboardName = computed(() => {
-  return authStore.user?.role === "ROLE_ADMIN" ? "Manajemen Admin" : "Donasi Saya" ;
+  if(authStore.user?.role === "ROLE_ADMIN") return "Manajemen Admin";
+  if(authStore.user?.role === "ROLE_DONATUR") return "Donasi saya";
+  if(authStore.user?.role === "ROLE_PANTI") return "Donasi Panti";
 });
 
 const dashboardRoute = computed(() => {
   if (authStore.user?.role === "ROLE_PANTI") {
-    return "/dashboard-panti";
+    return "/donasi-panti";
   } else if (authStore.user?.role === "ROLE_ADMIN") {
     return "/dashboard-admin";
   } else {
