@@ -82,7 +82,7 @@
     <!-- Donation and Message Buttons -->
     <section
       v-if="!authStore.user"
-      class="flex flex-col justify-center items-center gap-2 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
+      class="c-container flex flex-col justify-center items-center gap-2 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
     >
       <div class="flex flex-wrap items-center justify-center gap-4">
         <!-- Dana -->
@@ -128,7 +128,7 @@
       </div>
 
       <div>
-        <p class="error-message">
+        <p class="error-message text-center">
           *Anda harus login terlebih dahulu untuk melakukan donasi atau kirim
           pesan
         </p>
@@ -137,7 +137,7 @@
 
     <section
       v-else-if="authStore.user.role === 'ROLE_PANTI'"
-      class="flex flex-col justify-center items-center gap-2 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
+      class="c-container flex flex-col justify-center items-center gap-2 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
     >
       <div class="flex flex-wrap items-center justify-center gap-4">
         <!-- Dana -->
@@ -183,7 +183,7 @@
       </div>
 
       <div>
-        <p class="error-message">
+        <p class="error-message text-center">
           Akun panti asuhan tidak dapat digunakan untuk berdonasi atau mengirim
           pesan
         </p>
@@ -197,7 +197,7 @@
         authStore.user.dob == null ||
         authStore.user.address == null
       "
-      class="flex flex-col justify-center items-center gap-2 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
+      class="c-container flex flex-col justify-center items-center gap-2 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
     >
       <div class="flex flex-wrap items-center justify-center gap-4">
         <!-- Dana -->
@@ -243,7 +243,7 @@
       </div>
 
       <div>
-        <p class="error-message">
+        <p class="error-message text-center">
           *Anda harus melengkapi profil Anda terlebih dahulu sebelum dapat
           melakukan donasi atau mengirim pesan. Lengkapi profil Anda
           <a href="/ubah/profile/donatur" class="underline text-blue-500"
