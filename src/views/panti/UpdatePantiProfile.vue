@@ -633,7 +633,11 @@ const fetchUserData = async () => {
       removedPantiExistImages.value = []; 
 
       //fetch qris
-      previewImageQris.value = `${apiUrl}/storage/qris/${authStore.user.qris}`
+      if (authStore.user.qris) {
+        previewImageQris.value = `${apiUrl}/storage/qris/${authStore.user.qris}`
+      } else {
+        previewImageQris.value = null;
+      }
     }
       
       
