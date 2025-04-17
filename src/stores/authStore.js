@@ -70,6 +70,36 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
+    async changePassword(form) {
+      const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/change-password`;
+      const token = localStorage.getItem("token");
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "PATCH",
+          headers: { 
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(form),
+          mode: "cors",
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          this.errorMessages = errorData;
+          throw new Error("Validation failed");
+        }
+
+        const data = await response.json();
+
+        return data;
+      } catch (error) {
+        console.error("Registration error:", error);
+        return false;
+      }
+    },
+
     async verifyOTP(form) {
       const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/verify-otp`;
 

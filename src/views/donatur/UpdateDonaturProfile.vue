@@ -199,25 +199,42 @@
       <div class="self-end px-4">
         <p class="text-sm text-red-500 sm:text-base lg:text-lg">*Wajib diisi</p>
       </div>
+      
 
-      <div class="self-end px-2 lg:px-4 flex gap-2">
-        <button 
-          id="back" 
-          class="btn-secondary"
-          @click="goBack"
+      <div class="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between items-end gap-3 px-4">
+        <!-- Link -->
+        <router-link
+          v-if="!isGoogleLogin"
+          class="font-bold hover:underline text-primary-500 mb-2 sm:mb-0"
+          :to="{ name: 'ubahPassword' }"
         >
-          Kembali
-        </button>
+          Ubah Password
+        </router-link>
 
-        <button 
-          id="submit" 
-          type="submit" 
-          class="btn-primary"
+        <!-- Tombol-tombol -->
+        <div
+          :class="[
+            'flex gap-2',
+            isGoogleLogin ? 'ml-auto' : ''
+          ]"
         >
-          Update
-        </button>
+          <button 
+            id="back" 
+            class="btn-secondary"
+            @click="goBack"
+          >
+            Kembali
+          </button>
+
+          <button 
+            id="submit" 
+            type="submit" 
+            class="btn-primary"
+          >
+            Simpan
+          </button>
+        </div>
       </div>
-
     </form>
   </section>
 </template>
@@ -237,6 +254,10 @@ const selectedFile = ref(null);
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB dalam byte
 const REGEX_PHONE_NUMERIC = /^\d+$/;
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+
+const isGoogleLogin = computed(() => {
+  return authStore.user.is_google === "1";
+});
 
 const hasAccess = computed(() => {
   return authStore.user?.role === "ROLE_DONATUR";
@@ -267,6 +288,8 @@ const goBack = () => {
 const fetchUserData = async () => {
   try {
     await authStore.fetchUser();
+
+    console.log("google:", authStore.user.is_google);
 
     if (authStore.user) {
       form.name = authStore.user.name;
