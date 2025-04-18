@@ -288,7 +288,9 @@
 import { reactive, ref, onMounted, computed } from 'vue';
 import { useAuthStore } from "@/stores/authStore";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const authStore = useAuthStore();
 const fetching = ref(true);
 
@@ -414,7 +416,8 @@ const submitForm = async () => {
     if(response.current_password === "Kata sandi lama salah!") {
         errorMessages.current_password = response.current_password;
     } else {
-      // logout();
+      logout();
+      // router.push("/donasi-saya")
     }
   } catch (error) {
     console.error("Terjadi kesalahan saat update profile:", error);
