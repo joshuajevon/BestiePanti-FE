@@ -416,12 +416,7 @@ const submitForm = async () => {
     if(response.current_password === "Kata sandi lama salah!") {
         errorMessages.current_password = response.current_password;
     } else {
-      // logout();
-      if(authStore.user.role === "ROLE_DONATUR"){
-        router.push("/donasi-saya");
-      } else if(authStore.user.role === "ROLE_PANTI"){
-        router.push("/donasi-panti");
-      }
+      logout();
     }
   } catch (error) {
     console.error("Terjadi kesalahan saat update profile:", error);
