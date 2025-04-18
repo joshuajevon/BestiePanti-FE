@@ -13,17 +13,17 @@
       </h1>
     </div>
 
-    <div v-if="!fetching" 
+    <div v-if="!fetching && hasAccess" 
       class="flex items-center justify-center gap-3 lg:gap-4 xl:gap-6 2xl:gap-8">
       <h1 class="text-2xl font-bold text-secondary-500 xl:text-3xl 2xl:text-4xl">
-        Ubah Profile Panti
+        Ubah Profile
       </h1>
       <div class="h-0.5 flex-1 bg-secondary-500"></div>
     </div>
 
     <!-- Form -->
     <form
-      v-if="!fetching"
+      v-if="!fetching && hasAccess"
       method="PUT"
       class="flex flex-col items-center gap-6 rounded-md bg-white px-6 py-12 shadow-[0px_4.7451px_41.5196px_rgba(41,82,144,0.25)] sm:rounded-lg sm:px-8 sm:py-16 md:rounded-xl md:px-10 md:py-20 lg:rounded-2xl lg:px-12 lg:py-24 xl:rounded-3xl xl:px-14 xl:py-28 2xl:px-16 2xl:py-32"
       @submit.prevent="submitForm"
@@ -485,24 +485,33 @@
         <p class="text-sm text-red-500 sm:text-base lg:text-lg">*Wajib diisi</p>
       </div>
 
-      <div class="self-end px-2 lg:px-4 flex gap-2">
-        <!-- Tombol Kembali -->
-        <button
-          id="back"
-          type="button"
-          @click="goBack"
-          class="btn-secondary"
+      <div class="w-full flex flex-col sm:flex-row sm:justify-between sm:items-center items-end gap-3 px-4">
+        <!-- Link -->
+        <router-link
+          class="font-bold hover:underline text-primary-500 mb-2 sm:mb-0"
+          :to="{ name: 'ubahPassword' }"
         >
-          Kembali
-        </button>
+          Ubah Password
+        </router-link>
 
-        <!-- Tombol Tambah -->
-        <button 
-          id="submit" 
-          type="submit" 
-          class="btn-primary">
-          Ubah
-        </button>
+        <!-- Tombol-tombol -->
+        <div class="flex gap-2">
+          <button 
+            id="back" 
+            class="btn-secondary"
+            @click="goBack"
+          >
+            Kembali
+          </button>
+
+          <button 
+            id="submit" 
+            type="submit" 
+            class="btn-primary"
+          >
+            Simpan
+          </button>
+        </div>
       </div>
 
     </form>
@@ -633,7 +642,11 @@ const fetchUserData = async () => {
       removedPantiExistImages.value = []; 
 
       //fetch qris
-      previewImageQris.value = `${apiUrl}/storage/qris/${authStore.user.qris}`
+      if (authStore.user.qris) {
+        previewImageQris.value = `${apiUrl}/storage/qris/${authStore.user.qris}`
+      } else {
+        previewImageQris.value = null;
+      }
     }
       
       

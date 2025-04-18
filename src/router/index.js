@@ -61,6 +61,12 @@ const router = createRouter({
       meta: { requiresGuest: true },
     },
     {
+      path: "/ubah-password",
+      name: "ubahPassword",
+      component: () => import("../views/auth/ChangePassword.vue"),
+      meta: { requiresAuth: true },
+    },
+    {
       path: "/panti-detail/:id",
       name: "pantiDetail",
       component: () => import("../views/PantiDetail.vue"),
@@ -72,7 +78,7 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: "/dashboard-panti",
+      path: "/donasi-panti",
       name: "dashboard-panti",
       component: () => import("../views/panti/DashboardPanti.vue"),
       meta: { requiresAuth: true },
