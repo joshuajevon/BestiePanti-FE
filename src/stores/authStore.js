@@ -283,7 +283,7 @@ export const useAuthStore = defineStore("auth", {
           localStorage.removeItem("token");
           this.user = null;
           this.token = null;
-
+          window.location.reload(true);
           return true;
         } else {
           console.error("Logout failed with status:", response.status);
