@@ -514,6 +514,16 @@
         </div>
       </div>
 
+      <!-- loading overlay -->
+      <div
+        v-if="isLoading"
+        class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
+      >
+        <div class="bg-white rounded-xl p-8">
+          <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
+        </div>
+      </div>
+
     </form>
   </section>
 </template>
@@ -527,6 +537,7 @@ import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 
 const authStore = useAuthStore();
 const fetching = ref(true);
+const isLoading = ref(false);
 const apiUrl = import.meta.env.VITE_API_URL;
 
 //qris
@@ -861,11 +872,14 @@ const submitForm = async () => {
       await deleteExistingImages(authStore.user.id, removedPantiExistImages.value);
     }
     
-    
+    isLoading.value = true;
+
     const response = await updatePantiProfile(pantiData);
     if (!response.message) {
+      isLoading.value = false;
       goBack();
     } else {
+      isLoading.value = false;
       console.log("Gagal memperbarui profile. Silakan coba lagi.");
     }
 

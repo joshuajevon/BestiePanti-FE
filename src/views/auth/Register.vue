@@ -54,378 +54,374 @@
         </p>
       </div>
 
-      <div class="mt-2 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 w-full">
-        <div class="col-span-1 flex flex-col gap-8">
-          <!-- Name Lengkap -->
-          <div class="col-span-1 input-container">
-            <div class="flex gap-1 text-base sm:text-lg">
-              <label
-                for="name"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Nama Lengkap
-              </label>
-              <span class="text-red-500">*</span>
-            </div>
-
-            <input
-              type="text"
-              autocomplete="false"
-              id="name"
-              name="name"
-              v-model="form.name"
-              placeholder="Masukkan nama lengkap"
-            />
-
-            <p
-              id="name-error-message"
-              class="error-message"
-              v-if="authStore.errorMessages.name"
+      <div
+        class="mt-2 grid grid-cols-1 lg:grid-cols-2 gap-y-8 lg:gap-x-16 w-full"
+      >
+        <!-- Name Lengkap -->
+        <div class="input-container">
+          <div class="flex gap-1 text-base sm:text-lg">
+            <label
+              for="name"
+              class="text-base font-medium text-secondary-500 sm:text-lg"
             >
-              {{ authStore.errorMessages.name }}
-            </p>
+              Nama Lengkap
+            </label>
+            <span class="text-red-500">*</span>
           </div>
 
-          <!-- Tanggal Lahir -->
-          <div class="col-span-1 input-container">
-            <div class="flex gap-1 text-base sm:text-lg">
-              <label
-                for="dob"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Tanggal Lahir
-              </label>
-              <span class="text-red-500">*</span>
-            </div>
+          <input
+            type="text"
+            autocomplete="false"
+            id="name"
+            name="name"
+            v-model="form.name"
+            placeholder="Masukkan nama lengkap"
+          />
 
-            <input
-              type="date"
-              autocomplete="false"
-              id="dob"
-              name="dob"
-              v-model="form.dob"
-              placeholder="Masukkan tanggal lahir"
-              :max="new Date().toISOString().split('T')[0]"
-            />
-
-            <p
-              id="dob-error-message"
-              class="error-message"
-              v-if="authStore.errorMessages.dob"
-            >
-              {{ authStore.errorMessages.dob }}
-            </p>
-          </div>
-
-          <!-- Alamat -->
-          <div class="col-span-1 input-container">
-            <div class="flex gap-1 text-base sm:text-lg">
-              <label
-                for="address"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Alamat
-              </label>
-              <span class="text-red-500">*</span>
-            </div>
-
-            <input
-              type="text"
-              autocomplete="false"
-              id="address"
-              name="address"
-              v-model="form.address"
-              placeholder="Masukkan alamat"
-            />
-
-            <p
-              id="address-error-message"
-              class="error-message"
-              v-if="authStore.errorMessages.address"
-            >
-              {{ authStore.errorMessages.address }}
-            </p>
-          </div>
-
-          <!-- Kata Sandi -->
-          <div class="col-span-1 input-container">
-            <div class="flex gap-1 text-base sm:text-lg">
-              <label
-                for="password"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Kata Sandi
-              </label>
-              <span class="text-red-500">*</span>
-            </div>
-
-            <div class="relative w-full">
-              <input
-                ref="password"
-                :type="showPassword ? 'text' : 'password'"
-                autocomplete="false"
-                id="password"
-                name="password"
-                v-model="form.password"
-                placeholder="Masukkan kata sandi"
-                class="pr-12 lg:pr-16"
-              />
-
-              <svg
-                v-show="!showPassword"
-                id="eye-slash-1"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                @click="togglePassword"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
-                />
-              </svg>
-
-              <svg
-                v-show="showPassword"
-                id="eye-1"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                @click="togglePassword"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                />
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-            </div>
-
-            <p class="text-xs">
-              *Minimal 8 karakter mengandung huruf dan angka
-            </p>
-
-            <p
-              id="password-error-message"
-              class="error-message"
-              v-if="authStore.errorMessages.password"
-            >
-              {{ authStore.errorMessages.password }}
-            </p>
-          </div>
+          <p
+            id="name-error-message"
+            class="error-message"
+            v-if="authStore.errorMessages.name"
+          >
+            {{ authStore.errorMessages.name }}
+          </p>
         </div>
 
-        <div class="col-span-1 flex flex-col gap-8">
-          <!-- Nomor Whatsapp -->
-          <div class="col-span-1 input-container">
-            <div class="flex gap-1 text-base sm:text-lg">
-              <label
-                for="phone"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Nomor Whatsapp
-              </label>
-              <span class="text-red-500">*</span>
-            </div>
+        <!-- Jenis Kelamin -->
+        <div class="input-container">
+          <div class="flex gap-1 text-base sm:text-lg">
+            <label
+              for="gender"
+              class="text-base font-medium text-secondary-500 sm:text-lg"
+            >
+              Jenis Kelamin
+            </label>
+            <span class="text-red-500">*</span>
+          </div>
 
-            <div class="relative">
-              <div
-                class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
-              >
-                <p>+62</p>
-              </div>
-
+          <div
+            class="mt-1 flex w-full items-center justify-start gap-8 text-sm sm:text-base"
+          >
+            <div class="flex items-center justify-center gap-2">
               <input
-                type="text"
-                autocomplete="false"
-                id="phone"
-                name="phone"
-                v-model="form.phone"
-                placeholder="Masukkan nomor Whatsapp"
-                class="pl-14 sm:pl-16"
-                inputmode="numeric"
-                @input="form.phone = $event.target.value.replace(/\D/g, '')"
+                class="text-seconarborder-b-secondary-500 cursor-pointer appearance-none rounded-full focus:ring-0 focus:ring-offset-0"
+                type="radio"
+                id="laki-laki"
+                name="gender"
+                value="L"
+                v-model="form.gender"
               />
+              <label for="laki-laki">Laki-laki</label>
             </div>
 
-            <p class="text-xs">*Contoh: 87812341234</p>
-
-            <p
-              id="phone-error-message"
-              class="error-message"
-              v-if="authStore.errorMessages.phone"
-            >
-              {{ authStore.errorMessages.phone }}
-            </p>
+            <div class="flex items-center justify-center gap-2">
+              <input
+                class="text-seconarborder-b-secondary-500 cursor-pointer appearance-none rounded-full focus:ring-0 focus:ring-offset-0"
+                type="radio"
+                id="perempuan"
+                name="gender"
+                value="P"
+                v-model="form.gender"
+              />
+              <label for="perempuan">Perempuan</label>
+            </div>
           </div>
 
-          <!-- Jenis Kelamin -->
-          <div class="col-span-1 input-container">
-            <div class="flex gap-1 text-base sm:text-lg">
-              <label
-                for="gender"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Jenis Kelamin
-              </label>
-              <span class="text-red-500">*</span>
-            </div>
+          <p
+            id="gender-error-message"
+            class="error-message"
+            v-if="authStore.errorMessages.gender"
+          >
+            {{ authStore.errorMessages.gender }}
+          </p>
+        </div>
 
+        <!-- Tanggal Lahir -->
+        <div class="input-container">
+          <div class="flex gap-1 text-base sm:text-lg">
+            <label
+              for="dob"
+              class="text-base font-medium text-secondary-500 sm:text-lg"
+            >
+              Tanggal Lahir
+            </label>
+            <span class="text-red-500">*</span>
+          </div>
+
+          <input
+            type="date"
+            autocomplete="false"
+            id="dob"
+            name="dob"
+            v-model="form.dob"
+            placeholder="Masukkan tanggal lahir"
+            :max="new Date().toISOString().split('T')[0]"
+          />
+
+          <p
+            id="dob-error-message"
+            class="error-message"
+            v-if="authStore.errorMessages.dob"
+          >
+            {{ authStore.errorMessages.dob }}
+          </p>
+        </div>
+
+        <!-- Alamat -->
+        <div class="input-container">
+          <div class="flex gap-1 text-base sm:text-lg">
+            <label
+              for="address"
+              class="text-base font-medium text-secondary-500 sm:text-lg"
+            >
+              Alamat
+            </label>
+            <span class="text-red-500">*</span>
+          </div>
+
+          <input
+            type="text"
+            autocomplete="false"
+            id="address"
+            name="address"
+            v-model="form.address"
+            placeholder="Masukkan alamat"
+          />
+
+          <p
+            id="address-error-message"
+            class="error-message"
+            v-if="authStore.errorMessages.address"
+          >
+            {{ authStore.errorMessages.address }}
+          </p>
+        </div>
+
+        <!-- Nomor Whatsapp -->
+        <div class="input-container">
+          <div class="flex gap-1 text-base sm:text-lg">
+            <label
+              for="phone"
+              class="text-base font-medium text-secondary-500 sm:text-lg"
+            >
+              Nomor Whatsapp
+            </label>
+            <span class="text-red-500">*</span>
+          </div>
+
+          <div class="relative">
             <div
-              class="mt-1 flex w-full items-center justify-start gap-8 text-sm sm:text-base"
+              class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
             >
-              <div class="flex items-center justify-center gap-2">
-                <input
-                  class="text-seconarborder-b-secondary-500 cursor-pointer appearance-none rounded-full focus:ring-0 focus:ring-offset-0"
-                  type="radio"
-                  id="laki-laki"
-                  name="gender"
-                  value="L"
-                  v-model="form.gender"
-                />
-                <label for="laki-laki">Laki-laki</label>
-              </div>
-
-              <div class="flex items-center justify-center gap-2">
-                <input
-                  class="text-seconarborder-b-secondary-500 cursor-pointer appearance-none rounded-full focus:ring-0 focus:ring-offset-0"
-                  type="radio"
-                  id="perempuan"
-                  name="gender"
-                  value="P"
-                  v-model="form.gender"
-                />
-                <label for="perempuan">Perempuan</label>
-              </div>
-            </div>
-
-            <p
-              id="gender-error-message"
-              class="error-message"
-              v-if="authStore.errorMessages.gender"
-            >
-              {{ authStore.errorMessages.gender }}
-            </p>
-          </div>
-
-          <!-- Email -->
-          <div class="col-span-1 input-container">
-            <div class="flex gap-1 text-base sm:text-lg">
-              <label
-                for="email"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Email
-              </label>
-              <span class="text-red-500">*</span>
+              <p>+62</p>
             </div>
 
             <input
-              type="email"
+              type="text"
               autocomplete="false"
-              id="email"
-              name="email"
-              v-model="form.email"
-              placeholder="Masukkan email"
+              id="phone"
+              name="phone"
+              v-model="form.phone"
+              placeholder="Masukkan nomor Whatsapp"
+              class="pl-14 sm:pl-16"
+              inputmode="numeric"
+              @input="form.phone = $event.target.value.replace(/\D/g, '')"
+            />
+          </div>
+
+          <p class="text-xs">*Contoh: 87812341234</p>
+
+          <p
+            id="phone-error-message"
+            class="error-message"
+            v-if="authStore.errorMessages.phone"
+          >
+            {{ authStore.errorMessages.phone }}
+          </p>
+        </div>
+
+        <!-- Email -->
+        <div class="input-container">
+          <div class="flex gap-1 text-base sm:text-lg">
+            <label
+              for="email"
+              class="text-base font-medium text-secondary-500 sm:text-lg"
+            >
+              Email
+            </label>
+            <span class="text-red-500">*</span>
+          </div>
+
+          <input
+            type="email"
+            autocomplete="false"
+            id="email"
+            name="email"
+            v-model="form.email"
+            placeholder="Masukkan email"
+          />
+
+          <p
+            id="email-error-message"
+            class="error-message"
+            v-if="authStore.errorMessages.email"
+          >
+            {{ authStore.errorMessages.email }}
+          </p>
+        </div>
+
+        <!-- Kata Sandi -->
+        <div class="input-container">
+          <div class="flex gap-1 text-base sm:text-lg">
+            <label
+              for="password"
+              class="text-base font-medium text-secondary-500 sm:text-lg"
+            >
+              Kata Sandi
+            </label>
+            <span class="text-red-500">*</span>
+          </div>
+
+          <div class="relative w-full">
+            <input
+              ref="password"
+              :type="showPassword ? 'text' : 'password'"
+              autocomplete="false"
+              id="password"
+              name="password"
+              v-model="form.password"
+              placeholder="Masukkan kata sandi"
+              class="pr-12 lg:pr-16"
             />
 
-            <p
-              id="email-error-message"
-              class="error-message"
-              v-if="authStore.errorMessages.email"
+            <svg
+              v-show="!showPassword"
+              id="eye-slash-1"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
+              @click="togglePassword"
             >
-              {{ authStore.errorMessages.email }}
-            </p>
-          </div>
-
-          <!-- Konfirmasi Kata Sandi -->
-          <div class="col-span-1 input-container">
-            <div class="flex gap-1 text-base sm:text-lg">
-              <label
-                for="passwordcon"
-                class="text-base font-medium text-secondary-500 sm:text-lg"
-              >
-                Konfirmasi Kata Sandi
-              </label>
-              <span class="text-red-500">*</span>
-            </div>
-
-            <div class="relative mt-1 w-full">
-              <input
-                ref="confirmPassword"
-                :type="showConfirmPassword ? 'text' : 'password'"
-                autocomplete="false"
-                id="confirmation_password"
-                name="confirmation_password"
-                v-model="form.confirmation_password"
-                placeholder="Masukkan kata sandi"
-                class="pr-12 lg:pr-16"
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
               />
+            </svg>
 
-              <svg
-                v-show="!showConfirmPassword"
-                id="eye-slash-2"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                @click="toggleConfirmPassword"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
-                />
-              </svg>
-
-              <svg
-                v-show="showConfirmPassword"
-                id="eye-2"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
-                @click="toggleConfirmPassword"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                />
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-            </div>
-
-            <p class="text-xs">*Ketik ulang kata sandi Anda</p>
-
-            <p
-              id="confirmation-password-error-message"
-              class="error-message"
-              v-if="authStore.errorMessages.confirmationPassword"
+            <svg
+              v-show="showPassword"
+              id="eye-1"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
+              @click="togglePassword"
             >
-              {{ authStore.errorMessages.confirmationPassword }}
-            </p>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
           </div>
+
+          <p class="text-xs">*Minimal 8 karakter mengandung huruf dan angka</p>
+
+          <p
+            id="password-error-message"
+            class="error-message"
+            v-if="authStore.errorMessages.password"
+          >
+            {{ authStore.errorMessages.password }}
+          </p>
+        </div>
+
+        <!-- Konfirmasi Kata Sandi -->
+        <div class="input-container">
+          <div class="flex gap-1 text-base sm:text-lg">
+            <label
+              for="passwordcon"
+              class="text-base font-medium text-secondary-500 sm:text-lg"
+            >
+              Konfirmasi Kata Sandi
+            </label>
+            <span class="text-red-500">*</span>
+          </div>
+
+          <div class="relative mt-1 w-full">
+            <input
+              ref="confirmPassword"
+              :type="showConfirmPassword ? 'text' : 'password'"
+              autocomplete="false"
+              id="confirmation_password"
+              name="confirmation_password"
+              v-model="form.confirmation_password"
+              placeholder="Masukkan kata sandi"
+              class="pr-12 lg:pr-16"
+            />
+
+            <svg
+              v-show="!showConfirmPassword"
+              id="eye-slash-2"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
+              @click="toggleConfirmPassword"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+              />
+            </svg>
+
+            <svg
+              v-show="showConfirmPassword"
+              id="eye-2"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="absolute inset-y-0 right-4 my-auto h-5 w-5 cursor-pointer lg:right-5 lg:h-6 lg:w-6"
+              @click="toggleConfirmPassword"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </div>
+
+          <p class="text-xs">*Ketik ulang kata sandi Anda</p>
+
+          <p
+            id="confirmation-password-error-message"
+            class="error-message"
+            v-if="authStore.errorMessages.confirmationPassword"
+          >
+            {{ authStore.errorMessages.confirmationPassword }}
+          </p>
         </div>
       </div>
 

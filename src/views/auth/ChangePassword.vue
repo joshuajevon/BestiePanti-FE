@@ -187,7 +187,7 @@
               for="confirmPassword"
               class="text-base font-medium text-secondary-500 sm:text-lg"
             >
-              Kata Sandi Baru
+              Konfirmasi Kata Sandi Baru
             </label>
             <span class="text-red-500">*</span>
           </div>
@@ -200,7 +200,7 @@
               id="confrim_password"
               name="confrim_password"
               v-model="form.confirmation_password"
-              placeholder="Masukkan kata sandi baru"
+              placeholder="Masukkan konfirmasi kata sandi baru"
               class="pr-12 lg:pr-16"
             />
 
@@ -394,7 +394,7 @@ async function logout() {
 
   if (success) {
     console.log("Redirectin to login");
-    router.push({ path: "/login", query: { showLogoutSuccessAlert: true } });
+    router.push({ path: "/login", query: { showLogoutSuccessAfterChangePasswordAlert: true } });
   } else {
     console.error("Logout failed, staying on the page.");
   }
@@ -413,8 +413,8 @@ const submitForm = async () => {
 
     const response = await authStore.changePassword(passwordData);
 
-    if(response.current_password === "Kata sandi lama salah!") {
-        errorMessages.current_password = response.current_password;
+    if(response.error_message === "Kata sandi lama salah!") {
+        errorMessages.current_password = response.error_message;
     } else {
       logout();
     }
