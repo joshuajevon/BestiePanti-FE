@@ -175,6 +175,7 @@ function handleStatusChange(e) {
 const resetAllFilters = () => {
   selectedStatuses.value = ''
   searchDonatur.value = ''
+  searchPanti.value = ''
 }
 
 const filteredmessageList = computed(() => {
