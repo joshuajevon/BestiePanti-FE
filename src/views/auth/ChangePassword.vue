@@ -359,7 +359,7 @@ const validateForm = () => {
   let isValid = true;
 
   if (!form.current_password) {
-    errorMessages.current_password = "Kata sandi saat initidak boleh kosong";
+    errorMessages.current_password = "Kata sandi saat ini tidak boleh kosong";
     isValid = false;
   }
 
