@@ -16,6 +16,14 @@
 
       <transition name="slide-fade">
         <SuccessAlert
+          v-if="showLogoutSuccessAfterChangePasswordAlert"
+          text1="Kata sandi telah diperbaharui!"
+          text2="Silahkan masuk kembali dengan kata sandi baru Anda!"
+        />
+      </transition>
+
+      <transition name="slide-fade">
+        <SuccessAlert
           v-if="showResetPasswordSuccessAlert"
           text1="Reset kata sandi berhasil!"
           text2="Silakan masuk menggunakan kata sandi baru Anda."
@@ -257,7 +265,6 @@ const router = useRouter();
 
 const handleLoginWithGoogle = async () => {
   const success = await authStore.loginWithGoogle(form);
-
   if (success) {
     console.log("Success login with Google!");
   }
@@ -271,6 +278,17 @@ const handleLogoutSuccess = () => {
 
   setTimeout(() => {
     showLogoutSuccessAlert.value = false;
+  }, 3000);
+};
+
+const showLogoutSuccessAfterChangePasswordAlert = ref(false);
+
+const handleLogoutSuccessAfterChangePassword = () => {
+  router.replace({ query: {} });
+  showLogoutSuccessAfterChangePasswordAlert.value = true;
+
+  setTimeout(() => {
+    showLogoutSuccessAfterChangePasswordAlert.value = false;
   }, 3000);
 };
 
@@ -328,6 +346,7 @@ const submitForm = async () => {
   isLoading.value = false;
 
   if (success) {
+    localStorage.setItem("isHardRefresh", "false");
     router.push({ path: "/", query: { showLoginSuccessAlert: "true" } });
   } else {
     Object.keys(form).forEach((key) => {
@@ -336,13 +355,28 @@ const submitForm = async () => {
   }
 };
 
+const isHardRefresh = localStorage.getItem("isHardRefresh");
+
+const hardRefresh = async () => {
+  window.location.reload(true);
+}
+
 onMounted(async () => {
   if (route.query.showLogoutSuccessAlert) {
     handleLogoutSuccess();
   }
 
+  if (route.query.showLogoutSuccessAfterChangePasswordAlert) {
+    handleLogoutSuccessAfterChangePassword();
+  }
+
   if (route.query.showResetPasswordSuccessAlert) {
     handleResetPasswordSuccess();
+  }
+
+  if(isHardRefresh === "false"){
+    localStorage.setItem("isHardRefresh", "true");
+    hardRefresh();
   }
 });
 </script>
