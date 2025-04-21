@@ -413,8 +413,8 @@ const submitForm = async () => {
 
     const response = await authStore.changePassword(passwordData);
 
-    if(response.current_password === "Kata sandi lama salah!") {
-        errorMessages.current_password = response.current_password;
+    if(response.error_message === "Kata sandi lama salah!") {
+        errorMessages.current_password = response.error_message;
     } else {
       logout();
     }

@@ -88,7 +88,7 @@ export const useAuthStore = defineStore("auth", {
         if (!response.ok) {
           const errorData = await response.json();
           this.errorMessages = errorData;
-          throw new Error("Validation failed");
+          return errorData
         }
 
         const data = await response.json();
