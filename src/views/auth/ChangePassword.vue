@@ -187,7 +187,7 @@
               for="confirmPassword"
               class="text-base font-medium text-secondary-500 sm:text-lg"
             >
-              Kata Sandi Baru
+              Konfirmasi Kata Sandi Baru
             </label>
             <span class="text-red-500">*</span>
           </div>
@@ -200,7 +200,7 @@
               id="confrim_password"
               name="confrim_password"
               v-model="form.confirmation_password"
-              placeholder="Masukkan kata sandi baru"
+              placeholder="Masukkan konfirmasi kata sandi baru"
               class="pr-12 lg:pr-16"
             />
 
