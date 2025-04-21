@@ -5,10 +5,6 @@
       text="Memuat data panti asuhan..." 
       color="text-secondary-500"
      />
-    
-    <p v-else-if="!fetching && pantiList.length === 0" class="text-center text-red-500 mt-4">
-      Tidak ada data panti tersedia.
-    </p>
 
     <div v-else>
       <!-- filter -->
@@ -180,7 +176,12 @@
       </div>
 
       <!-- table -->
-      <p v-if="paginatedData.length === 0" 
+       <p v-if="!fetching && pantiList.length === 0" 
+      class="text-center text-red-500 mt-4">
+        Tidak ada data panti tersedia.
+      </p>
+
+      <p v-else-if="paginatedData.length === 0" 
       class="text-center text-red-500 mt-4">
         Tidak ada data panti yang sesuai.
       </p>
@@ -260,12 +261,23 @@
     </div>
 
     <!-- Confirmation Modal -->
-    <ConfirmationModal 
-      :show="modalVisible" 
+    <ConfirmationModal
+      :show="modalVisible && !isLoading" 
       :message="modalMessage" 
       @confirm="handleDeleteConfirm"
       @cancel="modalVisible = false"
     />
+
+    <!-- Loading Overlay -->
+    <div
+      v-if="isLoading"
+      class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
+    >
+      <div class="bg-white rounded-xl p-8">
+        <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -278,6 +290,7 @@ import ConfirmationModal from "@/components/modal/ConfirmationModal.vue";
 
 const pantiList = ref([]);
 const fetching = ref(true);
+const isLoading = ref(false);
 const currentPage = ref(1);
 const itemsPerPage = 10;
 
@@ -397,11 +410,14 @@ const triggerUrgentChange = (id, currentStatus) => {
 
 const handleDeleteConfirm = async () => {
   if (actionType.value === "delete") {
+    isLoading.value = true;
     await deletePanti(selectedPantiId.value)
+    isLoading.value = false;
   } else if (actionType.value === "update_urgent") {
+    isLoading.value = true;
     await updateIsUrgentPanti(selectedPantiId.value, urgentTargetValue.value)
+    isLoading.value = false;
   }
-
   modalVisible.value = false
   fetching.value = true
   fetchData()

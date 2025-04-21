@@ -235,6 +235,17 @@
           </button>
         </div>
       </div>
+
+      <!-- loading overlay -->
+      <div
+        v-if="isLoading"
+        class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
+      >
+        <div class="bg-white rounded-xl p-8">
+          <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
+        </div>
+      </div>
+
     </form>
   </section>
 </template>
@@ -248,9 +259,12 @@ import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 
 const authStore = useAuthStore();
 const fetching = ref(true);
+const isLoading = ref(false);
 const apiUrl = import.meta.env.VITE_API_URL;
+
 const previewImage = ref("");
 const selectedFile = ref(null);
+
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB dalam byte
 const REGEX_PHONE_NUMERIC = /^\d+$/;
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -402,9 +416,11 @@ const submitForm = async () => {
       donaturData.profile = selectedFile.value;
     }
 
+    isLoading.value = true;
     const response = await updateProileDonaturByUser(donaturData);
 
     if (!response.message) {
+      isLoading.value = false;
       goBack();
     } else {
       alert(`Gagal: ${response.message || "Terjadi kesalahan."}`);

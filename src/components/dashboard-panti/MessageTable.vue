@@ -132,11 +132,22 @@
 
     <!-- Confirmation Modal -->
     <ConfirmationModal 
-      :show="modalVisible" 
+      :show="modalVisible && !isLoading" 
       :message="modalMessage" 
       @confirm="handleConfirm"
       @cancel="modalVisible = false"
     />
+
+    <!-- loading overlay -->
+    <div
+      v-if="isLoading"
+      class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
+    >
+      <div class="bg-white rounded-xl p-8">
+        <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -152,6 +163,7 @@ const authStore = useAuthStore();
 
 const messageList = ref([]);
 const fetching = ref(true);
+const isLoading = ref(false);
 const currentPage = ref(1);
 const itemsPerPage = 10;
 
@@ -233,10 +245,14 @@ const fetchData = async () => {
 
 const handleConfirm = async () => {
   if (actionType.value === "tampilkan") {
+    isLoading.value = true;
     await acceptMessage(selectedMessageId.value);
+    isLoading.value = false;
   } 
   else if (actionType.value === "hapus") {
+    isLoading.value = true;
     await deleteMessage(selectedMessageId.value);
+    isLoading.value = false;
   }
 
   modalVisible.value = false;

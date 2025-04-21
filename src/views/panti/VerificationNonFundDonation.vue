@@ -153,6 +153,17 @@
                   Kirim
                 </button>
               </div>
+
+              <!-- loading overlay -->
+              <div
+                v-if="isLoading"
+                class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
+              >
+                <div class="bg-white rounded-xl p-8">
+                  <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
+                </div>
+              </div>
+
             </form>
           </div>
         </div>
@@ -171,6 +182,7 @@ import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 const route = useRoute();
 const donationId = route.params.id;
 const fetching = ref(true);
+const isLoading = ref(false);
 
 const donation = ref({
   donatur_name: "",
@@ -259,10 +271,11 @@ const submitForm = async () => {
       notes: donation.value.notes,
     };
 
-    console.log("verifyDonation", verifyDonation);
+    isLoading.value = true;
     const response = await verifyDonationNonDana(donationId, verifyDonation);
 
     if (!response.message) {
+      isLoading.value = false;
       goBack();
     } 
     else {

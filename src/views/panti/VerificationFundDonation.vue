@@ -86,6 +86,17 @@
                   Kirim
                 </button>
               </div>
+
+              <!-- loading overlay -->
+              <div
+                v-if="isLoading"
+                class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
+              >
+                <div class="bg-white rounded-xl p-8">
+                  <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
+                </div>
+              </div>
+
             </form>
           </div>
         </div>
@@ -107,6 +118,7 @@ const route = useRoute();
 const donationId = route.params.id;
 const apiUrl = import.meta.env.VITE_API_URL;
 const fetching = ref(true);
+const isLoading = ref(false);
 
 const donation = ref({
   donatur_name: "",
@@ -193,9 +205,11 @@ const submitForm = async () => {
       status: donation.value.status,
     };
 
+    isLoading.value = true;
     const response = await verifyDonationDana(donationId, verifyDonation);
 
     if (!response.message) {
+      isLoading.value = false;
       goBack();
     } 
     else {
