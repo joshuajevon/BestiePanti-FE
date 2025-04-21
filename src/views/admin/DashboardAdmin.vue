@@ -67,6 +67,14 @@
           Donasi Non-Dana
         </button>
         
+        <button @click="activeTab = 'message'" 
+          :class="{
+            'bg-blue-700 text-white rounded-lg': activeTab === 'message',
+            'bg-gray-300 rounded-lg hover:bg-blue-600': activeTab !== 'message'
+            }"
+          class="px-4 py-2  transition duration-300">
+          Pesan
+        </button>
       </div>
 
       <!-- Conditional Rendering -->
@@ -74,6 +82,7 @@
       <DonaturTable v-else-if="activeTab === 'donatur'" class="relative" />
       <DonationFundTable v-else-if="activeTab === 'fund-donation'" class="relative" />
       <DonationNonFundTable v-else-if="activeTab === 'nonfund-donation'" class="relative" />
+      <MessageTable v-else-if="activeTab === 'message'" class="relative" />
     </div>
   </section>
 </template>
@@ -85,6 +94,7 @@ import DonaturTable from "@/components/dashboard-admin/DonaturTable.vue";
 import DonationFundTable from "@/components/dashboard-admin/DonationFundTable.vue";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import DonationNonFundTable from "@/components/dashboard-admin/DonationNonFundTable.vue";
+import MessageTable from "@/components/dashboard-admin/MessageTable.vue";
 import { useAuthStore } from "@/stores/authStore";
 
 const authStore = useAuthStore();
