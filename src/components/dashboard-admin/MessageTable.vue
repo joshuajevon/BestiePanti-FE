@@ -16,12 +16,12 @@
         
         <div class="flex flex-col md:flex-row gap-3 w-full">
           <!-- filter Nama Panti -->
-          <!-- <input
+          <input
             type="text"
             v-model="searchPanti"
             placeholder="Cari Panti..."
             class="w-full md:max-w-xs px-4 py-2 border border-gray-300 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          /> -->
+          /> 
 
           <!-- filter Nama Donatur -->
           <input
@@ -96,6 +96,10 @@
           <tbody>
             <tr v-for="message in paginatedData" :key="message.id">
               <td class="border p-2">
+                {{ message.panti_name ? message.panti_name : '-' }}
+              </td>
+
+              <td class="border p-2">
                 {{ message.donatur_name ? message.donatur_name : '-' }}
               </td>
 
@@ -144,10 +148,11 @@ const itemsPerPage = 10;
 
 // filter behavior
 const searchDonatur = ref('')
-// const searchPanti = ref('')
+const searchPanti = ref('')
 const selectedStatuses = ref('')
 
 const headers = [
+  "Panti", 
   "Donatur", 
   "Ditampilkan", 
   "Pesan", 
@@ -176,13 +181,13 @@ const filteredmessageList = computed(() => {
   return messageList.value.filter((message) => {
     const matchesDonaturSearch = message.donatur_name.toLowerCase().includes(searchDonatur.value.toLowerCase());
     const matchesIsShown = selectedStatuses.value.length === 0 || selectedStatuses.value.includes(message.is_shown);
-    // const matchesPantirSearch = message.panti_name.toLowerCase().includes(searchPanti.value.toLowerCase());
+    const matchesPantirSearch = message.panti_name.toLowerCase().includes(searchPanti.value.toLowerCase());
 
-    return matchesDonaturSearch && matchesIsShown; //&& matchesPantirSearch;
+    return matchesDonaturSearch && matchesIsShown && matchesPantirSearch;
   });
 });
 
-watch([searchDonatur, selectedStatuses ], () => { // searchPanti tambahkan
+watch([searchDonatur, selectedStatuses, searchPanti ], () => { 
   currentPage.value = 1;
 });
 
