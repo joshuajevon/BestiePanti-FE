@@ -1,7 +1,7 @@
 <template>
   <div>
     <LoadingIndicator v-if="fetching" 
-      text="Memuat data donasi..." 
+      text="Memuat data pesan..." 
       color="text-secondary-500" 
     />
     
@@ -74,7 +74,7 @@
        <p v-if="paginatedData.length === 0" 
         class="text-center text-red-500 mt-4"
       >
-        Tidak ada data donasi yang sesuai.
+        Tidak ada data pesan yang sesuai.
       </p>
 
       <div v-else class="overflow-x-auto rounded-xl">
