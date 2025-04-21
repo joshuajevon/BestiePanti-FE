@@ -346,7 +346,7 @@ const submitForm = async () => {
   isLoading.value = false;
 
   if (success) {
-    localStorage.setItem("isHardRefresh", "false");
+    // localStorage.setItem("isHardRefresh", "false");
     router.push({ path: "/", query: { showLoginSuccessAlert: "true" } });
   } else {
     Object.keys(form).forEach((key) => {
@@ -355,11 +355,11 @@ const submitForm = async () => {
   }
 };
 
-const isHardRefresh = localStorage.getItem("isHardRefresh");
+// const isHardRefresh = localStorage.getItem("isHardRefresh");
 
-const hardRefresh = async () => {
-  window.location.reload(true);
-}
+// const hardRefresh = async () => {
+//   window.location.reload(true);
+// }
 
 onMounted(async () => {
   if (route.query.showLogoutSuccessAlert) {
@@ -374,10 +374,10 @@ onMounted(async () => {
     handleResetPasswordSuccess();
   }
 
-  if(isHardRefresh === "false"){
-    localStorage.setItem("isHardRefresh", "true");
-    hardRefresh();
-  }
+  // if(isHardRefresh === "false"){
+    // localStorage.setItem("isHardRefresh", "true");
+    // hardRefresh();
+  // }
 });
 </script>
 
