@@ -113,6 +113,9 @@ import { useRoute } from 'vue-router';
 import { fetchFundDonationByDonationId, verifyDonationDana } from '@/services/api-donation';
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import { formatDate } from "@/utils/date";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const route = useRoute();
 const donationId = route.params.id;
@@ -141,7 +144,7 @@ const statusClass = computed(() => {
 });
 
 const goBack = () => {
-  window.history.back();
+  router.push({ name: 'dashboard-panti' });
 };
 
 const fetchDonationData = async () => {

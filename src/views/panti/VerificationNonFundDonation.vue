@@ -178,7 +178,9 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { fetchNonFundDonationByDonationId, verifyDonationNonDana } from '@/services/api-donation';
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const route = useRoute();
 const donationId = route.params.id;
 const fetching = ref(true);
@@ -207,7 +209,7 @@ const statusClass = computed(() => {
 });
 
 const goBack = () => {
-  window.history.back();
+  router.push({ name: 'dashboard-panti' });
 };
 
 const fetchDonationData = async () => {
