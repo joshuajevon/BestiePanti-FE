@@ -130,7 +130,8 @@
       <div>
         <p class="error-message text-center">
           *Anda harus login terlebih dahulu untuk melakukan donasi atau kirim
-          pesan
+          pesan. Silakan melakukan login
+          <a href="/login" class="underline text-blue-500">di sini</a>.
         </p>
       </div>
     </section>
@@ -185,7 +186,61 @@
       <div>
         <p class="error-message text-center">
           Akun panti asuhan tidak dapat digunakan untuk berdonasi atau mengirim
-          pesan
+          pesan.
+        </p>
+      </div>
+    </section>
+
+    <section
+      v-else-if="authStore.user.role === 'ROLE_ADMIN'"
+      class="c-container flex flex-col justify-center items-center gap-2 pt-32 lg:pt-40 xl:pt-48 pb-8 lg:pb-12 xl:pb-16"
+    >
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <!-- Dana -->
+        <button
+          class="btn-primary pointer-events-none opacity-50"
+          @click="openFormDana"
+        >
+          Donasi Dana
+        </button>
+
+        <!-- Non Dana -->
+        <button
+          class="btn-primary pointer-events-none opacity-50"
+          @click="openFormNonDana"
+        >
+          Donasi Non Dana
+        </button>
+
+        <!-- Message -->
+        <button
+          class="btn-primary pointer-events-none opacity-50"
+          @click="openFormPesan"
+        >
+          Kirim Pesan
+        </button>
+
+        <!-- Donation Report -->
+        <button
+          class="flex items-center justify-center rounded-full bg-primary-500 text-center text-base font-bold text-white outline outline-4 -outline-offset-4 outline-transparent transition-all hover:outline-offset-0 hover:outline-primary-500/50 p-3 lg:p-3.5 lg:text-lg"
+          @click="openDonationReport"
+        >
+          <svg
+            class="size-6 lg:size-7"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64 144a48 48 0 1 0 0-96 48 48 0 1 0 0 96zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L192 64zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-288 0zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l288 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-288 0zM64 464a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm48-208a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div>
+        <p class="error-message text-center">
+          Akun admin tidak dapat digunakan untuk berdonasi atau mengirim pesan.
         </p>
       </div>
     </section>
