@@ -15,7 +15,7 @@ onMounted(async () => {
     try {
       localStorage.setItem("token", token);
       await authStore.fetchUserGoogle(token);
-      localStorage.setItem("isHardRefresh", "false");
+      // localStorage.setItem("isHardRefresh", "false");
       router.push({ path: "/", query: { showLoginSuccessAlert: "true" } });
     } catch (error) {
       console.error("Failed to fetch user with Google token:", error);

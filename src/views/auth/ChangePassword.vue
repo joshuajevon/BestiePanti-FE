@@ -359,7 +359,7 @@ const validateForm = () => {
   let isValid = true;
 
   if (!form.current_password) {
-    errorMessages.current_password = "Kata sandi saat initidak boleh kosong";
+    errorMessages.current_password = "Kata sandi saat ini tidak boleh kosong";
     isValid = false;
   }
 
@@ -394,7 +394,8 @@ async function logout() {
 
   if (success) {
     console.log("Redirectin to login");
-    router.push({ path: "/login", query: { showLogoutSuccessAfterChangePasswordAlert: true } });
+    // router.push({ path: "/login", query: { showLogoutSuccessAfterChangePasswordAlert: true } });
+    window.location.href = "/login?showLogoutSuccessAfterChangePasswordAlert=true";
   } else {
     console.error("Logout failed, staying on the page.");
   }

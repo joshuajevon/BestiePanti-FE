@@ -681,7 +681,9 @@ import { reactive, ref, onMounted, computed } from 'vue';
 import { useAuthStore } from "@/stores/authStore";
 import { createPanti } from "@/services/api-panti";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const authStore = useAuthStore();
 const fetching = ref(true);
 
@@ -779,7 +781,7 @@ const errorMessages = reactive({
 });
 
 const goBack = () => {
-  window.history.back();
+  router.push({ name: 'dashboard-admin' });
 };
 
 const fetchUserData = async () => {

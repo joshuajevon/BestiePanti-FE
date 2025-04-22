@@ -15,7 +15,14 @@
       <div class="bg-gray-300 px-4 py-3 rounded-xl flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-5">
         
         <div class="flex flex-col md:flex-row gap-3 w-full">
-          
+          <!-- filter Nama Panti -->
+          <input
+            type="text"
+            v-model="searchPanti"
+            placeholder="Cari Panti..."
+            class="w-full md:max-w-xs px-4 py-2 border border-gray-300 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          /> 
+
           <!-- filter Nama Donatur -->
           <input
             type="text"
@@ -89,8 +96,13 @@
           <tbody>
             <tr v-for="message in paginatedData" :key="message.id">
               <td class="border p-2">
+                {{ message.panti_name ? message.panti_name : '-' }}
+              </td>
+
+              <td class="border p-2">
                 {{ message.donatur_name ? message.donatur_name : '-' }}
               </td>
+
               <td class="border p-2">
                 <span 
                   :class="message.is_shown ? 
@@ -99,21 +111,9 @@
                   {{ message.is_shown ? "Ditampilkan" : "Belum Ditampilkan" }}
                 </span>
               </td>
-              <td class="border p-2 whitespace-pre-line">{{ formatMessage(message.message) }}</td>
-              <td class="border p-2">
-                <a 
-                  v-if="message.is_shown === 0"
-                  href="#" 
-                  class="text-green-600 hover:underline ml-2"
-                  @click.prevent="showConfirmation(message.id, 'tampilkan')">
-                  Tampilkan <br>
-                </a>
-                <a 
-                  href="#" 
-                  class="text-red-600 hover:underline ml-2"
-                  @click.prevent="showConfirmation(message.id, 'hapus')">
-                  Hapus
-                </a>
+
+              <td class="border p-2 whitespace-pre-line">
+                {{ formatMessage(message.message) }}
               </td>
             </tr>
           </tbody>
@@ -129,58 +129,33 @@
         class="mt-4" 
       />
     </div>
-
-    <!-- Confirmation Modal -->
-    <ConfirmationModal 
-      :show="modalVisible && !isLoading" 
-      :message="modalMessage" 
-      @confirm="handleConfirm"
-      @cancel="modalVisible = false"
-    />
-
-    <!-- loading overlay -->
-    <div
-      v-if="isLoading"
-      class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
-    >
-      <div class="bg-white rounded-xl p-8">
-        <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
-      </div>
-    </div>
-
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, watch } from "vue";
-import { fetchAllMessagesById, acceptMessage, deleteMessage } from "@/services/api-message";
+import { fetchAllMessages } from "@/services/api-message";
 import { useAuthStore } from "@/stores/authStore";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import Pagination from "@/components/pagination/PaginationDashboard.vue";
-import ConfirmationModal from "@/components/modal/ConfirmationModal.vue"; 
 
 const authStore = useAuthStore();
 
 const messageList = ref([]);
 const fetching = ref(true);
-const isLoading = ref(false);
 const currentPage = ref(1);
 const itemsPerPage = 10;
 
-const modalVisible = ref(false);
-const modalMessage = ref("");
-const selectedMessageId = ref(null);
-const actionType = ref(null);
-
 // filter behavior
 const searchDonatur = ref('')
+const searchPanti = ref('')
 const selectedStatuses = ref('')
 
 const headers = [
+  "Panti", 
   "Donatur", 
   "Ditampilkan", 
   "Pesan", 
-  "Aksi"
 ];
 
 const paginatedData = computed(() => {
@@ -200,18 +175,20 @@ function handleStatusChange(e) {
 const resetAllFilters = () => {
   selectedStatuses.value = ''
   searchDonatur.value = ''
+  searchPanti.value = ''
 }
 
 const filteredmessageList = computed(() => {
   return messageList.value.filter((message) => {
     const matchesDonaturSearch = message.donatur_name.toLowerCase().includes(searchDonatur.value.toLowerCase());
     const matchesIsShown = selectedStatuses.value.length === 0 || selectedStatuses.value.includes(message.is_shown);
+    const matchesPantirSearch = message.panti_name.toLowerCase().includes(searchPanti.value.toLowerCase());
 
-    return matchesDonaturSearch && matchesIsShown;
+    return matchesDonaturSearch && matchesIsShown && matchesPantirSearch;
   });
 });
 
-watch([searchDonatur, selectedStatuses], () => {
+watch([searchDonatur, selectedStatuses, searchPanti ], () => { 
   currentPage.value = 1;
 });
 
@@ -223,42 +200,15 @@ const formatMessage = (text) => {
   });
 };
 
-const showConfirmation = (id, type) => {
-  selectedMessageId.value = id;
-  actionType.value = type;
-  modalMessage.value = type === "tampilkan"
-    ? "Apakah kamu yakin ingin menampilkan pesan ini?"
-    : "Apakah kamu yakin ingin menghapus pesan ini?";
-  modalVisible.value = true;
-};
-
 const fetchData = async () => {
   try {
-    const data = await fetchAllMessagesById(authStore?.user.id || 0);
+    const data = await fetchAllMessages();
     messageList.value = data.message_responses;
   } catch (error) {
     console.error("Error fetching message data:", error);
   } finally {
     fetching.value = false;
   }
-};
-
-const handleConfirm = async () => {
-  if (actionType.value === "tampilkan") {
-    isLoading.value = true;
-    await acceptMessage(selectedMessageId.value);
-    isLoading.value = false;
-  } 
-  else if (actionType.value === "hapus") {
-    isLoading.value = true;
-    await deleteMessage(selectedMessageId.value);
-    isLoading.value = false;
-  }
-
-  modalVisible.value = false;
-  
-  fetching.value = true;
-  fetchData();
 };
 
 onMounted(async () => {

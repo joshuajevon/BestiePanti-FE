@@ -534,7 +534,9 @@ import { reactive, ref, onMounted, computed } from 'vue';
 import { useAuthStore } from "@/stores/authStore";
 import { updatePantiProfile, deleteExistingImages, deleteQris } from "@/services/api-panti";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const authStore = useAuthStore();
 const fetching = ref(true);
 const isLoading = ref(false);
@@ -622,7 +624,7 @@ const errorMessages = reactive({
 });
 
 const goBack = () => {
-  window.history.back();
+  router.push({ name: 'dashboard-panti' });
 };
 
 const fetchUserData = async () => {
