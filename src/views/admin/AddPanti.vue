@@ -671,6 +671,16 @@
         </button>
       </div>
 
+      <!-- loading overlay -->
+      <div
+        v-if="isLoading"
+        class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
+      >
+        <div class="bg-white rounded-xl p-8">
+          <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
+        </div>
+      </div>
+
     </form>
   </section>
 </template>
@@ -686,6 +696,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const authStore = useAuthStore();
 const fetching = ref(true);
+const isLoading = ref(false);
 
 const previewImageQris = ref("");
 const previewPantiImages = ref([]);
@@ -1010,11 +1021,14 @@ const submitForm = async () => {
       pantiData.image = [...form.image]; 
     }
 
+    isLoading.value = true;
     const response = await createPanti(pantiData);
 
     if (response.email === "Email sudah terdaftar") {
       errorMessages.email = response.email;
+      isLoading.value = false;
     } else {
+      isLoading.value = false;
       goBack();
     }
   } catch (error) {

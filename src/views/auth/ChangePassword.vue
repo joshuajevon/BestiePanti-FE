@@ -279,6 +279,16 @@
             </button>
         </div>
       </form>
+
+      <!-- loading overlay -->
+      <div
+        v-if="isLoading"
+        class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
+      >
+        <div class="bg-white rounded-xl p-8">
+          <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
+        </div>
+      </div>
     
   </section>
 </template>
@@ -291,6 +301,7 @@ import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const isLoading = ref(false);
 const authStore = useAuthStore();
 const fetching = ref(true);
 
@@ -411,12 +422,14 @@ const submitForm = async () => {
       confirmation_password: form.confirmation_password,
     };
 
-
+    isLoading.value = true;
     const response = await authStore.changePassword(passwordData);
 
     if(response.error_message === "Kata sandi lama salah!") {
         errorMessages.current_password = response.error_message;
+        isLoading.value = false;
     } else {
+      isLoading.value = false;
       logout();
     }
   } catch (error) {
