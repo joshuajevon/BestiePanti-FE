@@ -47,9 +47,16 @@
           <!-- QRIS Image -->
           <div class="flex justify-center items-center w-full">
             <img
+              v-if="qris"
               class="h-96 w-auto"
               :src="`${apiUrl}/storage/qris/${qris}`"
               :alt="`${pantiName}'s qris image`"
+            />
+            <img
+              v-else
+              class="h-96 w-auto"
+              src="/assets/no-qris.png"
+              alt="QRIS tidak tersedia"
             />
           </div>
 
