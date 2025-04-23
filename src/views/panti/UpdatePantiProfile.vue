@@ -49,65 +49,34 @@
 
         </div>
 
-        <!-- Tipe Donasi -->
+        <!-- Nomor telepon -->
          <div class="col-span-1 input-container">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Tipe Donasi <span class="text-red-500">*</span>
+            Nomor Telepon <span class="text-red-500">*</span>
           </label>
-
-          <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <div class="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="dana"
-                name="donation-type"
-                v-model="form.donation_types"
-                value="Dana"
-              />
-              <label for="Dana">Dana</label>
+          <div class="relative">
+            <div
+              class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
+            >
+              <p>+62</p>
             </div>
 
-            <div class="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id=""
-                name="donation-type"
-                v-model="form.donation_types"
-                value="Pangan"
-              />
-              <label for="makanan">Makanan</label>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="barang"
-                name="donation-type"
-                v-model="form.donation_types"
-                value="Barang"
-              />
-              <label for="barang">Barang</label>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="tenaga"
-                name="donation-type"
-                v-model="form.donation_types"
-                value="Tenaga"
-              />
-              <label for="tenaga">Tenaga</label>
-            </div>
+            <input
+              type="text"
+              autocomplete="false"
+              id="phone"
+              name="phone"
+              v-model="form.phone"
+              placeholder="Masukkan nomor Whatsapp"
+              class="pl-14 sm:pl-16"
+              inputmode="numeric"
+              @input="form.phone = $event.target.value.replace(/\D/g, '')"
+            />
           </div>
 
-          <p
-            class="error-message"
-            v-if="errorMessages.donation_types"
-          >
-            {{ errorMessages.donation_types }}
+          <p v-if="errorMessages.phone" class="text-red-500 text-sm">
+            {{ errorMessages.phone }}
           </p>
-
         </div>
 
         <!-- Alamat -->
@@ -135,7 +104,7 @@
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
             Region <span class="text-red-500">*</span>
           </label>
-          <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+          <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:pt-4">
             <label class="flex items-center gap-2">
               <input 
                 type="radio" 
@@ -192,56 +161,6 @@
 
         </div>
 
-        <!-- Nomor telepon -->
-         <div class="col-span-1 input-container">
-          <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Nomor Telepon <span class="text-red-500">*</span>
-          </label>
-          <div class="relative">
-            <div
-              class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
-            >
-              <p>+62</p>
-            </div>
-
-            <input
-              type="text"
-              autocomplete="false"
-              id="phone"
-              name="phone"
-              v-model="form.phone"
-              placeholder="Masukkan nomor Whatsapp"
-              class="pl-14 sm:pl-16"
-              inputmode="numeric"
-              @input="form.phone = $event.target.value.replace(/\D/g, '')"
-            />
-          </div>
-
-          <p v-if="errorMessages.phone" class="text-red-500 text-sm">
-            {{ errorMessages.phone }}
-          </p>
-        </div>
-
-        <!-- Nama Pemilik Akun Bank-->
-        <div class="col-span-1 input-container">
-          <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Nama Pemilik Akun Bank <span class="text-red-500">*</span>
-          </label>
-          <input 
-            type="text" 
-            v-model="form.bank_account_name" 
-            placeholder="Masukkan nama pemilik akun bank" 
-          />
-
-            <p
-              class="error-message"
-              v-if="errorMessages.bank_account_name"
-            >
-              {{ errorMessages.bank_account_name }}
-            </p>
-            
-        </div>
-
         <!-- Maps -->
         <div class="col-span-1 input-container">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
@@ -262,7 +181,7 @@
 
         </div>
 
-         <!-- Nama Bank -->
+        <!-- Nama Bank -->
         <div class="col-span-1 input-container relative">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
             Nama Bank <span class="text-red-500">*</span>
@@ -319,24 +238,25 @@
           </p>
         </div>
 
-        <!-- Deskripsi Panti -->
-        <div class="input-container mt-2">
+
+        <!-- Nama Pemilik Akun Bank-->
+        <div class="col-span-1 input-container">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Deskripsi Panti <span class="text-red-500">*</span>
+            Nama Pemilik Akun Bank <span class="text-red-500">*</span>
           </label>
+          <input 
+            type="text" 
+            v-model="form.bank_account_name" 
+            placeholder="Masukkan nama pemilik akun bank" 
+          />
 
-          <textarea
-            name="description"
-            id="description"
-            rows="10"
-            v-model="form.description"
-            placeholder="Masukkan deskripsi panti asuhan" 
-          ></textarea>
-
-          <p v-if="errorMessages.description" class="error-message">
-            {{ errorMessages.description }}
-          </p>
-
+            <p
+              class="error-message"
+              v-if="errorMessages.bank_account_name"
+            >
+              {{ errorMessages.bank_account_name }}
+            </p>
+            
         </div>
 
         <!-- Nomor Rekening -->
@@ -358,6 +278,87 @@
               {{ errorMessages.bank_account_number }}
             </p>
             
+        </div>
+
+        <!-- Deskripsi Panti -->
+        <div class="input-container mt-2">
+          <label class="text-base font-medium text-secondary-500 sm:text-lg">
+            Deskripsi Panti <span class="text-red-500">*</span>
+          </label>
+
+          <textarea
+            name="description"
+            id="description"
+            rows="10"
+            v-model="form.description"
+            placeholder="Masukkan deskripsi panti asuhan" 
+          ></textarea>
+
+          <p v-if="errorMessages.description" class="error-message">
+            {{ errorMessages.description }}
+          </p>
+
+        </div>
+
+        <!-- Tipe Donasi -->
+         <div class="col-span-1 input-container">
+          <label class="text-base font-medium text-secondary-500 sm:text-lg">
+            Tipe Donasi <span class="text-red-500">*</span>
+          </label>
+
+          <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:pt-4">
+            <div class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="dana"
+                name="donation-type"
+                v-model="form.donation_types"
+                value="Dana"
+              />
+              <label for="Dana">Dana</label>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id=""
+                name="donation-type"
+                v-model="form.donation_types"
+                value="Pangan"
+              />
+              <label for="makanan">Makanan</label>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="barang"
+                name="donation-type"
+                v-model="form.donation_types"
+                value="Barang"
+              />
+              <label for="barang">Barang</label>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="tenaga"
+                name="donation-type"
+                v-model="form.donation_types"
+                value="Tenaga"
+              />
+              <label for="tenaga">Tenaga</label>
+            </div>
+          </div>
+
+          <p
+            class="error-message"
+            v-if="errorMessages.donation_types"
+          >
+            {{ errorMessages.donation_types }}
+          </p>
+
         </div>
 
         <!-- Upload Qris -->
@@ -392,6 +393,13 @@
               ✕
             </button>
           </div>
+
+          <p
+            class="error-message"
+            v-if="errorMessages.qris"
+          >
+            {{ errorMessages.qris }}
+          </p>
 
         </div>
 
