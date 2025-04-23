@@ -601,6 +601,9 @@
             </button>
           </div>
 
+          <p v-if="errorMessages.qris" class="text-red-500 text-sm mt-1">
+            {{ errorMessages.qris }}
+          </p>
         </div>
 
         <!-- Upload Image Panti -->
