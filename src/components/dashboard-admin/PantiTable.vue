@@ -15,6 +15,7 @@
           <!-- filter Nama Panti -->
           <input
             type="text"
+            :disabled="pantiList.length === 0"
             v-model="searchPanti"
             placeholder="Cari panti..."
             class="w-full md:max-w-xs px-4 py-2 border border-gray-300 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
@@ -24,6 +25,7 @@
           <div class="relative">
             <button
               @click="toggleRegionsFilter"
+              :disabled="pantiList.length === 0"
               :class="[
                 'w-full justify-between border rounded-md h-10 px-3 shadow-sm flex items-center transition duration-200 text-sm',
                 selectedFilter === 'Regions' 
@@ -44,6 +46,7 @@
                 <label class="inline-flex items-center">
                   <input
                     type="checkbox"
+                    :disabled="pantiList.length === 0"
                     :value="region"
                     v-model="selectedRegions"
                     class="form-checkbox h-4 w-4 text-indigo-600"
@@ -59,6 +62,7 @@
           <div class="relative">
             <button
               @click="toggleDonationTypesFilter"
+              :disabled="pantiList.length === 0"
               :class="[
                 'w-full justify-between border rounded-md h-10 px-3 shadow-sm flex items-center transition duration-200 text-sm',
                 selectedFilter === 'Donation Types' 
@@ -94,6 +98,7 @@
           <div class="relative">
             <button
               @click="toggleStatusesFilter"
+              :disabled="pantiList.length === 0"
               :class="[
                 'w-full justify-between border rounded-md h-10 px-3 shadow-sm flex items-center transition duration-200 text-sm',
                 selectedFilter === 'Statuses' 
@@ -142,6 +147,7 @@
         <div class="flex flex-col md:flex-row gap-3 md:items-center mt-2 md:mt-0">
           <button
             class="flex items-center justify-center gap-2 transition p-2 md:p-2.5 rounded-full w-10 h-10 border-2 border-red-400 bg-white text-red-400 hover:bg-red-400 hover:text-white"
+            :disabled="pantiList.length === 0"
             :class="{
               'pointer-events-none opacity-50':
                 searchPanti.length === 0 &&
@@ -168,9 +174,11 @@
 
           <button
             @click="$router.push({ name: 'tambah-panti' })"
-            class="px-4 py-2 bg-blue-700 text-white text-sm font-medium rounded-xl shadow-md hover:bg-blue-600 transition duration-200"
+            class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full shadow-md hover:bg-blue-500 transition duration-200"
           >
-            Tambah Panti
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
           </button>
         </div>
       </div>

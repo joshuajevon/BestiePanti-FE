@@ -269,7 +269,7 @@ const submitForm = async () => {
       donationTypes: donation.value.donation_types,
       pic: donation.value.pic,
       status: donation.value.status,
-      activePhone: donation.value.active_phone,
+      activePhone: donation.value.active_phone.slice(3),
       notes: donation.value.notes,
     };
 

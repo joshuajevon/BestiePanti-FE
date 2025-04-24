@@ -7,7 +7,7 @@
     
     <p v-else-if="!fetching && messageList.length === 0" 
       class="text-center text-red-500 mt-4">
-      Panti asuhan anda belum menerima pesan.
+      Tidak ada data pesan tersedia.
     </p>
 
     <div v-else>
@@ -122,8 +122,8 @@
     </div>
 
     <div class="flex justify-end mt-4">
-      <Pagination v-if="messageList.length > 0" 
-        :totalItems="messageList.length" 
+      <Pagination v-if="filteredmessageList.length > 0" 
+        :totalItems="filteredmessageList.length" 
         :itemsPerPage="itemsPerPage" 
         v-model:currentPage="currentPage" 
         class="mt-4" 

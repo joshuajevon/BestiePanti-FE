@@ -80,6 +80,17 @@
       @confirm="handleDeleteConfirm"
       @cancel="modalVisible = false"
     />
+
+    <!-- Loading Overlay -->
+    <div
+      v-if="isLoading"
+      class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
+    >
+      <div class="bg-white rounded-xl p-8">
+        <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
+      </div>
+    </div>
+    
   </div>
 </template>
 
@@ -92,6 +103,7 @@ import ConfirmationModal from "@/components/modal/ConfirmationModal.vue";
 
 const donaturList = ref([]);
 const fetching = ref(true);
+const isLoading = ref(false);
 const currentPage = ref(1);
 const itemsPerPage = 10;
 
@@ -136,8 +148,9 @@ const showConfirmation = (id) => {
 };
 
 const handleDeleteConfirm = async () => {
-
+  isLoading.value = true;
   await deleteDonatur(selectedMessageId.value);
+  isLoading.value = false;
   modalVisible.value = false;
   
   fetching.value = true;

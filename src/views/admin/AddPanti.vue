@@ -49,119 +49,33 @@
 
         </div>
 
-        <!-- Tipe Donasi -->
+        <!-- Nomor telepon -->
          <div class="col-span-1 input-container">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Tipe Donasi <span class="text-red-500">*</span>
+            Nomor Telepon <span class="text-red-500">*</span>
           </label>
-
-          <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <div class="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="dana"
-                name="donation-type"
-                v-model="form.donation_types"
-                value="Dana"
-              />
-              <label for="Dana">Dana</label>
+          <div class="relative">
+            <div
+              class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
+            >
+              <p>+62</p>
             </div>
 
-            <div class="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id=""
-                name="donation-type"
-                v-model="form.donation_types"
-                value="Pangan"
-              />
-              <label for="makanan">Makanan</label>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="barang"
-                name="donation-type"
-                v-model="form.donation_types"
-                value="Barang"
-              />
-              <label for="barang">Barang</label>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="tenaga"
-                name="donation-type"
-                v-model="form.donation_types"
-                value="Tenaga"
-              />
-              <label for="tenaga">Tenaga</label>
-            </div>
+            <input
+              type="text"
+              autocomplete="false"
+              id="phone"
+              name="phone"
+              v-model="form.phone"
+              placeholder="Masukkan nomor Whatsapp"
+              class="pl-14 sm:pl-16"
+              inputmode="numeric"
+              @input="form.phone = $event.target.value.replace(/\D/g, '')"
+            />
           </div>
 
-          <p
-            class="error-message"
-            v-if="errorMessages.donation_types"
-          >
-            {{ errorMessages.donation_types }}
-          </p>
-
-        </div>
-
-        <!-- Email -->
-        <div class="col-span-1 input-container">
-          <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Email <span class="text-red-500">*</span>
-          </label>
-          <input 
-            type="text" 
-            v-model="form.email" 
-            placeholder="Masukkan email" 
-          />
-
-          <p
-            class="error-message"
-            v-if="errorMessages.email"
-          >
-            {{ errorMessages.email }}
-          </p>
-
-        </div>
-
-        <!-- Is Urgent -->
-        <div class="col-span-1 input-container">
-          <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Darurat <span class="text-red-500">*</span>
-          </label>
-
-          <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-            <label class="flex items-center gap-2">
-              <input 
-                type="radio" 
-                name="is_urgent" 
-                value="1" 
-                v-model="form.is_urgent" 
-                class="w-4 h-4"
-              />
-              <span class="text-sm sm:text-base">Darurat</span>
-            </label>
-
-            <label class="flex items-center gap-2">
-              <input 
-                type="radio" 
-                name="is_urgent" 
-                value="0" 
-                v-model="form.is_urgent" 
-                class="w-4 h-4"
-              />
-              <span class="text-sm sm:text-base">Tidak Darurat</span>
-            </label>
-          </div>
-
-          <p class="error-message text-red-500 text-sm mt-1" v-if="errorMessages.is_urgent">
-            {{ errorMessages.is_urgent }}
+          <p v-if="errorMessages.phone" class="text-red-500 text-sm">
+            {{ errorMessages.phone }}
           </p>
         </div>
 
@@ -190,7 +104,7 @@
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
             Region <span class="text-red-500">*</span>
           </label>
-          <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+          <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:pt-4">
             <label class="flex items-center gap-2">
               <input 
                 type="radio" 
@@ -247,91 +161,44 @@
 
         </div>
 
-        <!-- Nomor telepon -->
-         <div class="col-span-1 input-container">
+        <!-- Maps -->
+        <div class="col-span-1 input-container">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Nomor Telepon <span class="text-red-500">*</span>
+            Google Maps <span class="text-red-500">*</span>
           </label>
-          <div class="relative">
-            <div
-              class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base"
-            >
-              <p>+62</p>
-            </div>
-
-            <input
-              type="text"
-              autocomplete="false"
-              id="phone"
-              name="phone"
-              v-model="form.phone"
-              placeholder="Masukkan nomor Whatsapp"
-              class="pl-14 sm:pl-16"
-              inputmode="numeric"
-              @input="form.phone = $event.target.value.replace(/\D/g, '')"
+          <input 
+            type="text" 
+            v-model="form.maps" 
+            placeholder="Masukkan google maps panti asuhan" 
             />
-          </div>
 
-          <p v-if="errorMessages.phone" class="text-red-500 text-sm">
-            {{ errorMessages.phone }}
-          </p>
+            <p
+              class="error-message"
+              v-if="errorMessages.maps"
+            >
+              {{ errorMessages.maps }}
+            </p>
+
         </div>
 
-        <!-- Nama Bank -->
-        <div class="col-span-1 input-container relative">
+        <!-- Email -->
+        <div class="col-span-1 input-container">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Nama Bank <span class="text-red-500">*</span>
+            Email <span class="text-red-500">*</span>
           </label>
+          <input 
+            type="text" 
+            v-model="form.email" 
+            placeholder="Masukkan email" 
+          />
 
-          <div
-            class="flex justify-between items-center w-full px-4 py-3 bg-[#e5e9f2] border border-gray-300 rounded-3xl cursor-pointer relative"
-            @click="showBankOptions = !showBankOptions"
+          <p
+            class="error-message"
+            v-if="errorMessages.email"
           >
-            <span class="text-gray-700">{{ form.bank_name || 'Pilih nama bank' }}</span>
-            <svg
-              class="w-4 h-4 text-gray-400"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
-
-          <div
-          v-if="showBankOptions"
-          class="absolute z-10 left-0 right-0 top-full bg-white border border-gray-300 rounded-2xl shadow-lg max-h-60 overflow-y-auto"
-          @click.stop
-        >
-            <div class="px-3 pt-3">
-              <input
-                type="text"
-                v-model="searchBank"
-                placeholder="Cari bank..."
-                class="w-full px-3 py-2 border border-gray-200 rounded-xl bg-gray-50 outline-none"
-              />
-            </div>
-
-            <div
-              v-for="bank in filteredBanks"
-              :key="bank"
-              @click="selectBank(bank)"
-              class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-            >
-              {{ bank }}
-            </div>
-
-            <div v-if="filteredBanks.length === 0" class="px-4 py-2 text-gray-400">
-              Tidak ada hasil
-            </div>
-          </div>
-
-          <p class="error-message" v-if="errorMessages.bank_name">
-            {{ errorMessages.bank_name }}
+            {{ errorMessages.email }}
           </p>
+
         </div>
 
         <!-- Kata Sandi -->
@@ -409,26 +276,6 @@
           </p>
         </div>
 
-        <!-- Nama Pemilik Akun Bank-->
-        <div class="col-span-1 input-container">
-          <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Nama Pemilik Akun Bank <span class="text-red-500">*</span>
-          </label>
-          <input 
-            type="text" 
-            v-model="form.bank_account_name" 
-            placeholder="Masukkan nama pemilik akun bank" 
-          />
-
-            <p
-              class="error-message"
-              v-if="errorMessages.bank_account_name"
-            >
-              {{ errorMessages.bank_account_name }}
-            </p>
-            
-        </div>
-
         <!-- Konfirmasi Kata Sandi -->
         <div class="col-span-1 input-container">
           <div class="flex gap-1 text-base sm:text-lg">
@@ -504,6 +351,85 @@
           </p>
         </div>
 
+
+        <!-- Nama Bank -->
+        <div class="col-span-1 input-container relative">
+          <label class="text-base font-medium text-secondary-500 sm:text-lg">
+            Nama Bank <span class="text-red-500">*</span>
+          </label>
+
+          <div
+            class="flex justify-between items-center w-full px-4 py-3 bg-[#e5e9f2] border border-gray-300 rounded-3xl cursor-pointer relative"
+            @click="showBankOptions = !showBankOptions"
+          >
+            <span class="text-gray-700">{{ form.bank_name || 'Pilih nama bank' }}</span>
+            <svg
+              class="w-4 h-4 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+
+          <div
+          v-if="showBankOptions"
+          class="absolute z-10 left-0 right-0 top-full bg-white border border-gray-300 rounded-2xl shadow-lg max-h-60 overflow-y-auto"
+          @click.stop
+        >
+            <div class="px-3 pt-3">
+              <input
+                type="text"
+                v-model="searchBank"
+                placeholder="Cari bank..."
+                class="w-full px-3 py-2 border border-gray-200 rounded-xl bg-gray-50 outline-none"
+              />
+            </div>
+
+            <div
+              v-for="bank in filteredBanks"
+              :key="bank"
+              @click="selectBank(bank)"
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+            >
+              {{ bank }}
+            </div>
+
+            <div v-if="filteredBanks.length === 0" class="px-4 py-2 text-gray-400">
+              Tidak ada hasil
+            </div>
+          </div>
+
+          <p class="error-message" v-if="errorMessages.bank_name">
+            {{ errorMessages.bank_name }}
+          </p>
+        </div>
+
+
+        <!-- Nama Pemilik Akun Bank-->
+        <div class="col-span-1 input-container">
+          <label class="text-base font-medium text-secondary-500 sm:text-lg">
+            Nama Pemilik Akun Bank <span class="text-red-500">*</span>
+          </label>
+          <input 
+            type="text" 
+            v-model="form.bank_account_name" 
+            placeholder="Masukkan nama pemilik akun bank" 
+          />
+
+            <p
+              class="error-message"
+              v-if="errorMessages.bank_account_name"
+            >
+              {{ errorMessages.bank_account_name }}
+            </p>
+            
+        </div>
+
         <!-- Nomor Rekening -->
         <div class="col-span-1 input-container">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
@@ -523,6 +449,67 @@
               {{ errorMessages.bank_account_number }}
             </p>
             
+        </div>
+
+        <!-- Tipe Donasi -->
+         <div class="col-span-1 input-container">
+          <label class="text-base font-medium text-secondary-500 sm:text-lg">
+            Tipe Donasi <span class="text-red-500">*</span>
+          </label>
+
+          <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:pt-4">
+            <div class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="dana"
+                name="donation-type"
+                v-model="form.donation_types"
+                value="Dana"
+              />
+              <label for="Dana">Dana</label>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id=""
+                name="donation-type"
+                v-model="form.donation_types"
+                value="Pangan"
+              />
+              <label for="makanan">Makanan</label>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="barang"
+                name="donation-type"
+                v-model="form.donation_types"
+                value="Barang"
+              />
+              <label for="barang">Barang</label>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="tenaga"
+                name="donation-type"
+                v-model="form.donation_types"
+                value="Tenaga"
+              />
+              <label for="tenaga">Tenaga</label>
+            </div>
+          </div>
+
+          <p
+            class="error-message"
+            v-if="errorMessages.donation_types"
+          >
+            {{ errorMessages.donation_types }}
+          </p>
+
         </div>
 
         <!-- Deskripsi Panti -->
@@ -545,25 +532,41 @@
 
         </div>
 
-        <!-- Maps -->
+        <!-- Is Urgent -->
         <div class="col-span-1 input-container">
           <label class="text-base font-medium text-secondary-500 sm:text-lg">
-            Google Maps <span class="text-red-500">*</span>
+            Darurat <span class="text-red-500">*</span>
           </label>
-          <input 
-            type="text" 
-            v-model="form.maps" 
-            placeholder="Masukkan google maps panti asuhan" 
-            />
 
-            <p
-              class="error-message"
-              v-if="errorMessages.maps"
-            >
-              {{ errorMessages.maps }}
-            </p>
+          <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:pt-4">
+            <label class="flex items-center gap-2">
+              <input 
+                type="radio" 
+                name="is_urgent" 
+                value="1" 
+                v-model="form.is_urgent" 
+                class="w-4 h-4"
+              />
+              <span class="text-sm sm:text-base">Darurat</span>
+            </label>
 
+            <label class="flex items-center gap-2">
+              <input 
+                type="radio" 
+                name="is_urgent" 
+                value="0" 
+                v-model="form.is_urgent" 
+                class="w-4 h-4"
+              />
+              <span class="text-sm sm:text-base">Tidak Darurat</span>
+            </label>
+          </div>
+
+          <p class="error-message text-red-500 text-sm mt-1" v-if="errorMessages.is_urgent">
+            {{ errorMessages.is_urgent }}
+          </p>
         </div>
+
 
         <!-- Upload Qris -->
          <div class="input-container mt-2">
@@ -598,6 +601,9 @@
             </button>
           </div>
 
+          <p v-if="errorMessages.qris" class="text-red-500 text-sm mt-1">
+            {{ errorMessages.qris }}
+          </p>
         </div>
 
         <!-- Upload Image Panti -->
