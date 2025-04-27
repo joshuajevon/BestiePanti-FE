@@ -27,7 +27,7 @@
       <!-- Filters -->
       <div
         v-motion-slide-visible-once-left
-        class="flex flex-wrap items-center justify-center gap-2 relative bg-white p-3 rounded-full"
+        class="flex flex-wrap items-center justify-center gap-2 relative bg-white p-3 rounded-full z-10"
       >
         <!-- Region Filters -->
         <div>
