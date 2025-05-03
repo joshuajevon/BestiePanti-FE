@@ -33,7 +33,7 @@
                   :to="{ name: 'ubah-profile-donatur' }"
                   class="px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300"
               >
-                Ubah Profile
+                Ubah Profil
               </router-link>
             </div>
           </div>
