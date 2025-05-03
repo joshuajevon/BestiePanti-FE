@@ -206,10 +206,29 @@
               <td class="border p-2">{{ panti.name }}</td>
               <td class="border p-2">{{ panti.email }}</td>
               <td class="border p-2">{{ panti.phone }}</td>
-              <td class="border p-2">{{ panti.address }}</td>
+              <td class="border p-2 whitespace-pre-line">
+                {{ formatAddress(panti.address) }}
+              </td>
               <td class="border p-2">{{ panti.region }}</td>
-              <td class="border p-2">{{ panti.bank_name }} - {{ panti.bank_account_number }}</td>
+              <td class="border p-2">{{ panti.bank_name }} - {{ panti.bank_account_number }} </td>
               <td class="border p-2">{{ panti.bank_account_name }}</td>
+              <td class="border p-2">
+                <div class="flex flex-wrap gap-2">
+                  <span 
+                    v-for="(type, index) in panti.donation_types" 
+                    :key="index" 
+                    :class="{
+                      'bg-green-200 text-green-700': type === 'Dana',
+                      'bg-blue-200 text-blue-700': type === 'Barang',
+                      'bg-yellow-200 text-yellow-700': type === 'Tenaga',
+                      'bg-purple-200 text-purple-700': type === 'Pangan'
+                    }"
+                    class="px-2 py-1 rounded"
+                  >
+                    {{ type }}
+                  </span>
+                </div>
+              </td>
               <td class="border p-2">
                 <label class="flex items-center cursor-pointer">
                   <div class="relative">
@@ -339,6 +358,7 @@ const headers = [
   "Region",
   "Bank",
   "Nama Pemilik Rekening",
+  "Tipe Donasi",
   "Darurat",
   "Aksi"
 ];
@@ -397,6 +417,13 @@ watch([searchPanti, selectedRegions, selectedDonationTypes, selectedStatuses], (
   currentPage.value = 1;
 });
 
+const formatAddress = (text) => {
+  if (!text) return "";
+  const words = text.split(" ");
+  return words.reduce((acc, word, index) => {
+    return acc + (index % 8 === 0 && index !== 0 ? "\n" : " ") + word;
+  });
+};
 
 const showConfirmation = (id, type, message, urgentValue = null) => {
   selectedPantiId.value = id
