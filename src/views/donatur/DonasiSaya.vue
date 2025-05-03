@@ -1,5 +1,5 @@
 <template>
-  <section class="min-h-screen flex flex-col gap-8 pb-8 pt-36 lg:gap-12 lg:pb-16 lg:pt-40 xl:gap-16 xl:pb-32 xl:pt-44 2xl:pt-48">
+  <section class="min-h-screen pt-36 md:pt-40">
     <LoadingIndicator v-if="fetching" 
       text="Memuat data..." 
       color="text-secondary-500" 
@@ -13,29 +13,29 @@
       </div>
 
       <div v-else class="p-6">
-        <!-- Profile Section -->
+        <!-- profile section -->
         <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-10 md:mb-20">
           <img 
-            :src="authStore.user?.profile ? 
-              `${apiUrl}/storage/profile/${authStore.user.profile}` : 
-              '/assets/default-profile/profile.jpg'"
+            :src="authStore.user?.profile 
+              ? `${apiUrl}/storage/profile/${authStore.user.profile}` 
+              : '/assets/default-profile/profile.jpg'"
             :alt="`${authStore.user?.name || 'User'}'image`" 
             class="w-40 h-40 md:w-52 md:h-52 rounded-full border-2 border-gray-300"
           />
-          
+
           <div class="text-center md:text-left">
             <h2 class="text-2xl font-bold">{{ authStore.user?.name }}</h2>
-            <p class="text-gray-600">Email: {{ authStore.user?.email  }}</p>
-            <p class="text-gray-600">Telepon: {{ authStore.user?.phone || "-" }}</p>
-            <p class="text-gray-600">Alamat: {{ authStore.user?.address || "-" }}</p>
-            <div class="mt-4 md:text-right">
-              <router-link
-                  :to="{ name: 'ubah-profile-donatur' }"
-                  class="px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300"
-              >
-                Ubah Profil
-              </router-link>
-            </div>
+            <p class="text-gray-600">Email: {{ authStore.user?.email }}</p>
+            <p class="text-gray-600">Telepon: {{ authStore.user?.phone || '-' }}</p>
+            <p class="text-gray-600 break-words whitespace-pre-line">
+              Alamat: {{ formatAddress(authStore.user?.address)}}
+            </p>
+           <router-link
+              :to="{ name: 'ubah-profile-donatur' }"
+              class="inline-block mt-4 px-4 py-2 bg-blue-700 text-white rounded-xl hover:bg-blue-400 transition duration-300 text-center min-w-[180px] max-w-[95%]"
+            >
+              Ubah Profil
+            </router-link>
           </div>
         </div>
 
@@ -70,8 +70,8 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from "vue";
-import FundDonationCard from "@/components/cards/FundDonationCard.vue";
-import NonFundDonationCard from "@/components/cards/NonFundDonationCard.vue";
+import FundDonationCard from "@/components/dashboard-donatur/FundDonationTable.vue";
+import NonFundDonationCard from "@/components/dashboard-donatur/NonFundDonationTable.vue";
 import LoadingIndicator from "@/components/loading/LoadingIndicator.vue";
 import { useAuthStore } from "@/stores/authStore";
 
@@ -83,6 +83,16 @@ const fetching = ref(true);
 const isDonatur = computed(() => {
   return authStore.user?.role === "ROLE_DONATUR";
 });
+
+function formatAddress(address, wordsPerLine = 4) {
+  if (!address) return "-"
+  const words = address.split(" ")
+  const lines = []
+  for (let i = 0; i < words.length; i += wordsPerLine) {
+    lines.push(words.slice(i, i + wordsPerLine).join(" "))
+  }
+  return lines.join("\n")
+}
 
 onMounted(async () => {
     await authStore.fetchUser();
