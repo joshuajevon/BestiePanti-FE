@@ -6,7 +6,7 @@
     />
     
     <p v-else-if="!fetching && messageList.length === 0" 
-      class="text-center text-red-500 mt-4">
+      class="text-center text-red-500 mt-20 mb-20">
       Panti asuhan anda belum menerima pesan.
     </p>
 
