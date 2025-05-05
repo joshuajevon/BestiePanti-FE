@@ -36,7 +36,7 @@
             <select
               :value="selectedStatuses || ''"
               @change="handleStatusChange"
-              class="w-full appearance-none border-none outline-none rounded-md px-4 py-2 text-sm
+              class="w-full appearance-none border-none outline-none rounded-md px-4 h-10 text-sm
                     bg-white text-gray-800 transition-colors
                     focus:bg-blue-600 focus:border-blue-600 focus:text-white" 
             >

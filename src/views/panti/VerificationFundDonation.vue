@@ -1,111 +1,134 @@
 <template>
-  <section class="min-h-screen bg-gray-100 pt-16 md:pt-22 lg:pt-28">
-    <LoadingIndicator v-if="fetching" 
-      text="Memuat data..." 
-      color="text-secondary-500" 
+  <section
+    class="min-h-screen c-container flex flex-col gap-8 pb-8 pt-36 lg:gap-12 lg:pb-16 lg:pt-40 xl:gap-16 xl:pb-32 xl:pt-44 2xl:pt-48 bg-primary-50 text-secondary-500"
+  >
+    <!-- Loading -->
+    <LoadingIndicator
+      v-if="fetching"
+      text="Memuat data..."
+      color="text-secondary-500"
     />
 
-    <div v-else-if="!hasAccess && !fetching" class="p-6">
-      <h1 class="text-4xl font-bold text-center text-red-700">
+    <!-- No Access -->
+    <div v-else-if="!hasAccess" class="p-6">
+      <h1 class="text-4xl font-bold text-center text-red-700 justify-center">
         Kamu Tidak Memiliki Akses
       </h1>
     </div>
 
-    <div v-else class="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-      <div class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8">
-        <div>
-          <div class="text-center border-b pb-4">
-            <h1 class="text-3xl font-semibold text-primary-500">Verifikasi Donasi Dana</h1>
-            <p class="text-gray-600 text-sm mt-2">
-              Pastikan donasi anda telah sesuai.
-            </p>
-          </div>
+    <!-- Title -->
+    <div v-if="!fetching && hasAccess" class="flex items-center justify-center gap-3 lg:gap-4 xl:gap-6 2xl:gap-8">
+      <h1 class="text-2xl font-bold text-secondary-500 xl:text-3xl 2xl:text-4xl">
+        Verifikasi Donasi Dana
+      </h1>
+      <div class="h-0.5 flex-1 bg-secondary-500"></div>
+    </div>
 
-          <div class="mt-6">
-            <div class="flex justify-center mb-6">
-              <img 
-                alt="Gambar Donasi"
-                :src="`${apiUrl}/storage/donation/${donation.image}`" 
-                class="h-80 w-auto max-w-full rounded-lg object-contain"
-              />
-            </div>
-            
-            <div class="text-center font-bold mb-6">
-              <h2 class="text-lg">Dari: {{ donation.donatur_name }}</h2>
-              <p>Rekening: {{ donation.account_number }}</p>
-              <p>A/n {{ donation.account_name }}</p>
-            </div>
+    <!-- Form -->
+    <form
+      v-if="!fetching && hasAccess"
+      method="PUT"
+      @submit.prevent="submitForm"
+      class="flex flex-col items-center gap-6 rounded-md bg-white px-6 py-12 shadow-[0px_4.7451px_41.5196px_rgba(41,82,144,0.25)] sm:rounded-lg sm:px-8 sm:py-16 md:rounded-xl md:px-10 md:py-20 lg:rounded-2xl lg:px-12 lg:py-24 xl:rounded-3xl xl:px-14 xl:py-28 2xl:px-16 2xl:py-32"
+    >
+      <!-- Image -->
+      <div class="flex justify-center">
+        <img
+          :src="`${apiUrl}/storage/donation/${donation.image}`"
+          alt="Gambar Donasi"
+          class="h-80 w-auto max-w-full rounded-lg object-contain shadow"
+        />
+      </div>
 
-            <form
-            method="PUT" 
-            @submit.prevent="submitForm" 
-            class="space-y-4"
-            >
-              <div class="input-container text-gray-600 text-lg">
-                <span class="font-medium text-gray-700">Tanggal Donasi</span>
-                <span class="ml-2">{{ formatDate(donation.donation_date) }}</span>
-              </div>
+      <!-- Donatur Info -->
+      <div class="text-center font-bold text-secondary-500">
+        <h2 class="text-lg">Dari: {{ donation.donatur_name }}</h2>
+        <p>Rekening: {{ donation.account_number }}</p>
+        <p>A/n {{ donation.account_name }}</p>
+      </div>
 
-              <div class="input-container mt-2">
-                <label class="text-base font-medium text-secondary-500 sm:text-lg">
-                  Jumlah Transfer
-                  </label>
-                <input 
-                  type="text" 
-                  v-model="donation.nominal_amount" 
-                  placeholder="Verifikasi jumlah transfer" 
-                  class="w-full border rounded-full px-3 py-2"
-                  @input="donation.nominal_amount = $event.target.value.replace(/\D/g, '')" 
-                />
-                <p v-if="errorMessages.nominalAmount" class="text-red-500 text-sm">
-                  {{ errorMessages.nominalAmount }}
-                </p>
-              </div>
-
-              <div class="input-container mt-2">
-                <label class="text-base font-medium text-secondary-500 sm:text-lg">
-                  Status
-                </label>
-                <select 
-                v-model="donation.status" 
-                class="w-full border rounded-full px-3 py-2 appearance-none text-gray-700" 
-                :class="statusClass">
-                  <option value="PENDING" class="bg-white text-black">PENDING</option>
-                  <option value="COMPLETED" class="bg-white text-black">COMPLETED</option>
-                  <option value="REJECTED" class="bg-white text-black">REJECTED</option>
-                </select>
-              </div>
-
-              <div class="flex justify-end gap-4 mt-4 border-rounded">
-                <button 
-                  type="button" class="px-4 py-2 bg-gray-300 rounded" 
-                  @click="goBack">
-                  Batal
-                </button>
-                <button type="submit" class="px-4 py-2 bg-primary-500 text-white rounded">
-                  Kirim
-                </button>
-              </div>
-
-              <!-- loading overlay -->
-              <div
-                v-if="isLoading"
-                class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
-              >
-                <div class="bg-white rounded-xl p-8">
-                  <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
-                </div>
-              </div>
-
-            </form>
+      <!-- Form Fields -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+        <!-- Tanggal Donasi -->
+        <div class="input-container">
+          <label class="text-base font-medium text-secondary-500">
+            Tanggal Donasi
+          </label>
+          <div class="text-lg text-gray-700">
+            {{ formatDate(donation.donation_date) }}
           </div>
         </div>
 
+        <!-- Jumlah Transfer -->
+        <div class="input-container md:col-span-2">
+          <label class="text-base font-medium text-secondary-500">
+            Jumlah Transfer <span class="text-red-500">*</span>
+          </label>
+          <div class="relative">
+            <div
+              class="absolute left-5 sm:left-6 top-0 bottom-0 my-auto h-fit text-sm sm:text-base text-gray-500"
+            >
+              <p>Rp</p>
+            </div>
+            <input
+              type="text"
+              v-model="donation.nominal_amount"
+              placeholder="Masukkan jumlah transfer"
+              class="w-full pl-12 sm:pl-14 border rounded-full px-3 py-2"
+              inputmode="numeric"
+              @input="donation.nominal_amount = $event.target.value.replace(/\D/g, '')"
+            />
+          </div>
+          <p v-if="errorMessages.nominalAmount" class="text-red-500 text-sm">
+            {{ errorMessages.nominalAmount }}
+          </p>
+        </div>
+
+        <!-- Status -->
+        <div class="input-container md:col-span-2">
+          <label class="text-base font-medium text-secondary-500">
+            Status <span class="text-red-500">*</span>
+          </label>
+          <select
+            v-model="donation.status"
+            class="w-full border rounded-full px-3 py-2 appearance-none text-gray-700"
+            :class="statusClass"
+          >
+            <option value="PENDING" class="bg-white text-black">PENDING</option>
+            <option value="COMPLETED" class="bg-white text-black">COMPLETED</option>
+            <option value="REJECTED" class="bg-white text-black">REJECTED</option>
+          </select>
+        </div>
       </div>
-    </div>
+
+      <div class="self-end px-4 mt-4">
+        <p class="text-sm text-red-500 sm:text-base lg:text-lg">*Wajib diisi</p>
+      </div>
+
+      <!-- Buttons -->
+      <div class="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between items-end gap-3 px-4">
+        <div class="flex gap-2 ml-auto">
+          <button type="button" class="btn-secondary" @click="goBack">
+            Batal
+          </button>
+          <button type="submit" class="btn-primary">
+            Kirim
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading Overlay -->
+      <div
+        v-if="isLoading"
+        class="fixed inset-0 m-auto z-[200] w-screen h-screen bg-black/50 flex justify-center items-center"
+      >
+        <div class="bg-white rounded-xl p-8">
+          <LoadingIndicator text="Sedang memproses..." class="text-secondary-500" />
+        </div>
+      </div>
+    </form>
   </section>
 </template>
-
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
@@ -152,7 +175,7 @@ const fetchDonationData = async () => {
     const data = await fetchFundDonationByDonationId(donationId);
 
     if (data.forbidden) {
-    
+      hasAccess.value = false;
       return;
     }
 
