@@ -70,7 +70,7 @@
         >
           {{ errorMessages.donationDate }}
         </p>
-        <!-- test -->
+
       </div>
 
       <!-- Metode Donasi -->
