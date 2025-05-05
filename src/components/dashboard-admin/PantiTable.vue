@@ -146,39 +146,27 @@
          <!-- Action Filter -->
         <div class="flex flex-col md:flex-row gap-3 md:items-center mt-2 md:mt-0">
           <button
-            class="flex items-center justify-center gap-2 transition p-2 md:p-2.5 rounded-full w-10 h-10 border-2 border-red-400 bg-white text-red-400 hover:bg-red-400 hover:text-white"
-            :disabled="pantiList.length === 0"
+            class="px-4 py-2 bg-red-500 text-white font-semibold rounded-xl transition duration-200 hover:bg-red-400"
             :class="{
               'pointer-events-none opacity-50':
                 searchPanti.length === 0 &&
-                selectedRegions.length === 0 &&
                 selectedDonationTypes.length === 0 &&
-                selectedStatuses.length === 0,
+                selectedStatuses.length === 0 &&
+                selectedRegions.length === 0,
             }"
             @click="resetAllFilters"
             aria-label="Reset semua filter"
             title="Reset semua filter"
           >
-            <svg
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              class="w-4 h-4"
-            >
-              <path
-                d="M48.5 224L40 224c-13.3 0-24-10.7-24-24L16 72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8L48.5 224z"
-              />
-            </svg>
+            Reset Filter
           </button>
 
 
           <button
             @click="$router.push({ name: 'tambah-panti' })"
-            class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full shadow-md hover:bg-blue-500 transition duration-200"
+            class="px-4 py-2 bg-blue-700 text-white font-semibold rounded-xl rounded shadow-md hover:bg-blue-500 transition duration-200"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
+            Tambah Panti
           </button>
         </div>
       </div>
@@ -206,10 +194,39 @@
               <td class="border p-2">{{ panti.name }}</td>
               <td class="border p-2">{{ panti.email }}</td>
               <td class="border p-2">{{ panti.phone }}</td>
-              <td class="border p-2">{{ panti.address }}</td>
+              <td class="border p-2 whitespace-pre-line">
+                {{ formatAddress(panti.address) }}
+              </td>
               <td class="border p-2">{{ panti.region }}</td>
-              <td class="border p-2">{{ panti.bank_name }} - {{ panti.bank_account_number }}</td>
+              <td class="border p-2">
+                <strong>{{ panti.bank_name }} </strong>
+                <br> 
+                {{ panti.bank_account_number }} 
+              </td>
               <td class="border p-2">{{ panti.bank_account_name }}</td>
+              <td class="border p-2">
+                <div class="flex flex-col gap-2">
+                  <div 
+                    v-for="(group, gIndex) in chunkedDonationTypes(panti.donation_types, 2)" 
+                    :key="gIndex" 
+                    class="flex flex-wrap gap-2"
+                  >
+                    <span 
+                      v-for="(type, index) in group" 
+                      :key="index" 
+                      :class="{
+                        'bg-green-200 text-green-700': type === 'Dana',
+                        'bg-blue-200 text-blue-700': type === 'Barang',
+                        'bg-yellow-200 text-yellow-700': type === 'Tenaga',
+                        'bg-purple-200 text-purple-700': type === 'Pangan'
+                      }"
+                      class="px-2 py-1 rounded"
+                    >
+                      {{ type }}
+                    </span>
+                  </div>
+                </div>
+              </td>
               <td class="border p-2">
                 <label class="flex items-center cursor-pointer">
                   <div class="relative">
@@ -339,6 +356,7 @@ const headers = [
   "Region",
   "Bank",
   "Nama Pemilik Rekening",
+  "Tipe Donasi",
   "Darurat",
   "Aksi"
 ];
@@ -374,6 +392,14 @@ const paginatedData = computed(() => {
   return filteredPantiList.value.slice(start, start + itemsPerPage);
 });
 
+function chunkedDonationTypes(array, size) {
+  const result = [];
+  for (let i = 0; i < array.length; i += size) {
+    result.push(array.slice(i, i + size));
+  }
+  return result;
+}
+
 const filteredPantiList = computed(() => {
   return pantiList.value.filter((panti) => {
     const matchesSearch = panti.name.toLowerCase().includes(searchPanti.value.toLowerCase());
@@ -397,6 +423,13 @@ watch([searchPanti, selectedRegions, selectedDonationTypes, selectedStatuses], (
   currentPage.value = 1;
 });
 
+const formatAddress = (text) => {
+  if (!text) return "";
+  const words = text.split(" ");
+  return words.reduce((acc, word, index) => {
+    return acc + (index % 5 === 0 && index !== 0 ? "\n" : " ") + word;
+  });
+};
 
 const showConfirmation = (id, type, message, urgentValue = null) => {
   selectedPantiId.value = id

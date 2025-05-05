@@ -16,7 +16,7 @@
     <div v-if="!fetching && hasAccess" 
       class="flex items-center justify-center gap-3 lg:gap-4 xl:gap-6 2xl:gap-8">
       <h1 class="text-2xl font-bold text-secondary-500 xl:text-3xl 2xl:text-4xl">
-        Ubah Profile
+        Ubah Profil
       </h1>
       <div class="h-0.5 flex-1 bg-secondary-500"></div>
     </div>
@@ -208,7 +208,7 @@
           class="font-bold hover:underline text-primary-500 mb-2 sm:mb-0"
           :to="{ name: 'ubahPassword' }"
         >
-          Ubah Password
+          Ubah kata sandi
         </router-link>
 
         <!-- Tombol-tombol -->

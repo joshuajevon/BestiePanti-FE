@@ -17,7 +17,7 @@
       <div v-if="!fetching && hasAccess" 
         class="flex items-center justify-center gap-3 lg:gap-4 xl:gap-6 2xl:gap-8">
         <h1 class="text-2xl font-bold text-secondary-500 xl:text-3xl 2xl:text-4xl">
-          Ubah Password
+          Ubah Kata Sandi
         </h1>
         <div class="h-0.5 flex-1 bg-secondary-500"></div>
       </div>
