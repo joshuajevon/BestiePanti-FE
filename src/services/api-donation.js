@@ -179,7 +179,7 @@ export async function fetchFundDonationByDonationId(id) {
       }
     );
 
-    if (response.status === 403) {
+    if (response.status === 403 || response.status === 500) {
       return { forbidden: true };
     }
 
@@ -209,7 +209,7 @@ export async function fetchNonFundDonationByDonationId(id) {
       }
     );
 
-    if (response.status === 403) {
+    if (response.status === 403 || response.status === 500) {
       return { forbidden: true };
     }
 
