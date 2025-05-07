@@ -107,15 +107,15 @@
               v-if="userOS === 'windows'"
               class="text-xs flex items-center gap-0.5"
             >
-              <p>Ctrl</p>
-              <p>K</p>
+              <p>Cari</p>
+              <p>Panti</p>
             </div>
             <div
               v-else-if="userOS === 'mac'"
               class="text-xs flex items-center gap-0.5"
             >
-              <p>⌘</p>
-              <p>K</p>
+              <p>Cari</p>
+              <p>Panti</p>
             </div>
           </button>
         </div>
