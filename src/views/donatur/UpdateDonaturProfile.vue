@@ -61,6 +61,8 @@
           Upload foto profil
         </p>
 
+        <p class="text-xs">*Tipe file jpg, jpeg, png dan kurang dari 2MB</p>
+
          <p
           class="error-message"
           v-if="errorMessages.profile"
@@ -169,7 +171,7 @@
               @input="form.phone = $event.target.value.replace(/\D/g, '')"
             />
           </div>
-
+          <p class="text-xs">*Contoh: 87812341234</p>
           <p v-if="errorMessages.phone" class="text-red-500 text-sm">
             {{ errorMessages.phone }}
           </p>
