@@ -73,6 +73,8 @@
               @input="form.phone = $event.target.value.replace(/\D/g, '')"
             />
           </div>
+          
+          <p class="text-xs">*Contoh: 87812341234</p>
 
           <p v-if="errorMessages.phone" class="text-red-500 text-sm">
             {{ errorMessages.phone }}
@@ -267,6 +269,8 @@
             </svg>
           </div>
 
+          <p class="text-xs">*Minimal 8 karakter mengandung huruf dan angka</p>
+
           <p
             id="password-error-message"
             class="error-message"
@@ -341,6 +345,8 @@
               />
             </svg>
           </div>
+          
+          <p class="text-xs">*Ketik ulang kata sandi Anda</p>
 
           <p
             id="confirmation-password-error-message"
