@@ -170,6 +170,8 @@
               />
             </svg>
           </div>
+          
+          <p class="text-xs">*Minimal 8 karakter mengandung huruf dan angka</p>
 
           <p
             id="new_password-error-message"
@@ -245,6 +247,8 @@
               />
             </svg>
           </div>
+
+          <p class="text-xs">*Ketik ulang kata sandi Anda</p>
 
           <p
             id="new_password-error-message"

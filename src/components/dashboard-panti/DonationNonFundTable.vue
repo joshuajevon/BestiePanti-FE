@@ -98,6 +98,7 @@
         </div>
 
       </div>
+      
 
       <!-- table -->
        <p v-if="paginatedData.length === 0" 
@@ -106,7 +107,11 @@
         Tidak ada data donasi yang sesuai.
       </p>
 
-      <div v-else class="overflow-x-auto rounded-xl">
+      <p v-else-if="paginatedData.length != 0" class="text-s mb-2">
+        *Note: Anda dapat melakukan verifikasi ketika sudah menghubungi donatur
+      </p>
+
+      <div v-if="paginatedData.length != 0" class="overflow-x-auto rounded-xl">
         <table class="w-full min-w-max border-collapse border border-gray-300">
           <thead class="bg-blue-700 text-white">
             <tr>

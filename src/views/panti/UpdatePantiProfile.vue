@@ -73,6 +73,8 @@
               @input="form.phone = $event.target.value.replace(/\D/g, '')"
             />
           </div>
+          
+          <p class="text-xs">*Contoh: 87812341234</p>
 
           <p v-if="errorMessages.phone" class="text-red-500 text-sm">
             {{ errorMessages.phone }}
