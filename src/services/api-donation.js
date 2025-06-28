@@ -169,15 +169,12 @@ export async function fetchNonFundDonationsById(id) {
 
 export async function fetchFundDonationByDonationId(id) {
   try {
-    const response = await fetch(
-      `${API_URL}/api/v1/donation/fund/get/${id}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`${API_URL}/api/v1/donation/fund/get/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (response.status === 403 || response.status === 500) {
       return { forbidden: true };
@@ -263,8 +260,8 @@ export async function verifyDonationDana(id, donationData) {
 export async function verifyDonationNonDana(id, donationData) {
   const jsonData = {
     donation_date: donationData.donationDate,
-    is_onsite: donationData.isOnsite === "1" ? 1 : 0, 
-    donation_types: donationData.donationTypes, 
+    is_onsite: donationData.isOnsite === "1" ? 1 : 0,
+    donation_types: donationData.donationTypes,
     pic: donationData.pic,
     active_phone: donationData.activePhone,
     notes: donationData.notes,
@@ -279,7 +276,7 @@ export async function verifyDonationNonDana(id, donationData) {
       {
         method: "PUT",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(jsonData),
@@ -293,6 +290,33 @@ export async function verifyDonationNonDana(id, donationData) {
     }
 
     return await response.json();
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+}
+
+export async function fetchFundDonationsTotalAmountById(id) {
+  try {
+    const response = await fetch(
+      `${API_URL}/api/v1/donation/fund/amount/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch fund donation data. Status: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+
+    return data;
   } catch (error) {
     console.error("API Error:", error);
     throw error;
