@@ -30,36 +30,45 @@
             />
           </div>
 
-          <table
+          <div
             v-else-if="combinedDonations.length > 0"
-            class="min-w-full bg-white text-sm text-secondary-500 border border-secondary-100"
+            class="flex flex-col gap-4"
           >
-            <thead class="bg-gray-100 sticky top-0 z-10">
-              <tr>
-                <th class="px-4 py-2">Tanggal Donasi</th>
-                <th class="px-4 py-2">Jenis Donasi</th>
-                <th class="px-4 py-2">Catatan</th>
-              </tr>
-            </thead>
+            <p class="text-s">
+              Total donasi dana diterima:
+              {{ formatRupiah(totalFundDonationAmount) }}
+            </p>
 
-            <tbody class="divide-y divide-gray-200">
-              <tr
-                v-for="donation in combinedDonations"
-                :key="donation.donation_date"
-                class="odd:bg-gray-50"
-              >
-                <td class="px-4 py-2 font-medium">
-                  {{ formatDate(donation.donation_date) }}
-                </td>
-                <td class="px-4 py-2">
-                  {{ donation.donation_types }}
-                </td>
-                <td class="px-4 py-2">
-                  {{ donation.notes }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+            <table
+              class="min-w-full bg-white text-sm text-secondary-500 border border-secondary-100"
+            >
+              <thead class="bg-gray-100 sticky top-0 z-10">
+                <tr>
+                  <th class="px-4 py-2">Tanggal Donasi</th>
+                  <th class="px-4 py-2">Jenis Donasi</th>
+                  <th class="px-4 py-2">Catatan</th>
+                </tr>
+              </thead>
+
+              <tbody class="divide-y divide-gray-200">
+                <tr
+                  v-for="donation in combinedDonations"
+                  :key="donation.donation_date"
+                  class="odd:bg-gray-50"
+                >
+                  <td class="px-4 py-2 font-medium">
+                    {{ formatDate(donation.donation_date) }}
+                  </td>
+                  <td class="px-4 py-2">
+                    {{ donation.donation_types }}
+                  </td>
+                  <td class="px-4 py-2">
+                    {{ donation.notes }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <div v-else class="flex justify-center items-center">
             <p class="error-message text-center">
@@ -87,6 +96,7 @@ import { onMounted, ref } from "vue";
 import {
   fetchFundDonationsById,
   fetchNonFundDonationsById,
+  fetchFundDonationsTotalAmountById,
 } from "@/services/api-donation";
 import LoadingIndicator from "../loading/LoadingIndicator.vue";
 import { formatDate } from "@/utils/date";
@@ -105,6 +115,7 @@ const props = defineProps({
 
 const combinedDonations = ref([]);
 const isFetching = ref(true);
+const totalFundDonationAmount = ref(0);
 
 const emit = defineEmits(["closeDonationReport"]);
 
@@ -116,6 +127,9 @@ onMounted(async () => {
   try {
     const fundDonationsData = await fetchFundDonationsById(props.id);
     const nonfundDonationsData = await fetchNonFundDonationsById(props.id);
+    const fundDonationTotalAmount = await fetchFundDonationsTotalAmountById(
+      props.id
+    );
 
     // Create the combined list
     combinedDonations.value = [
@@ -139,6 +153,8 @@ onMounted(async () => {
     combinedDonations.value.sort(
       (a, b) => new Date(b.donation_date) - new Date(a.donation_date)
     );
+
+    totalFundDonationAmount.value = fundDonationTotalAmount.total_amount;
   } catch (error) {
     console.error("Error fetching donation data:", error);
   } finally {
